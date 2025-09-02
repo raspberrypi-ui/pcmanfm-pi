@@ -1,0 +1,4 @@
+*.o
+*.gmo
+build/
+_build/
