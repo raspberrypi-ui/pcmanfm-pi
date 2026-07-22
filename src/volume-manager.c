@@ -25,7 +25,7 @@
 #endif
 
 #include "volume-manager.h"
-#include <libfm/fm-gtk.h>
+#include <fm-gtk.h>
 #include <glib/gi18n.h>
 #include <gio/gdesktopappinfo.h>
 #include "pcmanfm.h"

@@ -25,7 +25,7 @@
 #define __DESKTOP_H__
 
 #include <gtk/gtk.h>
-#include <libfm/fm-gtk.h>
+#include <fm-gtk.h>
 
 #include "app-config.h"
 

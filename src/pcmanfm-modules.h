@@ -25,7 +25,7 @@
 #ifndef __PCMANFM_MODULES_H__
 #define __PCMANFM_MODULES_H__
 
-#include <libfm/fm.h>
+#include <fm.h>
 
 G_BEGIN_DECLS
 

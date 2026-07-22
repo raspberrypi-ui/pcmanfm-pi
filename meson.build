@@ -1,7 +1,7 @@
 project('pcmanfm', 'c',
   version : '1.4.0',
   license : 'GPL-2.0-or-later',
-  meson_version : '>= 0.60.0',
+  meson_version : '>= 0.61.0',
   default_options : ['c_std=gnu11'],
 )
 
@@ -35,19 +35,26 @@ config_h_dir = include_directories('.')
 add_project_arguments('-DHAVE_CONFIG_H', language : 'c')
 
 x11_dep = dependency('x11')
-gio_dep = dependency('gio-unix-2.0', version : '>= 2.18.0')
+# version bumped to satisfy libfm/meson.build's own requirement too, since
+# it reuses this same dependency object (see subdir('libfm') below)
+gio_dep = dependency('gio-unix-2.0', version : '>= 2.26.0')
 gthread_dep = dependency('gthread-2.0')
 glib_dep = dependency('glib-2.0')
 pango_dep = dependency('pango', version : '>= 1.20.0')
-libfm_dep = dependency('libfm', version : '>= 1.0')
 layer_shell_dep = dependency('gtk-layer-shell-0', version : '>= 0.6')
 gtk_dep = dependency('gtk+-3.0')
-libfm_gtk_dep = dependency('libfm-gtk3', version : '>= 1.0.1')
 m_dep = cc.find_library('m', required : false)
 
+# Vendored in libfm/ and compiled directly into this same build (no
+# subproject boundary, no separate libfm(-gtk3) shared libraries) so this
+# project has no external dependency on libfm(-gtk3)(-dev). Provides the
+# libfm_lib/libfm_gtk_lib static libraries and inc_top/inc_common/inc_gtk
+# include dirs consumed by src/meson.build below.
+subdir('libfm')
+
 fm_deps = [
-  gio_dep, gthread_dep, glib_dep, pango_dep,
-  libfm_dep, layer_shell_dep, gtk_dep, libfm_gtk_dep, m_dep,
+  gio_dep, gthread_dep, glib_dep, pango_dep, layer_shell_dep, gtk_dep, m_dep,
+  fm_gobject_dep, fm_gio2_dep, fm_cairo_dep, fm_menu_cache_dep, fm_dl_dep,
 ]
 
 subdir('src')

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Additional mime-types provided by libfm, adding some
+    missing but frequently seen globs for some common mime-types.
+-->
+<mime-info xmlns='http://www.freedesktop.org/standards/shared-mime-info'>
+
+  <mime-type type="text/plain">
+    <glob pattern="*.ini"/>
+    <glob pattern="*.inf"/>
+  </mime-type>
+
+  <mime-type type="application/x-ms-dos-executable">
+    <glob pattern="*.com" />
+  </mime-type>
+
+</mime-info>

@@ -24,8 +24,9 @@ pcmanfm_c_args = [
 executable('pcmanfm',
   pcmanfm_sources,
   c_args : pcmanfm_c_args,
-  include_directories : config_h_dir,
+  include_directories : [config_h_dir, inc_top, inc_common, inc_gtk],
   dependencies : fm_deps + [x11_dep],
+  link_with : [libfm_lib, libfm_gtk_lib],
   install : true,
 )
 

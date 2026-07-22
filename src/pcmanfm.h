@@ -24,7 +24,7 @@
 
 #include <gtk/gtk.h>
 #include <gtk-layer-shell/gtk-layer-shell.h>
-#include <libfm/fm.h>
+#include <fm.h>
 
 G_BEGIN_DECLS
 

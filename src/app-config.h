@@ -24,8 +24,8 @@
 #ifndef __APP_CONFIG_H__
 #define __APP_CONFIG_H__
 
-#include <libfm/fm.h>
-#include <libfm/fm-gtk.h>
+#include <fm.h>
+#include <fm-gtk.h>
 #include <gtk/gtk.h>
 
 #include "pcmanfm.h"

@@ -25,7 +25,7 @@
 #  include <config.h>
 #endif
 
-#include <libfm/fm.h>
+#include <fm.h>
 
 #include "pcmanfm.h"
 

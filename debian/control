@@ -5,7 +5,14 @@ Maintainer: Debian LXDE Maintainers <team+lxde@tracker.debian.org>
 Uploaders: Andrew Lee (李健秋) <ajqlee@debian.org>,
            Andriy Grytsenko <andrej@rep.kiev.ua>,
            ChangZhuo Chen (陳昌倬) <czchen@debian.org>
-Build-Depends: debhelper-compat (= 13), meson, ninja-build, gettext, libfm-gtk3-dev, pkgconf
+Build-Depends: debhelper-compat (= 13),
+               meson (>= 0.61.0),
+               ninja-build,
+               gettext,
+               libglib2.0-dev,
+               libgtk-3-dev,
+               libmenu-cache-dev (>= 0.5.0),
+               pkgconf
 Standards-Version: 4.7.2
 Rules-Requires-Root: no
 Homepage: https://github.com/lxde/pcmanfm

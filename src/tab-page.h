@@ -22,7 +22,7 @@
 #define __FM_TAB_PAGE_H__
 
 #include <gtk/gtk.h>
-#include <libfm/fm.h>
+#include <fm.h>
 
 #include "pcmanfm.h"
 

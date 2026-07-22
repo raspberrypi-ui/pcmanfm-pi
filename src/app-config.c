@@ -26,7 +26,7 @@
 
 #include "app-config.h"
 
-#include <libfm/fm-gtk.h>
+#include <fm-gtk.h>
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
