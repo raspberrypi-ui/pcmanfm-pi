@@ -100,7 +100,6 @@
 
 #include "fm-app-chooser-combo-box.h"
 
-#include "gtk-compat.h"
 
 #define     UI_FILE             PACKAGE_UI_DIR"/file-prop.ui"
 #define     GET_WIDGET(transform,name) data->name = transform(gtk_builder_get_object(builder, #name))

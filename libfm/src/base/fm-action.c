@@ -40,7 +40,6 @@
 
 #include "fm-action.h"
 #include "fm-terminal.h"
-#include "glib-compat.h"
 
 #include <glib.h>
 #include <glib/gstdio.h>

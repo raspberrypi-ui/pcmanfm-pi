@@ -35,7 +35,6 @@
 #include "fm-folder-model.h"
 
 /* libfm specific */
-#include "gtk-compat.h"
 
 #define             I_(string)  g_intern_static_string(string)
 

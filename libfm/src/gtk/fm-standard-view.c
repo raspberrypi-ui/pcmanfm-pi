@@ -39,7 +39,6 @@
 
 #include <stdlib.h>
 #include <glib/gi18n-lib.h>
-#include "gtk-compat.h"
 
 #include "fm.h"
 #include "fm-standard-view.h"

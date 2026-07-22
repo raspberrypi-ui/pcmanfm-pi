@@ -42,7 +42,6 @@
 #include "fm-thumbnail.h"
 #include "fm-gtk-marshal.h"
 
-#include "glib-compat.h"
 
 #include <gdk/gdk.h>
 #include <glib/gi18n-lib.h>

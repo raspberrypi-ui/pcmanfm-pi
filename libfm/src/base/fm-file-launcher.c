@@ -39,7 +39,6 @@
 #include "fm-file-launcher.h"
 #include "fm-file-info-job.h"
 #include "fm-app-info.h"
-#include "glib-compat.h"
 
 #include <glib/gi18n-lib.h>
 #include <libintl.h>

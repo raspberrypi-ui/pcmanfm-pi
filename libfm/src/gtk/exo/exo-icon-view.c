@@ -59,7 +59,6 @@
 #include "exo-private.h"
 
 /* libfm specific */
-#include "gtk-compat.h"
 
 /* from exo/exo-marshal.h */
 #if defined(G_PARAM_STATIC_NAME) && defined(G_PARAM_STATIC_NICK) && defined(G_PARAM_STATIC_BLURB)

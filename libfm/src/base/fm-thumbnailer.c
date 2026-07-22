@@ -36,7 +36,6 @@
 
 #include "fm-thumbnailer.h"
 #include "fm-mime-type.h"
-#include "glib-compat.h"
 
 #include <glib/gi18n-lib.h>
 #include <sys/types.h>

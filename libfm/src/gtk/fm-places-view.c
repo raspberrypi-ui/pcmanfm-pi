@@ -53,7 +53,6 @@
 #include "fm-gtk-marshal.h"
 
 #include <gdk/gdkkeysyms.h>
-#include "gtk-compat.h"
 
 enum
 {

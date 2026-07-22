@@ -52,7 +52,6 @@
 #include "fm-xml-file.h"
 
 #include <glib/gi18n-lib.h>
-#include "glib-compat.h"
 
 #include <stdlib.h>
 #include <errno.h>

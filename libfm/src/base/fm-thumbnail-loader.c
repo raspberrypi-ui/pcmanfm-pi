@@ -38,7 +38,6 @@
 #endif
 
 #include "fm-thumbnail-loader.h"
-#include "glib-compat.h"
 
 #include "fm-config.h"
 #include "fm-utils.h"

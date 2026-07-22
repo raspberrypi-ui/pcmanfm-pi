@@ -44,7 +44,6 @@
 #include "fm-file-ops-job-change-attr.h"
 #include "fm-marshal.h"
 #include "fm-file-info-job.h"
-#include "glib-compat.h"
 
 enum
 {

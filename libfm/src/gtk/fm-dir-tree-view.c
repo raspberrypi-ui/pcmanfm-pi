@@ -43,7 +43,6 @@
 #include "fm-cell-renderer-pixbuf.h"
 #include "fm-file-menu.h"
 #include "fm-gtk-marshal.h"
-#include "../gtk-compat.h"
 #include <gdk/gdkkeysyms.h>
 #include <string.h>
 

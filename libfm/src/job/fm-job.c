@@ -29,7 +29,6 @@
 
 #include "fm-job.h"
 #include "fm-marshal.h"
-#include "glib-compat.h"
 #include "fm-utils.h"
 
 /**

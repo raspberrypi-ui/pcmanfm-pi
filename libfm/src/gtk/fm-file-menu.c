@@ -75,7 +75,6 @@
 #endif
 
 #include <glib/gi18n-lib.h>
-#include "../gtk-compat.h"
 
 #include "fm.h"
 

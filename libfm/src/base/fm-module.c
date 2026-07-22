@@ -144,7 +144,6 @@
 #include <string.h>
 #include <dlfcn.h>
 
-#include "../glib-compat.h"
 
 volatile gint fm_modules_loaded = 0;
 

@@ -34,7 +34,6 @@
 #include <config.h>
 #endif
 
-#include "../glib-compat.h"
 #include "fm-app-menu-view.h"
 #include "fm-icon.h"
 #include <menu-cache.h>

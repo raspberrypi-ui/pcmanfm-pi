@@ -27,7 +27,6 @@
 #include "fm.h"
 #include "fm-folder-view.h"
 #include "fm-gtk-utils.h"
-#include "gtk-compat.h"
 
 #include "fm-action.h"
 

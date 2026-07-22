@@ -43,7 +43,6 @@
 #include <glib/gstdio.h>
 #include "fm-mime-type.h"
 #include "fm-file-info-job.h"
-#include "glib-compat.h"
 
 #include "fm-file-info.h"
 

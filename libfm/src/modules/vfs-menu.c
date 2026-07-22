@@ -25,7 +25,6 @@
 #endif
 
 #include "fm-file.h"
-#include "glib-compat.h"
 #include "fm-utils.h"
 #include "fm-xml-file.h"
 

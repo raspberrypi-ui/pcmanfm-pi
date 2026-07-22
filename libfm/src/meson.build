@@ -10,11 +10,6 @@ if cc.has_argument('-Werror-implicit-function-declaration')
   fm_extra_c_args += ['-Werror-implicit-function-declaration']
 endif
 
-glib_compat_sources = files(
-  'glib-compat.c',
-  'glib-compat.h',
-)
-
 base_sources = files(
   'base/fm-action.c',
   'base/fm-app-info.c',
@@ -50,7 +45,6 @@ job_sources = files(
   'job/fm-file-ops-job-delete.c',
   'job/fm-file-ops-job-xfer.c',
   'job/fm-job.c',
-  'job/fm-simple-job.c',
 )
 
 # libfm-extra's sole source (used directly by the vfs-menu module); folded
@@ -73,7 +67,7 @@ configure_file(
   },
 )
 
-libfm_sources = files('fm.c') + glib_compat_sources + base_sources + job_sources + extra_sources + fm_marshal
+libfm_sources = files('fm.c') + base_sources + job_sources + extra_sources + fm_marshal
 
 libfm_lib = static_library('fm-core', libfm_sources,
   include_directories : [fm_config_inc, inc_common],
@@ -94,12 +88,9 @@ exo_sources = files(
   'gtk/exo/exo-private.h',
   'gtk/exo/exo-tree-view.h',
   'gtk/exo/exo-marshal.c',
-  'gtk/exo/exo-string.c',
   'gtk/exo/exo-marshal.h',
   'gtk/exo/exo-string.h',
 )
-
-gtk_compat_sources = glib_compat_sources + files('gtk-compat.c', 'gtk-compat.h')
 
 inc_extra = include_directories('extra')
 
@@ -118,7 +109,7 @@ builtin_module_sources = files(
   'modules/gtk-menu-actions.c',
 )
 
-libfm_gtk_sources = files('fm-gtk.c') + gtk_compat_sources + exo_sources + files(
+libfm_gtk_sources = files('fm-gtk.c') + exo_sources + files(
   'gtk/fm-app-chooser-combo-box.c',
   'gtk/fm-app-chooser-dlg.c',
   'gtk/fm-app-menu-view.c',
