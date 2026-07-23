@@ -1966,17 +1966,12 @@ void fm_folder_view_columns_changed(FmFolderView* fv)
     g_signal_emit(fv, signals[COLUMNS_CHANGED], 0);
 }
 
-/* modules support */
-FM_MODULE_DEFINE_TYPE(gtk_menu_scheme, FmContextMenuSchemeAddonInit, 1)
-
-static gboolean fm_module_callback_gtk_menu_scheme(const char *name, gpointer init, int ver)
+static void _fm_folder_view_add_scheme_addon(const char *name, FmContextMenuSchemeAddonInit *cb)
 {
     FmContextMenuSchemeExt *ext = g_slice_new(FmContextMenuSchemeExt);
-    FmContextMenuSchemeAddonInit *cb = init;
     char *scheme_str;
     FmPath *path;
 
-    /* not checking version, it's only 1 for now */
     if (strcmp(name, "*") == 0)
         ext->scheme = NULL;
     else if (strcmp(name, "menu") == 0) /* special support */
@@ -1999,7 +1994,6 @@ static gboolean fm_module_callback_gtk_menu_scheme(const char *name, gpointer in
     if (cb->init != NULL)
         cb->init();
     extensions = g_list_append(extensions, ext);
-    return TRUE;
 }
 
 /* Compiled directly in, see modules/gtk-menu-trash.c and modules/gtk-menu-actions.c */
@@ -2008,11 +2002,8 @@ extern FmContextMenuSchemeAddonInit fm_module_init_gtk_menu_scheme_actions;
 
 void _fm_folder_view_init(void)
 {
-    fm_module_register_gtk_menu_scheme();
-    fm_module_register_builtin("gtk_menu_scheme", "trash",
-                               FM_MODULE_gtk_menu_scheme_VERSION, &fm_module_init_gtk_menu_scheme_trash);
-    fm_module_register_builtin("gtk_menu_scheme", "*",
-                               FM_MODULE_gtk_menu_scheme_VERSION, &fm_module_init_gtk_menu_scheme_actions);
+    _fm_folder_view_add_scheme_addon("trash", &fm_module_init_gtk_menu_scheme_trash);
+    _fm_folder_view_add_scheme_addon("*", &fm_module_init_gtk_menu_scheme_actions);
 }
 
 void _fm_folder_view_finalize(void)
@@ -2032,7 +2023,6 @@ void _fm_folder_view_finalize(void)
         g_slice_free(FmContextMenuSchemeExt, ext);
     }
     g_list_free(list);
-    fm_module_unregister_type("gtk_menu_scheme");
 }
 
 /**

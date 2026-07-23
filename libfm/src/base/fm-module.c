@@ -144,7 +144,6 @@
 #include <string.h>
 #include <dlfcn.h>
 
-
 volatile gint fm_modules_loaded = 0;
 
 static guint idle_handler = 0;
@@ -173,71 +172,8 @@ typedef struct _FmModuleClass       FmModuleClass;
 struct _FmModule
 {
     GObject parent;
-    void *handle; /* dlopen() handle; NULL for a compiled-in builtin module */
-    const char *name; /* borrowed: either dlsym("module_name") or a builtin's literal */
+    void *handle;
 };
-
-/**
- * FmBuiltinModule:
- *
- * A module that was compiled directly into the executable instead of
- * being provided as a separate dlopen()able "type/name.so" file. Used to
- * ship libfm's own bundled modules (vfs-menu, vfs-search, gtk-menu-trash,
- * etc.) as part of a single, self-contained binary while keeping the
- * exact same #FmModuleInitCallback dispatch and blacklist/whitelist
- * config handling as dlopen()ed modules.
- */
-typedef struct _FmBuiltinModule FmBuiltinModule;
-struct _FmBuiltinModule
-{
-    FmBuiltinModule *next;
-    const char *type;
-    const char *name;
-    int version;
-    gconstpointer init_data;
-};
-
-static FmBuiltinModule *builtin_modules = NULL;
-
-/**
- * fm_module_register_builtin
- * @type: module type, same value as passed to fm_module_register_type()
- * @name: module key, e.g. "menu" for the vfs/menu module
- * @version: version of the @init_data interface provided
- * @init_data: module type specific initialization data, same kind of
- * pointer a dlopen()ed module would export as "fm_module_init_<type>"
- *
- * Registers a module that is compiled directly into the executable.
- * Unlike fm_module_register_type(), which announces a *type* of module
- * the application supports, this announces an actual *implementation* of
- * that type, bypassing the dlopen()/dlsym() discovery used for modules
- * installed as separate "*.so" files under a modules directory. It is
- * otherwise treated identically: still subject to modules_blacklist/
- * modules_whitelist filtering and still delivered through the type's
- * registered #FmModuleInitCallback.
- *
- * This should be called before fm_modules_load() runs, same timing
- * requirement as fm_module_register_type().
- */
-void fm_module_register_builtin(const char *type, const char *name, int version,
-                                gconstpointer init_data)
-{
-    FmBuiltinModule *bm;
-
-    g_return_if_fail(type != NULL && name != NULL && init_data != NULL);
-    G_LOCK(idle_handler);
-    if (fm_modules_loaded) /* too late, _fm_modules_load_builtins() already ran */
-        goto _finish;
-    bm = g_slice_new(FmBuiltinModule);
-    bm->type = type;
-    bm->name = name;
-    bm->version = version;
-    bm->init_data = init_data;
-    bm->next = builtin_modules;
-    builtin_modules = bm;
-_finish:
-    G_UNLOCK(idle_handler);
-}
 
 struct _FmModuleClass
 {
@@ -255,8 +191,7 @@ static void fm_module_finalize(GObject *object)
 
     g_return_if_fail(FM_IS_MODULE(object));
     self = (FmModule*)object;
-    if (self->handle)
-        dlclose(self->handle);
+    dlclose(self->handle);
 
     G_OBJECT_CLASS(fm_module_parent_class)->finalize(object);
 }
@@ -417,111 +352,33 @@ static gboolean _module_matches(const char *type, const char *name, const char *
     return _name_matches(type, mask, delimiter);
 }
 
-/* Checks modules_blacklist/modules_whitelist config for "type:name". Same
-   filtering applies to dlopen()ed modules and compiled-in builtins. */
-static gboolean _fm_module_name_allowed(const char *type, const char *name)
-{
-    char **exp_list;
-
-    if (!fm_config->system_modules_blacklist && !fm_config->modules_blacklist)
-        return TRUE;
-    exp_list = fm_config->system_modules_blacklist;
-    if (exp_list)
-        for ( ; *exp_list; exp_list++)
-            if (_module_matches(type, name, *exp_list))
-                break;
-    if (!exp_list || (!*exp_list && fm_config->modules_blacklist))
-        for (exp_list = fm_config->modules_blacklist; *exp_list; exp_list++)
-            if (_module_matches(type, name, *exp_list))
-                break;
-    if (!exp_list || !*exp_list) /* not found in blacklist */
-        return TRUE;
-    /* found in blacklist, only a whitelist match can still allow it */
-    if (!fm_config->modules_whitelist)
-        return FALSE;
-    for (exp_list = fm_config->modules_whitelist; *exp_list; exp_list++)
-        if (_module_matches(type, name, *exp_list))
-            return TRUE;
-    return FALSE;
-}
-
-/* Checks blacklist/whitelist + version range for one (type,name) pair and,
-   if accepted, dispatches to the type's callback. Returns TRUE if the type
-   accepted this module implementation. */
-static gboolean _fm_module_offer(FmModuleType *mtype, const char *name,
-                                 gconstpointer init_data, int version)
-{
-    if (!_fm_module_name_allowed(mtype->type, name))
-        return FALSE;
-    if (version < mtype->minver || version > mtype->maxver) /* version mismatched */
-        return FALSE;
-    g_debug("found handler %s:%s", mtype->type, name);
-    return mtype->cb(name, (gpointer)init_data, version);
-}
-
-/* Delivers every module compiled directly into the executable (see
-   fm_module_register_builtin()) to its matching registered type. Unlike a
-   dlopen()ed "*.so", a builtin's type is unambiguous, so it is only ever
-   offered to the one type it declares. */
-static void _fm_modules_load_builtins(void)
-{
-    FmBuiltinModule *bm;
-    FmModuleType *mtype;
-    FmModule *module;
-
-    for (bm = builtin_modules; bm; bm = bm->next)
-    {
-        for (mtype = modules_types; mtype; mtype = mtype->next)
-            if (strcmp(mtype->type, bm->type) == 0)
-                break;
-        if (mtype == NULL) /* application registered no interest in this type */
-            continue;
-        if (!_fm_module_offer(mtype, bm->name, bm->init_data, bm->version))
-            continue;
-        module = fm_module_new();
-        module->handle = NULL;
-        module->name = bm->name;
-        mtype->modules = g_slist_prepend(mtype->modules, module); /* takes the creation ref */
-    }
-}
-
 static gboolean _fm_modules_load(gpointer unused)
 {
     GDir *dir;
     const char *file;
+    char **exp_list;
     const char *name;
     GString *str;
     void *handle;
     gint version;
     void *ptr;
-    FmModuleType *mtype;
     FmModule *module;
+    FmModuleType *mtype;
     const char *dir_name;
     GSList *dir_l;
 
     g_debug("starting modules initialization");
     G_LOCK(idle_handler);
-    _fm_modules_load_builtins();
-    /* libfm's own bundled modules are now compiled in above, so the
-       historical default modules directory is deliberately NOT scanned
-       here any more: doing so would risk dlopen()ing stale "*.so" files
-       left behind by an old, separately-packaged libfm-modules install
-       (still present alongside this build during any transition period),
-       re-registering the very same types this process already provides
-       built in and crashing. Only directories explicitly added via
-       fm_modules_add_directory() are scanned, for genuine third-party
-       modules. */
+    dir_name = PACKAGE_MODULES_DIR;
     dir_l = m_dirs;
     str = g_string_sized_new(128);
-    while (dir_l)
+    do
     {
-        dir_name = dir_l->data;
-        dir_l = dir_l->next;
         dir = g_dir_open(dir_name, 0, NULL);
         if (dir == NULL)
         {
             g_warning("modules directory is not accessible");
-            continue;
+            goto _next_dir;
         }
         g_debug("scanning modules directory %s", dir_name);
         while ((file = g_dir_read_name(dir)) != NULL)
@@ -536,37 +393,64 @@ static gboolean _fm_modules_load(gpointer unused)
             name = dlsym(handle, "module_name");
             if (name == NULL) /* no name found */
                 continue;
-            module = NULL;
+            module = fm_module_new();
+            module->handle = handle;
             for (mtype = modules_types; mtype; mtype = mtype->next)
             {
+                /* test each file name - whitelist and blacklist */
+                if (fm_config->system_modules_blacklist || fm_config->modules_blacklist)
+                {
+                    exp_list = fm_config->system_modules_blacklist;
+                    if (exp_list)
+                        for ( ; *exp_list; exp_list++)
+                            if (_module_matches(mtype->type, name, *exp_list))
+                                break;
+                    if (!exp_list || (!*exp_list && fm_config->modules_blacklist))
+                        for (exp_list = fm_config->modules_blacklist; *exp_list; exp_list++)
+                            if (_module_matches(mtype->type, name, *exp_list))
+                                break;
+                    if (*exp_list) /* found in blacklist */
+                    {
+                        if (!fm_config->modules_whitelist) /* no whitelist */
+                            continue;
+                        for (exp_list = fm_config->modules_whitelist; *exp_list; exp_list++)
+                            if (_module_matches(mtype->type, name, *exp_list))
+                                break;
+                        if (*exp_list == NULL) /* not matches whitelist */
+                            continue;
+                    }
+                }
                 /* test version */
                 g_string_printf(str, "module_%s_version", mtype->type);
                 ptr = dlsym(handle, str->str);
                 if (ptr == NULL)
                     continue;
                 version = *(int *)ptr;
+                if (version < mtype->minver || version > mtype->maxver)
+                    /* version mismatched */
+                    continue;
                 /* test interface */
                 g_string_printf(str, "fm_module_init_%s", mtype->type);
                 ptr = dlsym(handle, str->str);
                 if (ptr == NULL) /* no interface found */
                     continue;
-                if (!_fm_module_offer(mtype, name, ptr, version))
-                    continue;
-                if (module == NULL)
-                {
-                    module = fm_module_new();
-                    module->handle = handle;
-                    module->name = name;
-                }
-                mtype->modules = g_slist_prepend(mtype->modules, g_object_ref(module));
+                g_debug("found handler %s:%s", mtype->type, name);
+                /* if everything is ok then add to list */
+                if (mtype->cb(name, ptr, version))
+                    mtype->modules = g_slist_prepend(mtype->modules, g_object_ref(module));
             }
-            if (module)
-                g_object_unref(module);
-            else /* no type accepted this module: nothing owns the handle now */
-                dlclose(handle);
+            g_object_unref(module);
         }
         g_dir_close(dir);
-    }
+_next_dir:
+        if (dir_l)
+        {
+            dir_name = dir_l->data;
+            dir_l = dir_l->next;
+            continue;
+        }
+        break;
+    } while(1);
     g_slist_free_full(m_dirs, g_free);
     m_dirs = NULL;
     G_UNLOCK(idle_handler);
@@ -619,7 +503,7 @@ gboolean fm_module_is_in_use(const char *type, const char *name)
     for (l = mtype->modules; l; l = l->next)
     {
         FmModule *module = l->data;
-        if (g_strcmp0(name, module->name) == 0)
+        if (g_strcmp0(name, dlsym(module->handle, "module_name")) == 0)
             break;
     }
     return (l != NULL);

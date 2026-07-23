@@ -288,8 +288,6 @@ struct _FmContextMenuSchemeAddonInit
     FmFolderViewUpdatePopup update_folder_menu;
 };
 
-#define FM_MODULE_gtk_menu_scheme_VERSION 1
-
 void _fm_folder_view_init(void);
 void _fm_folder_view_finalize(void);
 

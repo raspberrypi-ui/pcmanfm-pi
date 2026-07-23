@@ -83,9 +83,6 @@ G_BEGIN_DECLS
 
 /* adds schedule */
 void fm_module_register_type(const char *type, int minver, int maxver, FmModuleInitCallback cb);
-/* registers a module compiled directly into the executable */
-void fm_module_register_builtin(const char *type, const char *name, int version,
-                                gconstpointer init_data);
 /* removes schedule */
 void fm_module_unregister_type(const char *type);
 /* forces schedules */

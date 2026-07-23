@@ -89,15 +89,14 @@ exo_sources = files(
   'gtk/exo/exo-tree-view.h',
   'gtk/exo/exo-marshal.c',
   'gtk/exo/exo-marshal.h',
-  'gtk/exo/exo-string.h',
 )
 
 inc_extra = include_directories('extra')
 
 # libfm's own bundled modules (previously separate dlopen()ed "*.so" files
-# under a modules directory). Compiled directly in here instead, and
-# statically registered via fm_module_register_builtin() (see the
-# _init() functions in base/fm-file.c, gtk/fm-folder-view.c and
+# under a modules directory). Compiled directly in here instead, and wired
+# up with plain direct calls at their call sites (see the _init()
+# functions in base/fm-file.c, gtk/fm-folder-view.c and
 # gtk/fm-file-properties.c) so the executable does not need to dlopen
 # anything nor export any symbols for them to work.
 builtin_module_sources = files(

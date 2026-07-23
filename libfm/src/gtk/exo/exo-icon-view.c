@@ -50,11 +50,9 @@
 #include <exo/exo-icon-view.h>
 #include <exo/exo-marshal.h>
 #include <exo/exo-private.h>
-#include <exo/exo-string.h>
 #include <exo/exo-alias.h>
 */
 #include "exo-icon-view.h"
-#include "exo-string.h"
 #include "exo-marshal.h"
 #include "exo-private.h"
 

@@ -31,7 +31,6 @@
 #endif
 
 #include "exo-private.h"
-#include "exo-string.h"
 
 #define             I_(string)  g_intern_static_string(string)
 

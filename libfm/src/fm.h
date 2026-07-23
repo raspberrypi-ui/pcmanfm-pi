@@ -57,7 +57,6 @@
 #include "fm-file-ops-job-delete.h"
 #include "fm-file-ops-job-xfer.h"
 #include "fm-job.h"
-#include "fm-simple-job.h"
 
 G_BEGIN_DECLS
 

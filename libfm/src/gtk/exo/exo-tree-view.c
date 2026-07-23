@@ -27,7 +27,6 @@
 
 #include <glib/gi18n-lib.h>
 #include "exo-tree-view.h"
-#include "exo-string.h"
 #include "exo-marshal.h"
 #include "exo-private.h"
 #include "fm-gtk-utils.h"
@@ -62,7 +61,6 @@
 /*
 #include <exo/exo-config.h>
 #include <exo/exo-private.h>
-#include <exo/exo-string.h>
 #include <exo/exo-tree-view.h>
 #include <exo/exo-utils.h>
 #include <exo/exo-alias.h>

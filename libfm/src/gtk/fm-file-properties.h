@@ -76,9 +76,6 @@ struct _FmFilePropertiesExtensionInit
 gboolean fm_file_properties_add_for_mime_type(const char *mime_type,
                                               FmFilePropertiesExtensionInit *callbacks);
 
-/* modules support */
-#define FM_MODULE_gtk_file_prop_VERSION 1
-
 void _fm_file_properties_init(void);
 void _fm_file_properties_finalize(void);
 

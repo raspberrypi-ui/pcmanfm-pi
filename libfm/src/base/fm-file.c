@@ -181,16 +181,6 @@ GFile *fm_file_new_for_commandline_arg(const char *arg)
 
 /* TODO: implement fm_file_parse_name() too */
 
-/* modules stuff */
-FM_MODULE_DEFINE_TYPE(vfs, FmFileInitTable, 1)
-static gboolean fm_module_callback_vfs(const char *name, gpointer init, int ver)
-{
-    /* we don't check version and don't support any other than 1
-       otherwise we should allocate own copy of FmFileInitTable */
-    fm_file_add_vfs(name, init);
-    return TRUE;
-}
-
 /* Compiled directly in, see modules/vfs-menu.c and modules/vfs-search.c */
 extern FmFileInitTable fm_module_init_vfs_menu;
 extern FmFileInitTable fm_module_init_vfs_search;
@@ -198,14 +188,12 @@ extern FmFileInitTable fm_module_init_vfs_search;
 void _fm_file_init(void)
 {
     schemes = g_hash_table_new_full(g_str_hash, g_str_equal, g_free, NULL);
-    fm_module_register_vfs();
-    fm_module_register_builtin("vfs", "menu", FM_MODULE_vfs_VERSION, &fm_module_init_vfs_menu);
-    fm_module_register_builtin("vfs", "search", FM_MODULE_vfs_VERSION, &fm_module_init_vfs_search);
+    fm_file_add_vfs("menu", &fm_module_init_vfs_menu);
+    fm_file_add_vfs("search", &fm_module_init_vfs_search);
 }
 
 void _fm_file_finalize(void)
 {
-    fm_module_unregister_type("vfs");
     g_hash_table_destroy(schemes);
     schemes = NULL;
 }

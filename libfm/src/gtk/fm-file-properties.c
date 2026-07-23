@@ -1562,15 +1562,6 @@ gboolean fm_file_properties_add_for_mime_type(const char *mime_type,
     return TRUE;
 }
 
-/* modules support here */
-FM_MODULE_DEFINE_TYPE(gtk_file_prop, FmFilePropertiesExtensionInit, 1)
-
-static gboolean fm_module_callback_gtk_file_prop(const char *name, gpointer init, int ver)
-{
-    /* we don't test version yet since there is only version 1 */
-    return fm_file_properties_add_for_mime_type(name, init);
-}
-
 /* Compiled directly in, see modules/gtk-fileprop-x-desktop.c and
    modules/gtk-fileprop-x-shortcut.c */
 extern FmFilePropertiesExtensionInit fm_module_init_gtk_file_prop_desktop;
@@ -1578,18 +1569,14 @@ extern FmFilePropertiesExtensionInit fm_module_init_gtk_file_prop_shortcut;
 
 void _fm_file_properties_init(void)
 {
-    fm_module_register_gtk_file_prop();
-    fm_module_register_builtin("gtk_file_prop", "application/x-desktop",
-                               FM_MODULE_gtk_file_prop_VERSION, &fm_module_init_gtk_file_prop_desktop);
-    fm_module_register_builtin("gtk_file_prop", "inode/x-shortcut",
-                               FM_MODULE_gtk_file_prop_VERSION, &fm_module_init_gtk_file_prop_shortcut);
+    fm_file_properties_add_for_mime_type("application/x-desktop", &fm_module_init_gtk_file_prop_desktop);
+    fm_file_properties_add_for_mime_type("inode/x-shortcut", &fm_module_init_gtk_file_prop_shortcut);
 }
 
 void _fm_file_properties_finalize(void)
 {
     FmFilePropExt *ext;
 
-    fm_module_unregister_type("gtk_file_prop");
     /* free all extensions */
     while ((ext = extensions))
     {
