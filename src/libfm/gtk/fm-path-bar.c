@@ -30,9 +30,6 @@
  * possible to click buttons to change directory to parent or child.
  */
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
 
 #define FM_DISABLE_SEAL
 
@@ -164,12 +161,8 @@ static void fm_path_bar_init(FmPathBar *bar)
     gtk_widget_set_size_request(bar->viewport, 100, -1);
 
     gtk_viewport_set_shadow_type(GTK_VIEWPORT(bar->viewport), GTK_SHADOW_NONE);
-#if GTK_CHECK_VERSION(3, 2, 0)
     /* FIXME: migrate to GtkGrid */
     bar->btn_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
-#else
-    bar->btn_box = gtk_hbox_new(FALSE, 0);
-#endif
     gtk_container_add(GTK_CONTAINER(bar->viewport), bar->btn_box);
 
     bar->left_scroll = gtk_button_new();
@@ -224,12 +217,8 @@ static GtkRadioButton* create_btn(FmPathBar* bar, GSList* grp, FmPath* path_elem
     char* label = fm_path_display_basename(path_element);
     if(!fm_path_get_parent(path_element)) /* this element is root */
     {
-#if GTK_CHECK_VERSION(3, 2, 0)
         /* FIXME: migrate to GtkGrid */
         GtkWidget* hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 2);
-#else
-        GtkWidget* hbox = gtk_hbox_new(FALSE, 2);
-#endif
         btn = (GtkRadioButton*)gtk_radio_button_new(grp);
         gtk_container_add(GTK_CONTAINER(btn), hbox);
         gtk_box_pack_start(GTK_BOX(hbox),

@@ -31,9 +31,6 @@
  *
  */
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
 
 #include "fm-path.h"
 #include "fm-file-info.h"
@@ -347,22 +344,8 @@ FmPath* _fm_path_new_child_len(FmPath* parent, const char* basename, int name_le
         GSequenceIter *iter;
 
         /* try to reuse existing path */
-#if GLIB_CHECK_VERSION(2, 28, 0)
         iter = g_sequence_lookup(parent->children, path,
                                  (GCompareDataFunc)fm_path_compare, NULL);
-#else
-        iter = g_sequence_search(parent->children, path,
-                                 (GCompareDataFunc)fm_path_compare, NULL);
-        if (iter)
-        {
-            FmPath *pp = NULL;
-            iter = g_sequence_iter_prev(iter);
-            if (iter)
-                pp = g_sequence_get(iter);
-            if (fm_path_compare(pp, path) != 0)
-                iter = NULL;
-        }
-#endif
         if (iter)
         {
                 /* g_debug("found reusable path '%.*s'", name_len, basename); */

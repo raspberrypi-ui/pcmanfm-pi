@@ -96,11 +96,7 @@ struct _FmJob
     GCancellable* FM_SEAL(cancellable);
     /* used for suspending the job */
     gboolean FM_SEAL(suspended);
-#if GLIB_CHECK_VERSION(2, 32, 0)
     GRecMutex FM_SEAL(stop);
-#else
-    GStaticRecMutex FM_SEAL(stop);
-#endif
 
     gpointer _reserved1;
     gpointer _reserved2;

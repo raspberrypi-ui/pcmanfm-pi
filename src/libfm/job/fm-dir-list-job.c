@@ -32,9 +32,6 @@
  * directory contains.
  */
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
 
 #include "fm-dir-list-job.h"
 #include <glib/gi18n-lib.h>

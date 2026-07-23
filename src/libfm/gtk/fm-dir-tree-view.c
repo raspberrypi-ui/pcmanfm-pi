@@ -29,9 +29,6 @@
  * of folders where each node can be expanded or collapsed when required.
  */
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
 
 #define FM_DISABLE_SEAL
 

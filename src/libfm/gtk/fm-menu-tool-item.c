@@ -34,9 +34,6 @@
  * just an arrow for menu.
  */
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
 
 #define FM_DISABLE_SEAL
 
@@ -243,11 +240,7 @@ static void menu_position_func(GtkMenu *menu, int *x, int *y,
     }
     else
     {
-#if GTK_CHECK_VERSION(2, 22, 0)
         gdk_window_get_origin (gtk_button_get_event_window (GTK_BUTTON (priv->arrow_button)), x, y);
-#else
-        gdk_window_get_origin (GTK_BUTTON (priv->arrow_button)->event_window, x, y);
-#endif
 
         gtk_widget_get_allocation (priv->arrow_button, &arrow_allocation);
 

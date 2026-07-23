@@ -31,9 +31,6 @@
  * itself is represented by fm_app_chooser_dlg_new().
  */
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
 
 #include <glib/gi18n-lib.h>
 #include "fm-app-chooser-combo-box.h"

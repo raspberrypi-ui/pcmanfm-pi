@@ -37,9 +37,6 @@
  * configuration and to save it.
  */
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
 
 #include "fm-config.h"
 #include "fm-utils.h"

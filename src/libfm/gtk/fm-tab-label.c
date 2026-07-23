@@ -30,9 +30,6 @@
  * notebook-like folders view.
  */
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
 
 #include <glib/gi18n-lib.h>
 
@@ -82,12 +79,8 @@ static void fm_tab_label_init(FmTabLabel *self)
     GtkStyleContext *context = gtk_widget_get_style_context(GTK_WIDGET(self));
 
     gtk_event_box_set_visible_window(GTK_EVENT_BOX(self), FALSE);
-#if GTK_CHECK_VERSION(3, 2, 0)
     /* FIXME: migrate to GtkGrid */
     hbox = GTK_BOX(gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0));
-#else
-    hbox = GTK_BOX(gtk_hbox_new(FALSE, 0));
-#endif
 
     self->label = (GtkLabel*)gtk_label_new("");
     gtk_widget_set_has_tooltip((GtkWidget*)self->label, TRUE);

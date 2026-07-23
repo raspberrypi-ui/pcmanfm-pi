@@ -30,9 +30,6 @@
  * The widget to represent known applications as a tree.
  */
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
 
 #include "fm-app-menu-view.h"
 #include "fm-icon.h"

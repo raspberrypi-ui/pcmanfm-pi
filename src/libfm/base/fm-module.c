@@ -133,9 +133,6 @@
  * have to restart the application before it see your change.
  */
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
 
 #include "fm-module.h"
 #include "fm-config.h"

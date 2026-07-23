@@ -36,9 +36,6 @@
  * use it.
  */
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
 
 #include "fm-file.h"
 

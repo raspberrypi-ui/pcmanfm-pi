@@ -22,7 +22,6 @@
 
 /* File properties dialog extension for desktop entry type */
 
-#include <config.h>
 #include <glib/gi18n-lib.h>
 
 #include "fm.h"
@@ -266,12 +265,8 @@ static gpointer _dentry_ui_init(GtkBuilder *ui, gpointer uidata, FmFileInfoList 
     gtk_misc_set_alignment(GTK_MISC(new_widget), 0.0, 0.0);
     gtk_label_set_markup_with_mnemonic(label, _("<b>Co_mmand:</b>"));
     gtk_table_attach(table, new_widget, 0, 1, 0, 1, GTK_FILL, 0, 0, 0);
-#if GTK_CHECK_VERSION(3, 2, 0)
     /* FIXME: migrate to GtkGrid */
     widget = G_OBJECT(gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 6));
-#else
-    widget = G_OBJECT(gtk_hbox_new(FALSE, 6));
-#endif
     new_widget = gtk_button_new_with_mnemonic(_("_Browse..."));
     gtk_box_pack_end(GTK_BOX(widget), new_widget, FALSE, FALSE, 0);
     g_signal_connect(new_widget, "clicked",

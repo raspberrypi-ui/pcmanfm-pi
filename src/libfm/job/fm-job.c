@@ -21,9 +21,6 @@
  *      Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
 
 #define FM_DISABLE_SEAL
 
@@ -112,11 +109,7 @@ static void fm_job_dispose(GObject *object)
         g_signal_handlers_disconnect_by_func(self->cancellable, on_cancellable_cancelled, self);
         g_object_unref(self->cancellable);
         self->cancellable = NULL;
-#if GLIB_CHECK_VERSION(2, 32, 0)
         g_rec_mutex_clear(&self->stop);
-#else
-        g_static_rec_mutex_free(&self->stop);
-#endif
     }
 
     G_OBJECT_CLASS(fm_job_parent_class)->dispose(object);
@@ -173,13 +166,8 @@ static void fm_job_class_init(FmJobClass *klass)
                       G_SIGNAL_RUN_LAST,
                       G_STRUCT_OFFSET ( FmJobClass, error ),
                       NULL /*fm_job_error_accumulator*/, NULL,
-#if GLIB_CHECK_VERSION(2,26,0)
                       fm_marshal_UINT__BOXED_UINT,
                       G_TYPE_UINT, 2, G_TYPE_ERROR, G_TYPE_UINT );
-#else
-                      fm_marshal_INT__POINTER_INT,
-                      G_TYPE_INT, 2, G_TYPE_POINTER, G_TYPE_INT );
-#endif
 
     /**
      * FmJob::cancelled:
@@ -597,11 +585,7 @@ static gboolean on_idle_cleanup(gpointer unused)
  */
 void fm_job_init_cancellable(FmJob* job)
 {
-#if GLIB_CHECK_VERSION(2, 32, 0)
     g_rec_mutex_init(&job->stop);
-#else
-    g_static_rec_mutex_init(&job->stop);
-#endif
     job->cancellable = g_cancellable_new();
     g_signal_connect(job->cancellable, "cancelled", G_CALLBACK(on_cancellable_cancelled), job);
 }
@@ -741,11 +725,6 @@ gboolean fm_job_error_accumulator(GSignalInvocationHint *ihint, GValue *return_a
     return val != FM_JOB_CONTINUE;
 }
 */
-
-#if !GLIB_CHECK_VERSION(2, 32, 0)
-#define g_rec_mutex_lock g_static_rec_mutex_lock
-#define g_rec_mutex_unlock g_static_rec_mutex_unlock
-#endif
 
 /* lock the job but be sure lock is single */
 static void _ensure_job_locked(FmJob *job)

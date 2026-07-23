@@ -33,9 +33,6 @@
  * side panel.
  */
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
 
 #include "fm-places-model.h"
 #include "fm-file.h"

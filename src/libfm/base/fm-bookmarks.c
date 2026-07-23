@@ -32,9 +32,6 @@
  * class FmBookmarks.
  */
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
 
 #define FM_DISABLE_SEAL
 

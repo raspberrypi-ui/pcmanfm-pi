@@ -33,9 +33,6 @@
  * disk then use that cache next time to display them.
  */
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
 
 #include "fm-thumbnail-loader.h"
 
@@ -117,17 +114,10 @@ struct _ThumbnailCache
 /* FIXME: use thread pool */
 
 /* Lock for loader, generator, and ready queues */
-#if GLIB_CHECK_VERSION(2, 32, 0)
 static GMutex queue_lock;
 #define lock_ptr &queue_lock
 static GCond queue_cond;
 #define cond_ptr &queue_cond
-#else
-static GMutex *queue_lock;
-#define lock_ptr queue_lock
-static GCond *queue_cond;
-#define cond_ptr queue_cond
-#endif
 
 /* load generated thumbnails */
 static GQueue loader_queue = G_QUEUE_INIT; /* consists of ThumbnailTask */
@@ -515,9 +505,7 @@ _free_task:
             g_free(normal_path);
             g_free(large_path);
             g_checksum_free(sum);
-#if GLIB_CHECK_VERSION(2, 32, 0)
             g_thread_unref(g_thread_self());
-#endif
             return NULL;
         }
     }
@@ -646,14 +634,10 @@ FmThumbnailLoader* fm_thumbnail_loader_load(FmFileInfo* src_file,
     g_mutex_unlock(lock_ptr);
 
     if(!thread_running)
-#if GLIB_CHECK_VERSION(2, 32, 0)
         g_thread_new("loader", load_thumbnail_thread, NULL);
         /* we don't use loader_thread_id but Glib 2.32 crashes if we unref
            GThread while it's in creation progress. It is a bug of GLib
            certainly but as workaround we'll unref it in the thread itself */
-#else
-        g_thread_create( load_thumbnail_thread, NULL, FALSE, NULL);
-#endif
 
     return req;
 }
@@ -753,10 +737,6 @@ void _fm_thumbnail_loader_init()
 {
     thumb_dir = g_build_filename(g_get_user_cache_dir(), "thumbnails", NULL);
     hash = g_hash_table_new((GHashFunc)fm_path_hash, (GEqualFunc)fm_path_equal);
-#if !GLIB_CHECK_VERSION(2, 32, 0)
-    lock_ptr = g_mutex_new();
-    cond_ptr = g_cond_new();
-#endif
 }
 
 static gboolean fm_thumbnail_loader_cleanup(gpointer unused)
@@ -797,10 +777,6 @@ void _fm_thumbnail_loader_finalize(void)
     while (loader_thread_running)
         g_cond_wait(cond_ptr, lock_ptr);
     g_mutex_unlock(lock_ptr);
-#if !GLIB_CHECK_VERSION(2, 32, 0)
-    g_mutex_free(lock_ptr);
-    g_cond_free(cond_ptr);
-#endif
     while((task = g_queue_pop_head(&loader_queue)))
         thumbnail_task_free(task);
     fm_thumbnail_loader_cleanup(NULL);

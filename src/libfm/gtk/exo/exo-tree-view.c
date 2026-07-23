@@ -21,9 +21,6 @@
 /* Modified by Hong Jen Yee (PCMan) <pcman.tw@gmail.com>
  * on 2008.05.11 for use in PCManFM */
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
 
 #include <glib/gi18n-lib.h>
 #include "exo-tree-view.h"
@@ -457,7 +454,6 @@ exo_tree_view_button_press_event (GtkWidget      *widget,
       }
     }
 
-#if GTK_CHECK_VERSION(2,9,0)
   /* Rubberbanding in GtkTreeView 2.9.0 and above is rather buggy, unfortunately, and
    * doesn't interact properly with GTKs own DnD mechanism. So we need to block all
    * dragging here when pressing the mouse button on a not yet selected row if
@@ -495,7 +491,6 @@ exo_tree_view_button_press_event (GtkWidget      *widget,
           tree_view->priv->button_release_enables_rubber_banding = TRUE;
         }
     }
-#endif
 
   /* call the parent's button press handler */
   result = (*GTK_WIDGET_CLASS (exo_tree_view_parent_class)->button_press_event) (widget, event);
@@ -603,7 +598,6 @@ exo_tree_view_button_release_event (GtkWidget      *widget,
       }
     }
 
-#if GTK_CHECK_VERSION(2,9,0)
   /* check if we need to re-enable drag and drop */
   if (G_LIKELY (tree_view->priv->button_release_unblocks_dnd))
     {
@@ -624,7 +618,6 @@ exo_tree_view_button_release_event (GtkWidget      *widget,
       gtk_tree_view_set_rubber_banding (GTK_TREE_VIEW (tree_view), TRUE);
       tree_view->priv->button_release_enables_rubber_banding = FALSE;
     }
-#endif
 
   /* call the parent's button release handler */
   return (*GTK_WIDGET_CLASS (exo_tree_view_parent_class)->button_release_event) (widget, event);
@@ -646,7 +639,6 @@ exo_tree_view_motion_notify_event (GtkWidget      *widget,
   /* check if the event occurred on the tree view internal window and we are in single-click mode */
   if (event->window == gtk_tree_view_get_bin_window (GTK_TREE_VIEW (tree_view)) && tree_view->priv->single_click)
     {
-#if GTK_CHECK_VERSION(2,9,0)
       /* check if we're doing a rubberband selection right now (which means DnD is blocked) */
       if (G_UNLIKELY (tree_view->priv->button_release_unblocks_dnd))
         {
@@ -657,7 +649,6 @@ exo_tree_view_motion_notify_event (GtkWidget      *widget,
           gdk_window_set_cursor (event->window, NULL);
         }
       else
-#endif
         {
           /* determine the path at the event coordinates */
           if (!gtk_tree_view_get_path_at_pos (GTK_TREE_VIEW (tree_view), event->x, event->y, &path, &column, NULL, NULL))

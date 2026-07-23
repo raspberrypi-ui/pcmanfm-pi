@@ -45,9 +45,6 @@
  * without usage of libfm.
  */
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
 
 #include "fm-xml-file.h"
 

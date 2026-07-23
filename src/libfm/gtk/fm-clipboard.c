@@ -29,9 +29,6 @@
  *
  */
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
 
 #include "fm-clipboard.h"
 #include "fm-gtk-utils.h"

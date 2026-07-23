@@ -23,9 +23,6 @@
  *      Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
 
 #include "fm-file-ops-job-xfer.h"
 #include "fm-file-ops-job-delete.h"

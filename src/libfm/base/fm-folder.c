@@ -329,13 +329,8 @@ static void fm_folder_class_init(FmFolderClass *klass)
                       G_SIGNAL_RUN_LAST,
                       G_STRUCT_OFFSET ( FmFolderClass, error ),
                       NULL, NULL,
-#if GLIB_CHECK_VERSION(2,26,0)
                       fm_marshal_UINT__BOXED_UINT,
                       G_TYPE_UINT, 2, G_TYPE_ERROR, G_TYPE_UINT );
-#else
-                      fm_marshal_INT__POINTER_INT,
-                      G_TYPE_INT, 2, G_TYPE_POINTER, G_TYPE_INT );
-#endif
 }
 
 
@@ -705,9 +700,7 @@ static void on_folder_changed(GFileMonitor* mon, GFile* gf, GFile* other, GFileM
             G_UNLOCK(lists);
             /* g_debug("folder is changed"); */
             break;
-#if GLIB_CHECK_VERSION(2,24,0)
         case G_FILE_MONITOR_EVENT_MOVED:
-#endif
         case G_FILE_MONITOR_EVENT_CHANGES_DONE_HINT:
             ;
         }

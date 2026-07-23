@@ -421,7 +421,6 @@ gboolean fm_app_info_launch(GAppInfo *appinfo, GList *files,
     {
         const char *id;
 
-#if GLIB_CHECK_VERSION(2,24,0)
         /* if GDesktopAppInfo knows the filename then let use it */
         id = g_desktop_app_info_get_filename(G_DESKTOP_APP_INFO(appinfo));
         if(id) /* this is a desktop entry file */
@@ -436,7 +435,6 @@ gboolean fm_app_info_launch(GAppInfo *appinfo, GList *files,
             id = NULL;
         }
         else /* otherwise try application id */
-#endif
             id = g_app_info_get_id(appinfo);
         if(id) /* this is an installed application */
         {
@@ -459,9 +457,7 @@ gboolean fm_app_info_launch(GAppInfo *appinfo, GList *files,
         }
         else
         {
-#if GLIB_CHECK_VERSION(2,24,0)
             if (!supported) /* it was launched otherwise, see above */
-#endif
             {
                 /* If this is created with fm_app_info_create_from_commandline() */
                 if(g_object_get_data(G_OBJECT(appinfo), "flags"))

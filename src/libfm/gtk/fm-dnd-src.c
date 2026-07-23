@@ -72,9 +72,6 @@
  * indices starting from N_FM_DND_SRC_DEFAULT_TARGETS.
  */
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
 
 #define FM_DISABLE_SEAL
 
@@ -336,21 +333,7 @@ on_drag_begin ( GtkWidget *src_widget,
         FmFileInfo *fi = fm_file_info_list_peek_head(ds->files);
         FmIcon *icon = fm_file_info_get_icon(fi);
         if (icon)
-#if GTK_CHECK_VERSION(3, 2, 0)
             gtk_drag_set_icon_gicon(drag_context, fm_icon_get_gicon(icon), 0, 0);
-#else
-        {
-            gint w;
-            GdkPixbuf *pix;
-            gtk_icon_size_lookup(GTK_ICON_SIZE_DND, &w, NULL);
-            pix = fm_pixbuf_from_icon(icon, w);
-            if (pix)
-            {
-                gtk_drag_set_icon_pixbuf(drag_context, pix, 0, 0);
-                g_object_unref(pix);
-            }
-        }
-#endif
     }
     else if (ds->files)
         gtk_drag_set_icon_stock(drag_context, GTK_STOCK_DND_MULTIPLE, 0, 0);

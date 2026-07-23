@@ -127,9 +127,11 @@ path_c_args = [
 ]
 
 extra_c_args = [
+  '-DGETTEXT_PACKAGE="' + meson.project_name() + '"',
+  '-DPACKAGE_VERSION="' + meson.project_version() + '"',
+  '-D_FILE_OFFSET_BITS=64',
   '-D_LARGEFILE_SOURCE',
   '-D_REENTRANT',
-  '-D_FILE_OFFSET_BITS=64',
   '-DG_DISABLE_ASSERT',
   '-DG_DISABLE_CHECKS',
   '-DG_DISABLE_CAST_CHECKS',
@@ -140,7 +142,8 @@ extra_c_args = [
 
 libfm_includes = include_directories('libfm', 'libfm/base', 'libfm/job', 'libfm/gtk','libfm/extra')
 
-gtk = dependency('gtk+-3.0')
+glib = dependency('glib-2.0', version : '>=2.80')
+gtk = dependency('gtk+-3.0', version : '>=3.24')
 x11 = dependency('x11')
 layershell = dependency('gtk-layer-shell-0')
 menucache = dependency('libmenu-cache')
@@ -150,7 +153,7 @@ math = meson.get_compiler('c').find_library('m', required : false)
 executable('pcmanfm',
   pcmanfm_sources + libfm_sources + libfm_gtk_sources,
   c_args : path_c_args + extra_c_args,
-  include_directories : [ config_h_dir, libfm_includes ],
-  dependencies : [ gtk, x11, layershell, menucache, math ],
+  include_directories : libfm_includes,
+  dependencies : [ glib, gtk, x11, layershell, menucache, math ],
   install : true,
 )

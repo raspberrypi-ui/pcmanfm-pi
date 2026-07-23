@@ -31,9 +31,6 @@
  * disk then use that cache next time to display them.
  */
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
 #include "fm-thumbnail.h"
 #include "fm-config.h"
 

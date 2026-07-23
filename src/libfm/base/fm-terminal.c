@@ -31,18 +31,12 @@
  * require start in terminal should be started.
  */
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
 
 #include <glib.h>
 #include <glib/gi18n-lib.h>
 #include <gio/gdesktopappinfo.h>
 #include <string.h>
 #include <unistd.h>
-#if !GLIB_CHECK_VERSION(2, 28, 0) && !HAVE_DECL_ENVIRON
-extern char **environ;
-#endif
 
 #include "fm-terminal.h"
 #include "fm-config.h"
@@ -314,38 +308,9 @@ gboolean fm_terminal_launch(const gchar *dir, GError **error)
     g_object_unref(term);
     if(!argv) /* parsing failed */
         return FALSE;
-#if GLIB_CHECK_VERSION(2, 28, 0)
     envp = g_get_environ();
-#else
-    envp = g_strdupv(environ);
-#endif
     if (dir)
-#if GLIB_CHECK_VERSION(2, 32, 0)
         envp = g_environ_setenv(envp, "PWD", dir, TRUE);
-#else
-    {
-        char **env = envp;
-
-        if (env) while (*env != NULL)
-        {
-            if (strncmp(*env, "PWD=", 4) == 0)
-                break;
-            env++;
-        }
-        if (env == NULL || *env == NULL)
-        {
-            gint length;
-
-            length = envp ? g_strv_length(envp) : 0;
-            envp = g_renew(gchar *, envp, length + 2);
-            env = &envp[length];
-            env[1] = NULL;
-        }
-        else
-            g_free(*env);
-        *env = g_strdup_printf ("PWD=%s", dir);
-    }
-#endif
     ret = g_spawn_async(dir, argv, envp, G_SPAWN_SEARCH_PATH,
                         child_setup, (gpointer)(gsize)getpgid(getppid()), NULL, error);
     g_strfreev(argv);

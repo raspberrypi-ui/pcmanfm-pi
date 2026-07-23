@@ -21,8 +21,6 @@
 
 /* File properties dialog extension for desktop entry shortcut type */
 
-#include <config.h>
-
 #include "fm.h"
 #include "fm-file-properties.h"
 

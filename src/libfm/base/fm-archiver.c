@@ -31,9 +31,6 @@
  * into archive and/or extract them.
  */
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
 
 #include "fm-config.h"
 #include "fm-archiver.h"

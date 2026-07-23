@@ -80,9 +80,6 @@
  * context menu but one with #FmFileMenu object will be opened instead.
  */
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
 
 #include <glib/gi18n-lib.h>
 #include <stdlib.h>

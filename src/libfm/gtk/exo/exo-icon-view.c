@@ -25,9 +25,6 @@
 /* Modified by Hong Jen Yee (PCMan) <pcman.tw@gmail.com>
  * on 2009-08-30 for use in libfm */
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
 
 /* #ifdef HAVE_MATH_H */
 #include <math.h>
@@ -420,14 +417,9 @@ static gboolean exo_icon_view_search_iter               (ExoIconView    *icon_vi
 static void     exo_icon_view_search_move               (GtkWidget      *widget,
                                                          ExoIconView    *icon_view,
                                                          gboolean        move_up);
-#if GTK_CHECK_VERSION(2, 20, 0)
 static void     exo_icon_view_search_preedit_changed    (GtkEntry       *entry,
                                                          gchar          *preedit,
                                                          ExoIconView    *icon_view);
-#else
-static void     exo_icon_view_search_preedit_changed    (GtkIMContext   *im_context,
-                                                         ExoIconView    *icon_view);
-#endif
 static gboolean exo_icon_view_search_start              (ExoIconView    *icon_view,
                                                          gboolean        keybinding);
 static gboolean exo_icon_view_search_equal_func         (GtkTreeModel   *model,
@@ -1533,11 +1525,7 @@ exo_icon_view_realize (GtkWidget *widget)
   GtkAllocation       allocation;
   gint                attributes_mask;
 
-#if GTK_CHECK_VERSION(2, 20, 0)
   gtk_widget_set_realized (widget, TRUE);
-#else
-  GTK_WIDGET_SET_FLAGS (widget, GTK_REALIZED);
-#endif
 
   /* Allocate the clipping window */
   gtk_widget_get_allocation (widget, &allocation);
@@ -1561,9 +1549,7 @@ exo_icon_view_realize (GtkWidget *widget)
   attributes.height = MAX (priv->height, allocation.height);
   attributes.event_mask = GDK_EXPOSURE_MASK
                         | GDK_SCROLL_MASK
-#if GTK_CHECK_VERSION(3, 4, 0)
                         | GDK_SMOOTH_SCROLL_MASK
-#endif
                         | GDK_POINTER_MOTION_MASK
                         | GDK_BUTTON_PRESS_MASK
                         | GDK_BUTTON_RELEASE_MASK
@@ -2634,10 +2620,7 @@ exo_icon_view_scroll_event (GtkWidget      *widget,
    * everything else will be handled by GtkScrolledWindow.
    */
   if (event->direction != GDK_SCROLL_UP && event->direction != GDK_SCROLL_DOWN
-#if GTK_CHECK_VERSION(3, 4, 0)
-   && event->direction != GDK_SCROLL_SMOOTH
-#endif
-     )
+   && event->direction != GDK_SCROLL_SMOOTH)
     return FALSE;
 
   /* we also don't care for scroll events with Shift/Ctrl/Alt pressed */
@@ -2650,11 +2633,9 @@ exo_icon_view_scroll_event (GtkWidget      *widget,
   /* determine the scroll delta */
   delta = pow (gtk_adjustment_get_page_size(adjustment), 2.0 / 3.0);
   delta = (event->direction == GDK_SCROLL_UP) ? -delta : delta;
-#if GTK_CHECK_VERSION(3, 4, 0)
   if (gdk_event_get_scroll_deltas((GdkEvent *) event, &delta_x, NULL))
     /* it was smooth scrolling - try to approach the usual scrolling speed */
     delta = delta_x * 33.3;
-#endif
 
   /* apply the new adjustment value */
   value = CLAMP (gtk_adjustment_get_value(adjustment) + delta, gtk_adjustment_get_lower(adjustment), gtk_adjustment_get_upper(adjustment) - gtk_adjustment_get_page_size(adjustment));
@@ -3222,10 +3203,6 @@ exo_icon_view_adjustment_changed (GtkAdjustment *adjustment,
 
       if (G_UNLIKELY (icon_view->priv->doing_rubberband))
         exo_icon_view_update_rubberband (GTK_WIDGET (icon_view));
-
-#if !GTK_CHECK_VERSION(3, 22, 0)
-      gdk_window_process_updates (icon_view->priv->bin_window, TRUE);
-#endif
     }
 }
 
@@ -3576,9 +3553,7 @@ exo_icon_view_layout (ExoIconView *icon_view)
   gint                rows, cols;
   gint                x, y;
   GtkAllocation       allocation;
-#if GTK_CHECK_VERSION(2, 20, 0)
   GtkRequisition      requisition;
-#endif
 
   /* verify that we still have a valid model */
   if (G_UNLIKELY (priv->model == NULL))
@@ -3660,14 +3635,9 @@ exo_icon_view_layout (ExoIconView *icon_view)
   exo_icon_view_set_adjustment_upper (priv->hadjustment, priv->width);
   exo_icon_view_set_adjustment_upper (priv->vadjustment, priv->height);
 
-#if GTK_CHECK_VERSION(2, 20, 0)
   gtk_widget_get_requisition (GTK_WIDGET (icon_view), &requisition);
   if (priv->width != requisition.width
       || priv->height != requisition.height)
-#else
-  if (priv->width != GTK_WIDGET (icon_view)->requisition.width
-      || priv->height != GTK_WIDGET (icon_view)->requisition.height)
-#endif
     gtk_widget_queue_resize_no_redraw (GTK_WIDGET (icon_view));
 
   if (gtk_widget_get_realized (GTK_WIDGET(icon_view)))
@@ -8490,13 +8460,8 @@ exo_icon_view_search_ensure_directory (ExoIconView *icon_view)
   /* allocate the search entry widget */
   icon_view->priv->search_entry = gtk_entry_new ();
   g_signal_connect (G_OBJECT (icon_view->priv->search_entry), "activate", G_CALLBACK (exo_icon_view_search_activate), icon_view);
-#if GTK_CHECK_VERSION(2, 20, 0)
   g_signal_connect (G_OBJECT (icon_view->priv->search_entry), "preedit-changed",
                     G_CALLBACK (exo_icon_view_search_preedit_changed), icon_view);
-#else
-  g_signal_connect (G_OBJECT (GTK_ENTRY (icon_view->priv->search_entry)->im_context), "preedit-changed",
-                    G_CALLBACK (exo_icon_view_search_preedit_changed), icon_view);
-#endif
   gtk_box_pack_start (GTK_BOX (vbox), icon_view->priv->search_entry, TRUE, TRUE, 0);
   gtk_widget_realize (icon_view->priv->search_entry);
   gtk_widget_show (icon_view->priv->search_entry);
@@ -8661,14 +8626,9 @@ exo_icon_view_search_move (GtkWidget   *widget,
 
 
 static void
-#if GTK_CHECK_VERSION(2, 20, 0)
 exo_icon_view_search_preedit_changed (GtkEntry     *entry,
                                       gchar        *preedit,
                                       ExoIconView  *icon_view)
-#else
-exo_icon_view_search_preedit_changed (GtkIMContext *im_context,
-                                      ExoIconView  *icon_view)
-#endif
 {
   icon_view->priv->search_imcontext_changed = TRUE;
 
@@ -8836,12 +8796,8 @@ exo_icon_view_search_position_func (ExoIconView *icon_view,
   gtk_widget_realize (search_dialog);
 
   gdk_window_get_origin (view_window, &view_x, &view_y);
-#if GTK_CHECK_VERSION(2, 24, 0)
   view_width = gdk_window_get_width (view_window);
   view_height = gdk_window_get_height (view_window);
-#else
-  gdk_drawable_get_size (view_window, &view_width, &view_height);
-#endif
   gtk_widget_get_preferred_size (search_dialog, NULL, &requisition);
 
   if (view_x + view_width > gdk_screen_get_width (screen))

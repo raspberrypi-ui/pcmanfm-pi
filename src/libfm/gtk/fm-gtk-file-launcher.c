@@ -31,9 +31,6 @@
  * Utilities to launch files using libfm file launchers.
  */
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
 
 #include <glib/gi18n-lib.h>
 #include <gio/gdesktopappinfo.h>

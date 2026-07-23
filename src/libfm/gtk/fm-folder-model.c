@@ -31,9 +31,6 @@
  * items of folder.
  */
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
 
 #include "fm-config.h"
 #include "fm-folder-model.h"

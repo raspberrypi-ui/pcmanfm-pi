@@ -77,7 +77,6 @@
  * not do own processing.
  */
 
-#include <config.h>
 #include <glib/gi18n-lib.h>
 #include <gdk/gdkkeysyms.h>
 
@@ -318,13 +317,8 @@ static gpointer load_themed_icon(GtkIconTheme *theme, IconThreadData *data)
         if (gtk_icon_view_get_model(data->view) == NULL)
         {
             gtk_icon_view_set_model(data->view, GTK_TREE_MODEL(data->model));
-#if GTK_CHECK_VERSION(2, 20, 0)
             if (gtk_widget_get_realized(GTK_WIDGET(data->view)))
                 gdk_window_set_cursor(gtk_widget_get_window(GTK_WIDGET(data->view)), NULL);
-#else
-            if (GTK_WIDGET_REALIZED(GTK_WIDGET(data->view)))
-                gdk_window_set_cursor(GTK_WIDGET(data->view)->window, NULL);
-#endif
         }
     }
     GDK_THREADS_LEAVE();

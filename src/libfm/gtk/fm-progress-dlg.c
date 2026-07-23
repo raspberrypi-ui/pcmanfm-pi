@@ -31,9 +31,6 @@
  *
  */
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
 
 #include "fm-progress-dlg.h"
 #include "fm-config.h"

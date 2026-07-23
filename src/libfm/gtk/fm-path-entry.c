@@ -35,9 +35,6 @@
  * (such as \%23) into entry.
  */
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
 
 #include <glib/gi18n-lib.h>
 
@@ -398,12 +395,8 @@ static gboolean fm_path_entry_focus_out_event(GtkWidget *widget, GdkEventFocus *
     return GTK_WIDGET_CLASS(fm_path_entry_parent_class)->focus_out_event(widget, event);
 }
 
-#if GLIB_CHECK_VERSION(2, 36, 0)
 static void on_dir_list_finished(GObject *source_object, GAsyncResult *res,
                                  gpointer user_data)
-#else
-static gboolean on_dir_list_finished(gpointer user_data)
-#endif
 {
     ListSubDirNames* data = (ListSubDirNames*)user_data;
     FmPathEntry* entry = data->entry;
@@ -413,11 +406,7 @@ static gboolean on_dir_list_finished(gpointer user_data)
 
     /* final chance to check cancellable */
     if(g_cancellable_is_cancelled(data->cancellable))
-#if GLIB_CHECK_VERSION(2, 36, 0)
         return;
-#else
-        return TRUE;
-#endif
     /* FIXME: check errors! */
 
     new_model = fm_path_entry_model_new(priv->parent_dir);
@@ -453,17 +442,10 @@ static gboolean on_dir_list_finished(gpointer user_data)
      * A even more dirty thing to do is to check if we finished after
      * 300 ms timeout happens. */
     g_signal_emit_by_name(entry, "changed", 0);
-#if !GLIB_CHECK_VERSION(2, 36, 0)
-    return TRUE;
-#endif
 }
 
-#if GLIB_CHECK_VERSION(2, 36, 0)
 static void list_sub_dirs(GTask *task, gpointer source_object, gpointer user_data,
                           GCancellable *cancellable)
-#else
-static gboolean list_sub_dirs(GIOSchedulerJob *job, GCancellable *cancellable, gpointer user_data)
-#endif
 {
     ListSubDirNames* data = (ListSubDirNames*)user_data;
     GError *err = NULL;
@@ -503,15 +485,7 @@ static gboolean list_sub_dirs(GIOSchedulerJob *job, GCancellable *cancellable, g
     }
 
     if(!g_cancellable_is_cancelled(cancellable))
-#if GLIB_CHECK_VERSION(2, 36, 0)
         g_task_return_pointer(task, NULL, NULL);
-#else
-    {
-        /* finished! */
-        g_io_scheduler_job_send_to_mainloop(job, on_dir_list_finished, data, NULL);
-    }
-    return FALSE;
-#endif
 }
 
 static void list_sub_dir_names_free(gpointer user_data)
@@ -529,9 +503,7 @@ static void fm_path_entry_changed(GtkEditable *editable, gpointer user_data)
     FmPathEntry *entry = FM_PATH_ENTRY(editable);
     FmPathEntryPrivate *priv  = FM_PATH_ENTRY_GET_PRIVATE(entry);
     const gchar *path_str, *sep;
-#if GLIB_CHECK_VERSION(2, 36, 0)
     GTask *task;
-#endif
 
     if(priv->model == NULL)
         return;
@@ -573,17 +545,11 @@ static void fm_path_entry_changed(GtkEditable *editable, gpointer user_data)
             if (G_LIKELY(priv->cancellable == NULL))
                 priv->cancellable = g_cancellable_new();
             data->cancellable = (GCancellable*)g_object_ref(priv->cancellable);
-#if GLIB_CHECK_VERSION(2, 36, 0)
             task = g_task_new(editable, data->cancellable, on_dir_list_finished, data);
             g_task_set_task_data(task, data, list_sub_dir_names_free);
             g_task_set_priority(task, G_PRIORITY_LOW);
             g_task_run_in_thread(task, list_sub_dirs);
             g_object_unref(task);
-#else
-            g_io_scheduler_push_job(list_sub_dirs,
-                                    data, list_sub_dir_names_free,
-                                    G_PRIORITY_LOW, data->cancellable);
-#endif
         }
         /* calculate the length of remaining part after / */
         priv->typed_basename_len = strlen(sep + 1);
