@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pcmanfm\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-23 09:23+0100\n"
+"POT-Creation-Date: 2026-07-23 10:02+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -27,7 +27,7 @@ msgstr ""
 msgid "translator-credits"
 msgstr ""
 
-#: data/ui/desktop-pref.glade:8 src/desktop-ui.c:35
+#: data/ui/desktop-pref.glade:8 src/pcmanfm/desktop-ui.c:35
 msgid "Desktop Preferences"
 msgstr ""
 
@@ -250,7 +250,7 @@ msgstr ""
 msgid "Vie_w Mode:"
 msgstr ""
 
-#: data/ui/pref.glade:599 libfm/data/ui/file-prop.glade:515
+#: data/ui/pref.glade:599 data/ui/file-prop.glade:515
 msgid "_General"
 msgstr ""
 
@@ -375,7 +375,7 @@ msgstr ""
 msgid "Des_ktop"
 msgstr ""
 
-#: data/ui/pref.glade:1391 src/main-win-ui.c:305
+#: data/ui/pref.glade:1391 src/pcmanfm/main-win-ui.c:305
 msgid "_Trash Can"
 msgstr ""
 
@@ -387,7 +387,7 @@ msgstr ""
 msgid "App_lications"
 msgstr ""
 
-#: data/ui/pref.glade:1439 src/main-win-ui.c:308
+#: data/ui/pref.glade:1439 src/pcmanfm/main-win-ui.c:308
 msgid "Dev_ices"
 msgstr ""
 
@@ -631,690 +631,454 @@ msgstr ""
 msgid "WebDAV"
 msgstr ""
 
-#: src/volume-manager.c:239
-msgid "mixed content"
+#: data/ui/app-chooser.glade:13
+msgid "Choose Application"
 msgstr ""
 
-#: src/volume-manager.c:248
-msgid "removable disk"
+#: data/ui/app-chooser.glade:78
+msgid "Use selected application to open files"
 msgstr ""
 
-#: src/volume-manager.c:304
-msgid "Open in File Manager"
+#: data/ui/app-chooser.glade:79
+msgid "_Installed Applications"
 msgstr ""
 
-#: src/desktop-ui.c:61
-msgid "Open in New Ta_b"
+#: data/ui/app-chooser.glade:97
+msgid "<b>C_ommand line to execute:</b>"
 msgstr ""
 
-#: src/desktop-ui.c:62 src/tab-page.c:65
-msgid "Open in New Win_dow"
+#: data/ui/app-chooser.glade:142 src/libfm/modules/gtk-fileprop-x-desktop.c:275
+msgid "_Browse..."
 msgstr ""
 
-#: src/desktop-ui.c:64 src/tab-page.c:67
-msgid "Open in Termina_l"
+#. row 1: "Terminal" GtkCheckButton
+#: data/ui/app-chooser.glade:166 src/libfm/modules/gtk-fileprop-x-desktop.c:294
+msgid "_Execute in terminal emulator"
 msgstr ""
 
-#: src/desktop-ui.c:77
-msgid "_Remove from Desktop"
+#. row 2: "X-KeepTerminal" GtkCheckButton
+#: data/ui/app-chooser.glade:187 src/libfm/modules/gtk-fileprop-x-desktop.c:306
+msgid "_Keep terminal window open after command execution"
 msgstr ""
 
-#: src/desktop-ui.c:93
-msgid "Stic_k to Current Position"
-msgstr ""
-
-#: src/desktop-ui.c:98
-msgid "Snap to _Grid"
-msgstr ""
-
-#: src/desktop.c:1102
-msgid "Activate file"
-msgstr ""
-
-#: src/desktop.c:1104
-msgid "Show file menu"
-msgstr ""
-
-#: src/desktop.c:1525
-msgid "Show desktop menu"
-msgstr ""
-
-#. FIXME: set name by monitor
-#: src/desktop.c:1597 libfm/src/gtk/fm-places-model.c:810
-#: libfm/src/gtk/fm-places-model.c:1058 libfm/src/gtk/fm-places-model.c:1185
-msgid "Desktop"
-msgstr ""
-
-#: src/main-win-ui.c:254
-msgid "_File"
-msgstr ""
-
-#: src/main-win-ui.c:255 src/main-win-ui.c:327
-msgid "_New Window"
-msgstr ""
-
-#: src/main-win-ui.c:255 src/main-win-ui.c:327
-msgid "Open new file manager window"
-msgstr ""
-
-#: src/main-win-ui.c:256
-msgid "New T_ab"
-msgstr ""
-
-#: src/main-win-ui.c:256
-msgid "Create new tab for this folder"
-msgstr ""
-
-#: src/main-win-ui.c:257
-msgid "C_reate New..."
-msgstr ""
-
-#: src/main-win-ui.c:258 libfm/src/gtk/fm-folder-view.c:182
-msgid "Folder"
-msgstr ""
-
-#: src/main-win-ui.c:259 libfm/src/gtk/fm-folder-view.c:185
-msgid "Empty File"
-msgstr ""
-
-#: src/main-win-ui.c:260 libfm/src/gtk/fm-folder-view.c:180
-msgid "New _Folder..."
-msgstr ""
-
-#: src/main-win-ui.c:260
-msgid "Create new folder"
-msgstr ""
-
-#: src/main-win-ui.c:261 libfm/src/gtk/fm-folder-view.c:181
-msgid "New Fil_e..."
-msgstr ""
-
-#: src/main-win-ui.c:261
-msgid "Create new empty file"
-msgstr ""
-
-#: src/main-win-ui.c:262
-msgid "Folder Propertie_s"
-msgstr ""
-
-#: src/main-win-ui.c:263
-msgid "_Close Tab"
-msgstr ""
-
-#: src/main-win-ui.c:264
-msgid "Close _Window"
-msgstr ""
-
-#: src/main-win-ui.c:265
-msgid "_Edit"
-msgstr ""
-
-#: src/main-win-ui.c:267
-msgid "C_ut"
-msgstr ""
-
-#: src/main-win-ui.c:270 libfm/src/gtk/fm-file-menu.c:258
-#: libfm/src/gtk/fm-file-menu.c:306
-msgid "Move to _Trash"
-msgstr ""
-
-#: src/main-win-ui.c:272
-msgid "Copy Pat_h(s)"
-msgstr ""
-
-#: src/main-win-ui.c:273
-msgid "R_ename..."
-msgstr ""
-
-#: src/main-win-ui.c:274
-msgid "D_uplicate..."
-msgstr ""
-
-#: src/main-win-ui.c:275
-msgid "Create Lin_k..."
-msgstr ""
-
-#: src/main-win-ui.c:276
-msgid "_Move to..."
-msgstr ""
-
-#: src/main-win-ui.c:277
-msgid "Copy to_..."
-msgstr ""
-
-#: src/main-win-ui.c:278
-msgid "Propertie_s"
-msgstr ""
-
-#: src/main-win-ui.c:280 libfm/src/gtk/fm-folder-view.c:197
-msgid "_Invert Selection"
-msgstr ""
-
-#: src/main-win-ui.c:281
-msgid "Prefere_nces"
-msgstr ""
-
-#: src/main-win-ui.c:282
-msgid "_View"
-msgstr ""
-
-#: src/main-win-ui.c:283
-msgid "_Reload Folder"
-msgstr ""
-
-#: src/main-win-ui.c:283
-msgid "Reload current folder"
-msgstr ""
-
-#: src/main-win-ui.c:284
-msgid "Tool_bar"
-msgstr ""
-
-#: src/main-win-ui.c:285
-msgid "Pat_h Bar"
-msgstr ""
-
-#: src/main-win-ui.c:286
-msgid "Side _Pane"
-msgstr ""
-
-#. other see below: 'ShowHidden' 'ShowStatus' 'Fullscreen' 'IconView'...
-#: src/main-win-ui.c:288
-msgid "Fo_lder View Mode"
-msgstr ""
-
-#: src/main-win-ui.c:289
-msgid "S_ort Files"
-msgstr ""
-
-#: src/main-win-ui.c:290
-msgid "S_ort"
-msgstr ""
-
-#: src/main-win-ui.c:291
-msgid "Zoom _In"
-msgstr ""
-
-#: src/main-win-ui.c:292
-msgid "Zoom O_ut"
-msgstr ""
-
-#: src/main-win-ui.c:294
-msgid "Fil_ter..."
-msgstr ""
-
-#: src/main-win-ui.c:295
-msgid "Clear Filt_er"
-msgstr ""
-
-#: src/main-win-ui.c:296
-msgid "_Help"
-msgstr ""
-
-#: src/main-win-ui.c:298
-msgid "_Keyboard Navigation"
-msgstr ""
-
-#: src/main-win-ui.c:299
-msgid "_Go"
-msgstr ""
-
-#: src/main-win-ui.c:300
-msgid "_Previous Folder"
-msgstr ""
-
-#: src/main-win-ui.c:300
-msgid "Return to previous folder in history"
-msgstr ""
-
-#: src/main-win-ui.c:301
-msgid "_Next Folder"
-msgstr ""
-
-#: src/main-win-ui.c:301
-msgid "Go forward to next folder in history"
-msgstr ""
-
-#: src/main-win-ui.c:302
-msgid "Pa_rent Folder"
-msgstr ""
-
-#: src/main-win-ui.c:302
-msgid "Go to parent Folder"
-msgstr ""
-
-#: src/main-win-ui.c:303
-msgid "H_ome Folder"
-msgstr ""
-
-#: src/main-win-ui.c:303
-msgid "Go to home folder"
-msgstr ""
-
-#: src/main-win-ui.c:304
-msgid "_Desktop"
-msgstr ""
-
-#: src/main-win-ui.c:304
-msgid "Go to desktop folder"
-msgstr ""
-
-#: src/main-win-ui.c:305
-msgid "Open trash can"
-msgstr ""
-
-#: src/main-win-ui.c:306
-msgid "Filesyste_m Root"
-msgstr ""
-
-#: src/main-win-ui.c:306
-msgid "Go to filesystem root"
-msgstr ""
-
-#: src/main-win-ui.c:307
-msgid "_Applications"
-msgstr ""
-
-#: src/main-win-ui.c:307
-msgid "Go to root of applications menu folder"
-msgstr ""
-
-#: src/main-win-ui.c:308
-msgid "Go to list of devices connected to the computer"
-msgstr ""
-
-#: src/main-win-ui.c:309
-msgid "Net_work"
-msgstr ""
-
-#: src/main-win-ui.c:309
-msgid "Go to list of places on the network"
-msgstr ""
-
-#: src/main-win-ui.c:310
-msgid "_Go to Location..."
-msgstr ""
-
-#: src/main-win-ui.c:311
-msgid "_Connect to Server..."
-msgstr ""
-
-#: src/main-win-ui.c:311
-msgid "Open a window to choose remote folder location"
-msgstr ""
-
-#: src/main-win-ui.c:312
-msgid "Go to the path in the location bar"
-msgstr ""
-
-#: src/main-win-ui.c:313
-msgid "_Bookmarks"
-msgstr ""
-
-#: src/main-win-ui.c:314
-msgid "_Add to Bookmarks..."
-msgstr ""
-
-#: src/main-win-ui.c:314
-msgid "Add current folder to bookmarks list"
-msgstr ""
-
-#: src/main-win-ui.c:315
-msgid "Too_ls"
-msgstr ""
-
-#: src/main-win-ui.c:316
-msgid "Open Current Folder in _Terminal"
-msgstr ""
-
-#: src/main-win-ui.c:317
-msgid "Fin_d Files..."
-msgstr ""
-
-#: src/main-win-ui.c:317
-msgid "Open search dialog"
-msgstr ""
-
-#: src/main-win-ui.c:318
-msgid "_Run a Command in Current Folder..."
-msgstr ""
-
-#. Note to translators: "Mingle..." means "Do not put folders before files" but make the translation as short as possible, please!
-#: src/main-win-ui.c:334 libfm/src/gtk/fm-folder-view.c:210
-msgid "Mingle _Files and Folders"
-msgstr ""
-
-#: src/main-win-ui.c:335 libfm/src/gtk/fm-folder-view.c:211
-msgid "_Ignore Name Case"
-msgstr ""
-
-#: src/main-win-ui.c:336
-msgid "Sho_w Hidden"
-msgstr ""
-
-#: src/main-win-ui.c:337
-msgid "Show Thum_bnails"
-msgstr ""
-
-#. Note to translators: this save is meant for folder's settings such as sort
-#: src/main-win-ui.c:339
-msgid "Preserve This Folder's Settings"
-msgstr ""
-
-#: src/main-win-ui.c:340
+#: data/ui/app-chooser.glade:209
 msgid ""
-"Check to remember view and sort as folder setting rather than global one"
+"<b>These special codes can be used in the command line:</b>\n"
+"  <b>%f</b>: Represents a single file name\n"
+"  <b>%F</b>: Represents multiple file names\n"
+"  <b>%u</b>: Represents a single URI of the file\n"
+"  <b>%U</b>: Represents multiple URIs"
 msgstr ""
 
-#: src/main-win-ui.c:342
-msgid "_Show Toolbar"
+#: data/ui/app-chooser.glade:237
+msgid "<b>_Application name (optional, set it to keep association)</b>"
 msgstr ""
 
-#: src/main-win-ui.c:343
-msgid "Show 'New _Window' Button"
+#: data/ui/app-chooser.glade:281
+msgid "Execute custom command line to open files"
 msgstr ""
 
-#: src/main-win-ui.c:344
-msgid "Show 'New _Tab' Button"
+#: data/ui/app-chooser.glade:282
+msgid "C_ustom Command Line"
 msgstr ""
 
-#: src/main-win-ui.c:345
-msgid "Show _Navigation Buttons"
+#: data/ui/app-chooser.glade:309
+msgid "_Set selected application as default action for this file type"
 msgstr ""
 
-#: src/main-win-ui.c:346
-msgid "Show '_Home' Button"
+#: data/ui/ask-rename.glade:8
+msgid "Confirm File Replacing"
 msgstr ""
 
-#: src/main-win-ui.c:347
-msgid "Sho_w Side Pane"
+#: data/ui/ask-rename.glade:37
+msgid "_Skip"
 msgstr ""
 
-#: src/main-win-ui.c:348
-msgid "Show Status B_ar"
+#: data/ui/ask-rename.glade:54
+msgid "_Rename"
 msgstr ""
 
-#: src/main-win-ui.c:349
-msgid "_Dual Pane Mode"
+#: data/ui/ask-rename.glade:71
+msgid "_Overwrite"
 msgstr ""
 
-#: src/main-win-ui.c:349
-msgid "Show two panels with folder views"
-msgstr ""
-
-#: src/main-win-ui.c:350
-msgid "Fullscreen _Mode"
-msgstr ""
-
-#: src/main-win-ui.c:361 libfm/src/gtk/fm-folder-view.c:222
-msgid "By _Name"
-msgstr ""
-
-#: src/main-win-ui.c:362 libfm/src/gtk/fm-folder-view.c:223
-msgid "By _Modification Time"
-msgstr ""
-
-#: src/main-win-ui.c:363 libfm/src/gtk/fm-folder-view.c:224
-msgid "By _Size"
-msgstr ""
-
-#: src/main-win-ui.c:364 libfm/src/gtk/fm-folder-view.c:225
-msgid "By File _Type"
-msgstr ""
-
-#: src/main-win-ui.c:365
-msgid "By _Extension"
-msgstr ""
-
-#: src/main-win-ui.c:370
-msgid "_Location"
-msgstr ""
-
-#: src/main-win-ui.c:371
-msgid "_Buttons"
-msgstr ""
-
-#: src/main-win-ui.c:376 libfm/src/gtk/fm-standard-view.c:2006
-msgid "_Icon View"
-msgstr ""
-
-#: src/main-win-ui.c:377
-msgid "_List View"
-msgstr ""
-
-#: src/main-win.c:885
-msgid "Show history of visited folders"
-msgstr ""
-
-#: src/main-win.c:889
-msgid "History"
-msgstr ""
-
-#: src/main-win.c:901
-msgid "View as icons"
-msgstr ""
-
-#: src/main-win.c:909
-msgid "View as detailed list"
-msgstr ""
-
-#: src/main-win.c:930
-msgid "You are in super user mode"
-msgstr ""
-
-#: src/main-win.c:1115
-msgid "Lightweight file manager\n"
-msgstr ""
-
-#: src/main-win.c:1118
-#, c-format
-msgid "using LibFM ver. %s\n"
-msgstr ""
-
-#: src/main-win.c:1119
+#: data/ui/ask-rename.glade:121
 msgid ""
+"<b>There is already a file with the same name in this location.</b>\n"
 "\n"
-"Developed by Hon Jen Yee (PCMan)"
+"Do you want to replace the existing file"
 msgstr ""
 
-#: src/main-win.c:1144 src/main-win.c:1152
-msgid "Keyboard Navigation"
+#: data/ui/ask-rename.glade:174
+msgid "with the following file?"
 msgstr ""
 
-#: src/main-win.c:1146
+#: data/ui/ask-rename.glade:229
+msgid "_File name:"
+msgstr ""
+
+#: data/ui/ask-rename.glade:279
+msgid "_Apply this option to all existing files"
+msgstr ""
+
+#: data/ui/choose-icon.ui:6
+msgid "Choose An Icon..."
+msgstr ""
+
+#. genitive case is here: Choose icon from: ...
+#: data/ui/choose-icon.ui:82
+msgid "system icon theme"
+msgstr ""
+
+#. genitive case is here: Choose icon from: ...
+#: data/ui/choose-icon.ui:100
+msgid "image files"
+msgstr ""
+
+#: data/ui/choose-icon.ui:122
+msgid "<b>Choose icon from:</b>"
+msgstr ""
+
+#: data/ui/exec-file.glade:7
+msgid "Execute File"
+msgstr ""
+
+#: data/ui/exec-file.glade:66
+msgid "Execute in _Terminal"
+msgstr ""
+
+#: data/ui/file-prop.glade:8
+msgid "File Properties"
+msgstr ""
+
+#: data/ui/file-prop.glade:98
+msgid "Icon of the file in folder view"
+msgstr ""
+
+#: data/ui/file-prop.glade:141
+msgid "<b>_Name:</b>"
+msgstr ""
+
+#: data/ui/file-prop.glade:177
+msgid "<b>Location:</b>"
+msgstr ""
+
+#: data/ui/file-prop.glade:211
+msgid "<b>Target file:</b>"
+msgstr ""
+
+#: data/ui/file-prop.glade:246
+msgid "<b>File type:</b>"
+msgstr ""
+
+#: data/ui/file-prop.glade:282
+msgid "<b>Open _with:</b>"
+msgstr ""
+
+#: data/ui/file-prop.glade:299
+msgid "Select the application used to open files of this type "
+msgstr ""
+
+#: data/ui/file-prop.glade:314
+msgid "<b>Total count of files:</b>"
+msgstr ""
+
+#: data/ui/file-prop.glade:346
+msgid "<b>Total size of files:</b>"
+msgstr ""
+
+#: data/ui/file-prop.glade:380
+msgid "<b>Size on disk:</b>"
+msgstr ""
+
+#: data/ui/file-prop.glade:414
+msgid "<b>Last modification:</b>"
+msgstr ""
+
+#: data/ui/file-prop.glade:448
+msgid "<b>Last access:</b>"
+msgstr ""
+
+#: data/ui/file-prop.glade:480
+msgid "<b>Last permissions change:</b>"
+msgstr ""
+
+#: data/ui/file-prop.glade:548
+msgid "<b>O_wner:</b>"
+msgstr ""
+
+#: data/ui/file-prop.glade:563
+msgid "<b>G_roup:</b>"
+msgstr ""
+
+#: data/ui/file-prop.glade:641
+msgid "<b>_View content:</b>"
+msgstr ""
+
+#: data/ui/file-prop.glade:656
+msgid "<b>C_hange content:</b>"
+msgstr ""
+
+#: data/ui/file-prop.glade:673
+msgid "<b>_Execute:</b>"
+msgstr ""
+
+#: data/ui/file-prop.glade:690
+msgid "<b>Special bits:</b>"
+msgstr ""
+
+#: data/ui/file-prop.glade:704
+msgid "Who can read content of the file/directory"
+msgstr ""
+
+#: data/ui/file-prop.glade:723
+msgid "Who can change content of the file/directory"
+msgstr ""
+
+#: data/ui/file-prop.glade:744
+msgid "Who can execute the file or enter the directory"
+msgstr ""
+
+#: data/ui/file-prop.glade:765
+msgid "Special flags for file execution"
+msgstr ""
+
+#: data/ui/file-prop.glade:786
+msgid "Special flags for directory access"
+msgstr ""
+
+#: data/ui/file-prop.glade:811
+msgid "<b>Access Control</b>"
+msgstr ""
+
+#: data/ui/file-prop.glade:824
+msgid "Hidden file"
+msgstr ""
+
+#: data/ui/file-prop.glade:848
+msgid "_Permissions"
+msgstr ""
+
+#: data/ui/file-prop.glade:902 data/ui/file-prop.glade:925
+#: data/ui/file-prop.glade:948 data/ui/file-prop.glade:968
+msgid "---"
+msgstr ""
+
+#: data/ui/file-prop.glade:905 data/ui/file-prop.glade:928
+msgid "None"
+msgstr ""
+
+#. this is a directory access bit - only owner can delete a file from it
+#: data/ui/file-prop.glade:908
+msgid "Sticky"
+msgstr ""
+
+#: data/ui/file-prop.glade:911 data/ui/file-prop.glade:934
+msgid "Set GID"
+msgstr ""
+
+#: data/ui/file-prop.glade:914
+msgid "Sticky & set GID"
+msgstr ""
+
+#. this is a file access mode bit - executable files run with permissions of owner
+#: data/ui/file-prop.glade:931
+msgid "Set UID"
+msgstr ""
+
+#: data/ui/file-prop.glade:937
+msgid "Set UID & GID"
+msgstr ""
+
+#. this is a file access mode - only owner can access the file, for others access is denied
+#: data/ui/file-prop.glade:951 data/ui/file-prop.glade:974
+msgid "Only owner"
+msgstr ""
+
+#: data/ui/file-prop.glade:954 data/ui/file-prop.glade:977
+msgid "Only owner and group"
+msgstr ""
+
+#: data/ui/file-prop.glade:957 data/ui/file-prop.glade:980
+msgid "Anyone"
+msgstr ""
+
+#: data/ui/file-prop.glade:971
+msgid "Nobody"
+msgstr ""
+
+#: data/ui/filesearch.glade:17 data/ui/filesearch.glade:1078
+msgid "Bytes"
+msgstr ""
+
+#: data/ui/filesearch.glade:20 data/ui/filesearch.glade:1081
+msgid "KB"
+msgstr ""
+
+#: data/ui/filesearch.glade:23 data/ui/filesearch.glade:1084
+#: src/libfm/base/fm-utils.c:143
+msgid "MB"
+msgstr ""
+
+#: data/ui/filesearch.glade:26 data/ui/filesearch.glade:1087
+#: src/libfm/base/fm-utils.c:149
+msgid "GB"
+msgstr ""
+
+#: data/ui/filesearch.glade:33
+msgid "Choose Date"
+msgstr ""
+
+#: data/ui/filesearch.glade:91
+msgid "Choose a date from the following calendar"
+msgstr ""
+
+#: data/ui/filesearch.glade:120
+msgid "Search Files"
+msgstr ""
+
+#: data/ui/filesearch.glade:194
+msgid "<b>File _Name Patterns:</b>"
+msgstr ""
+
+#: data/ui/filesearch.glade:221
 msgid ""
-"Tab: cycle focus Folder View -> Side Pane -> Tools Bar\n"
-"Shift+Tab: cycle focus Tools Bar -> Side Pane -> Folder View\n"
-"F6: change focus Side pane <-> Folder view\n"
-"F8: focus divider between Side pane and Folder view\n"
-"F10: activate main menu\n"
-"Ctrl+L or Alt+D: jump focus to Path Bar"
+"Pattern may be either POSIX shell pattern list (with ',' as separator) or "
+"POSIX regular expression."
 msgstr ""
 
-#: src/main-win.c:1183
-msgid "Run a command"
+#: data/ui/filesearch.glade:238 data/ui/filesearch.glade:710
+msgid "Case insensiti_ve"
 msgstr ""
 
-#: src/main-win.c:1184
-msgid "Enter a command to run:"
+#: data/ui/filesearch.glade:256 data/ui/filesearch.glade:727
+msgid "_Use regular expression"
 msgstr ""
 
-#: src/main-win.c:1191
-msgid "Current folder is inaccessible"
+#: data/ui/filesearch.glade:284
+msgid "<b>Plac_es to Search:</b>"
 msgstr ""
 
-#: src/main-win.c:1922
-#, c-format
+#: data/ui/filesearch.glade:397
+msgid "_Search in sub directories"
+msgstr ""
+
+#: data/ui/filesearch.glade:414
+msgid "Search _hidden files"
+msgstr ""
+
+#: data/ui/filesearch.glade:443
+msgid "Name/_Location"
+msgstr ""
+
+#: data/ui/filesearch.glade:461
+msgid "<b>File Type</b>"
+msgstr ""
+
+#: data/ui/filesearch.glade:486
+msgid "Only search for files of following types:"
+msgstr ""
+
+#: data/ui/filesearch.glade:496
+msgid "Te_xt files"
+msgstr ""
+
+#: data/ui/filesearch.glade:512
+msgid "_Image files"
+msgstr ""
+
+#: data/ui/filesearch.glade:528
+msgid "_Audio files"
+msgstr ""
+
+#: data/ui/filesearch.glade:544
+msgid "_Video files"
+msgstr ""
+
+#: data/ui/filesearch.glade:560
+msgid "_Documents"
+msgstr ""
+
+#: data/ui/filesearch.glade:576
+msgid "Folde_rs"
+msgstr ""
+
+#: data/ui/filesearch.glade:596
+msgid "Ot_her:"
+msgstr ""
+
+#: data/ui/filesearch.glade:612
 msgid ""
-"Add following folder to bookmarks:\n"
-"'%s'\n"
-"Enter a name for the new bookmark item:"
+"Any valid content type can be entered here. Wildcard '*' is allowed at end "
+"of the type. Multiple types should be separated with ';'."
 msgstr ""
 
-#: src/main-win.c:1926
-msgid "Add to Bookmarks"
+#: data/ui/filesearch.glade:649
+msgid "File _Type"
 msgstr ""
 
-#: src/main-win.c:2698
-msgid "Select filter"
+#: data/ui/filesearch.glade:668
+msgid "<b>File Contain_s:</b>"
 msgstr ""
 
-#: src/main-win.c:2699
-msgid "Choose a new shell pattern to show files:"
+#: data/ui/filesearch.glade:759
+msgid "C_ontent"
 msgstr ""
 
-#. options only acceptable by first pcmanfm instance. These options are not passed through IPC
-#: src/pcmanfm.c:78
-msgid "Name of configuration profile"
+#: data/ui/filesearch.glade:778
+msgid "<b>File Size</b>"
 msgstr ""
 
-#: src/pcmanfm.c:78
-msgid "PROFILE"
+#: data/ui/filesearch.glade:844
+msgid "_Smaller than:"
 msgstr ""
 
-#: src/pcmanfm.c:79
-msgid "Run PCManFM as a daemon"
+#: data/ui/filesearch.glade:861
+msgid "_Bigger than:"
 msgstr ""
 
-#: src/pcmanfm.c:80
-msgid "No function. Just to be compatible with nautilus"
+#: data/ui/filesearch.glade:931
+msgid "<b>Last Modified Time</b>"
 msgstr ""
 
-#. options that are acceptable for every instance of pcmanfm and will be passed through IPC.
-#: src/pcmanfm.c:83
-msgid "Launch desktop manager"
+#: data/ui/filesearch.glade:956 data/ui/filesearch.glade:971
+#: src/libfm/gtk/fm-gtk-file-launcher.c:669
+#: src/libfm/gtk/fm-gtk-file-launcher.c:676
+msgid "(None)"
 msgstr ""
 
-#: src/pcmanfm.c:84
-msgid "Turn off desktop manager if it's running"
+#: data/ui/filesearch.glade:988
+msgid "_Earlier than:"
 msgstr ""
 
-#: src/pcmanfm.c:85
-msgid "Open desktop preference dialog"
+#: data/ui/filesearch.glade:1004
+msgid "L_ater than:"
 msgstr ""
 
-#: src/pcmanfm.c:86
-msgid "Reload desktop config file"
+#: data/ui/filesearch.glade:1038
+msgid "_Properties"
 msgstr ""
 
-#: src/pcmanfm.c:87
-msgid "Use --desktop option only for one screen"
+#. To: <Destination folder> ex. Copy file to..., Move file to...etc.
+#: data/ui/progress.glade:129
+msgid "<b>To:</b>"
 msgstr ""
 
-#: src/pcmanfm.c:88
-msgid "Set desktop wallpaper from image FILE"
+#. Preparing to do some file operation (Copy, Move, Delete...)
+#: data/ui/progress.glade:174
+msgid "Preparing..."
 msgstr ""
 
-#: src/pcmanfm.c:88
-msgid "FILE"
+#: data/ui/progress.glade:189
+msgid "<b>Data transferred:</b>"
 msgstr ""
 
-#. don't translate list of modes in description, please
-#: src/pcmanfm.c:90
-msgid ""
-"Set mode of desktop wallpaper. MODE=(color|stretch|fit|crop|center|tile|"
-"screen)"
+#: data/ui/progress.glade:220
+msgid "<b>Time remaining:</b>"
 msgstr ""
 
-#: src/pcmanfm.c:90
-msgid "MODE"
-msgstr ""
-
-#: src/pcmanfm.c:91
-msgid "Open Preferences dialog on the page N"
-msgstr ""
-
-#: src/pcmanfm.c:91
-msgid "N"
-msgstr ""
-
-#: src/pcmanfm.c:92
-msgid "Open new window"
-msgstr ""
-
-#: src/pcmanfm.c:93
-msgid "Open a Find Files window"
-msgstr ""
-
-#: src/pcmanfm.c:94
-msgid "Window role for usage by window manager"
-msgstr ""
-
-#: src/pcmanfm.c:94
-msgid "ROLE"
-msgstr ""
-
-#: src/pcmanfm.c:95
-msgid "[FILE1, FILE2,...]"
-msgstr ""
-
-#. FIXME: add "on this X screen/monitor" into diagnostics
-#: src/pcmanfm.c:364
-msgid "Desktop manager is not active."
-msgstr ""
-
-#: src/pcmanfm.c:640
-msgid "Terminal emulator is not set."
-msgstr ""
-
-#: src/tab-page.c:64
-msgid "Open in New T_ab"
-msgstr ""
-
-#. Note to translators: this is the information (name, size, type)
-#. about the selected file in the status bar
-#: src/tab-page.c:336
-#, c-format
-msgid "\"%s\" (%s) %s"
-msgstr ""
-
-#. Note to translators: this is the information (name, type)
-#. about the selected file in the status bar
-#: src/tab-page.c:345
-#, c-format
-msgid "\"%s\" %s"
-msgstr ""
-
-#: src/tab-page.c:371
-#, c-format
-msgid "%d item selected"
-msgid_plural "%d items selected"
-msgstr[0] ""
-msgstr[1] ""
-
-#: src/tab-page.c:678
-#, c-format
-msgid "Free space: %s (Total: %s)"
-msgstr ""
-
-#: src/tab-page.c:698
-#, c-format
-msgid "%d item"
-msgid_plural "%d items"
-msgstr[0] ""
-msgstr[1] ""
-
-#: src/tab-page.c:699
-#, c-format
-msgid " (%d hidden)"
-msgid_plural " (%d hidden)"
-msgstr[0] ""
-msgstr[1] ""
-
-#: src/pref.c:532
-msgid "Add to Modules Blacklist"
-msgstr ""
-
-#: src/pref.c:533
-msgid "Enter a blacklisted module mask:"
-msgstr ""
-
-#: src/pref.c:624
-msgid "Add to Modules Whitelist"
-msgstr ""
-
-#: src/pref.c:625
-msgid "Enter a whitelisted module mask:"
+#: data/ui/progress.glade:262
+msgid "<b>Errors occurred:</b>"
 msgstr ""
 
 #: data/pcmanfm.desktop.in:4
@@ -1329,577 +1093,810 @@ msgstr ""
 msgid "Browse the file system and manage the files"
 msgstr ""
 
-#: libfm/data/ui/app-chooser.glade:13
-msgid "Choose Application"
+#: src/pcmanfm/volume-manager.c:239
+msgid "mixed content"
 msgstr ""
 
-#: libfm/data/ui/app-chooser.glade:78
-msgid "Use selected application to open files"
+#: src/pcmanfm/volume-manager.c:248
+msgid "removable disk"
 msgstr ""
 
-#: libfm/data/ui/app-chooser.glade:79
-msgid "_Installed Applications"
+#: src/pcmanfm/volume-manager.c:304
+msgid "Open in File Manager"
 msgstr ""
 
-#: libfm/data/ui/app-chooser.glade:97
-msgid "<b>C_ommand line to execute:</b>"
+#: src/pcmanfm/desktop-ui.c:61
+msgid "Open in New Ta_b"
 msgstr ""
 
-#: libfm/data/ui/app-chooser.glade:142
-#: libfm/src/modules/gtk-fileprop-x-desktop.c:275
-msgid "_Browse..."
+#: src/pcmanfm/desktop-ui.c:62 src/pcmanfm/tab-page.c:65
+msgid "Open in New Win_dow"
 msgstr ""
 
-#. row 1: "Terminal" GtkCheckButton
-#: libfm/data/ui/app-chooser.glade:166
-#: libfm/src/modules/gtk-fileprop-x-desktop.c:294
-msgid "_Execute in terminal emulator"
+#: src/pcmanfm/desktop-ui.c:64 src/pcmanfm/tab-page.c:67
+msgid "Open in Termina_l"
 msgstr ""
 
-#. row 2: "X-KeepTerminal" GtkCheckButton
-#: libfm/data/ui/app-chooser.glade:187
-#: libfm/src/modules/gtk-fileprop-x-desktop.c:306
-msgid "_Keep terminal window open after command execution"
+#: src/pcmanfm/desktop-ui.c:77
+msgid "_Remove from Desktop"
 msgstr ""
 
-#: libfm/data/ui/app-chooser.glade:209
+#: src/pcmanfm/desktop-ui.c:93
+msgid "Stic_k to Current Position"
+msgstr ""
+
+#: src/pcmanfm/desktop-ui.c:98
+msgid "Snap to _Grid"
+msgstr ""
+
+#: src/pcmanfm/desktop.c:1102
+msgid "Activate file"
+msgstr ""
+
+#: src/pcmanfm/desktop.c:1104
+msgid "Show file menu"
+msgstr ""
+
+#: src/pcmanfm/desktop.c:1525
+msgid "Show desktop menu"
+msgstr ""
+
+#. FIXME: set name by monitor
+#: src/pcmanfm/desktop.c:1597 src/libfm/gtk/fm-places-model.c:810
+#: src/libfm/gtk/fm-places-model.c:1058 src/libfm/gtk/fm-places-model.c:1185
+msgid "Desktop"
+msgstr ""
+
+#: src/pcmanfm/main-win-ui.c:254
+msgid "_File"
+msgstr ""
+
+#: src/pcmanfm/main-win-ui.c:255 src/pcmanfm/main-win-ui.c:327
+msgid "_New Window"
+msgstr ""
+
+#: src/pcmanfm/main-win-ui.c:255 src/pcmanfm/main-win-ui.c:327
+msgid "Open new file manager window"
+msgstr ""
+
+#: src/pcmanfm/main-win-ui.c:256
+msgid "New T_ab"
+msgstr ""
+
+#: src/pcmanfm/main-win-ui.c:256
+msgid "Create new tab for this folder"
+msgstr ""
+
+#: src/pcmanfm/main-win-ui.c:257
+msgid "C_reate New..."
+msgstr ""
+
+#: src/pcmanfm/main-win-ui.c:258 src/libfm/gtk/fm-folder-view.c:182
+msgid "Folder"
+msgstr ""
+
+#: src/pcmanfm/main-win-ui.c:259 src/libfm/gtk/fm-folder-view.c:185
+msgid "Empty File"
+msgstr ""
+
+#: src/pcmanfm/main-win-ui.c:260 src/libfm/gtk/fm-folder-view.c:180
+msgid "New _Folder..."
+msgstr ""
+
+#: src/pcmanfm/main-win-ui.c:260
+msgid "Create new folder"
+msgstr ""
+
+#: src/pcmanfm/main-win-ui.c:261 src/libfm/gtk/fm-folder-view.c:181
+msgid "New Fil_e..."
+msgstr ""
+
+#: src/pcmanfm/main-win-ui.c:261
+msgid "Create new empty file"
+msgstr ""
+
+#: src/pcmanfm/main-win-ui.c:262
+msgid "Folder Propertie_s"
+msgstr ""
+
+#: src/pcmanfm/main-win-ui.c:263
+msgid "_Close Tab"
+msgstr ""
+
+#: src/pcmanfm/main-win-ui.c:264
+msgid "Close _Window"
+msgstr ""
+
+#: src/pcmanfm/main-win-ui.c:265
+msgid "_Edit"
+msgstr ""
+
+#: src/pcmanfm/main-win-ui.c:267
+msgid "C_ut"
+msgstr ""
+
+#: src/pcmanfm/main-win-ui.c:270 src/libfm/gtk/fm-file-menu.c:258
+#: src/libfm/gtk/fm-file-menu.c:306
+msgid "Move to _Trash"
+msgstr ""
+
+#: src/pcmanfm/main-win-ui.c:272
+msgid "Copy Pat_h(s)"
+msgstr ""
+
+#: src/pcmanfm/main-win-ui.c:273
+msgid "R_ename..."
+msgstr ""
+
+#: src/pcmanfm/main-win-ui.c:274
+msgid "D_uplicate..."
+msgstr ""
+
+#: src/pcmanfm/main-win-ui.c:275
+msgid "Create Lin_k..."
+msgstr ""
+
+#: src/pcmanfm/main-win-ui.c:276
+msgid "_Move to..."
+msgstr ""
+
+#: src/pcmanfm/main-win-ui.c:277
+msgid "Copy to_..."
+msgstr ""
+
+#: src/pcmanfm/main-win-ui.c:278
+msgid "Propertie_s"
+msgstr ""
+
+#: src/pcmanfm/main-win-ui.c:280 src/libfm/gtk/fm-folder-view.c:197
+msgid "_Invert Selection"
+msgstr ""
+
+#: src/pcmanfm/main-win-ui.c:281
+msgid "Prefere_nces"
+msgstr ""
+
+#: src/pcmanfm/main-win-ui.c:282
+msgid "_View"
+msgstr ""
+
+#: src/pcmanfm/main-win-ui.c:283
+msgid "_Reload Folder"
+msgstr ""
+
+#: src/pcmanfm/main-win-ui.c:283
+msgid "Reload current folder"
+msgstr ""
+
+#: src/pcmanfm/main-win-ui.c:284
+msgid "Tool_bar"
+msgstr ""
+
+#: src/pcmanfm/main-win-ui.c:285
+msgid "Pat_h Bar"
+msgstr ""
+
+#: src/pcmanfm/main-win-ui.c:286
+msgid "Side _Pane"
+msgstr ""
+
+#. other see below: 'ShowHidden' 'ShowStatus' 'Fullscreen' 'IconView'...
+#: src/pcmanfm/main-win-ui.c:288
+msgid "Fo_lder View Mode"
+msgstr ""
+
+#: src/pcmanfm/main-win-ui.c:289
+msgid "S_ort Files"
+msgstr ""
+
+#: src/pcmanfm/main-win-ui.c:290
+msgid "S_ort"
+msgstr ""
+
+#: src/pcmanfm/main-win-ui.c:291
+msgid "Zoom _In"
+msgstr ""
+
+#: src/pcmanfm/main-win-ui.c:292
+msgid "Zoom O_ut"
+msgstr ""
+
+#: src/pcmanfm/main-win-ui.c:294
+msgid "Fil_ter..."
+msgstr ""
+
+#: src/pcmanfm/main-win-ui.c:295
+msgid "Clear Filt_er"
+msgstr ""
+
+#: src/pcmanfm/main-win-ui.c:296
+msgid "_Help"
+msgstr ""
+
+#: src/pcmanfm/main-win-ui.c:298
+msgid "_Keyboard Navigation"
+msgstr ""
+
+#: src/pcmanfm/main-win-ui.c:299
+msgid "_Go"
+msgstr ""
+
+#: src/pcmanfm/main-win-ui.c:300
+msgid "_Previous Folder"
+msgstr ""
+
+#: src/pcmanfm/main-win-ui.c:300
+msgid "Return to previous folder in history"
+msgstr ""
+
+#: src/pcmanfm/main-win-ui.c:301
+msgid "_Next Folder"
+msgstr ""
+
+#: src/pcmanfm/main-win-ui.c:301
+msgid "Go forward to next folder in history"
+msgstr ""
+
+#: src/pcmanfm/main-win-ui.c:302
+msgid "Pa_rent Folder"
+msgstr ""
+
+#: src/pcmanfm/main-win-ui.c:302
+msgid "Go to parent Folder"
+msgstr ""
+
+#: src/pcmanfm/main-win-ui.c:303
+msgid "H_ome Folder"
+msgstr ""
+
+#: src/pcmanfm/main-win-ui.c:303
+msgid "Go to home folder"
+msgstr ""
+
+#: src/pcmanfm/main-win-ui.c:304
+msgid "_Desktop"
+msgstr ""
+
+#: src/pcmanfm/main-win-ui.c:304
+msgid "Go to desktop folder"
+msgstr ""
+
+#: src/pcmanfm/main-win-ui.c:305
+msgid "Open trash can"
+msgstr ""
+
+#: src/pcmanfm/main-win-ui.c:306
+msgid "Filesyste_m Root"
+msgstr ""
+
+#: src/pcmanfm/main-win-ui.c:306
+msgid "Go to filesystem root"
+msgstr ""
+
+#: src/pcmanfm/main-win-ui.c:307
+msgid "_Applications"
+msgstr ""
+
+#: src/pcmanfm/main-win-ui.c:307
+msgid "Go to root of applications menu folder"
+msgstr ""
+
+#: src/pcmanfm/main-win-ui.c:308
+msgid "Go to list of devices connected to the computer"
+msgstr ""
+
+#: src/pcmanfm/main-win-ui.c:309
+msgid "Net_work"
+msgstr ""
+
+#: src/pcmanfm/main-win-ui.c:309
+msgid "Go to list of places on the network"
+msgstr ""
+
+#: src/pcmanfm/main-win-ui.c:310
+msgid "_Go to Location..."
+msgstr ""
+
+#: src/pcmanfm/main-win-ui.c:311
+msgid "_Connect to Server..."
+msgstr ""
+
+#: src/pcmanfm/main-win-ui.c:311
+msgid "Open a window to choose remote folder location"
+msgstr ""
+
+#: src/pcmanfm/main-win-ui.c:312
+msgid "Go to the path in the location bar"
+msgstr ""
+
+#: src/pcmanfm/main-win-ui.c:313
+msgid "_Bookmarks"
+msgstr ""
+
+#: src/pcmanfm/main-win-ui.c:314
+msgid "_Add to Bookmarks..."
+msgstr ""
+
+#: src/pcmanfm/main-win-ui.c:314
+msgid "Add current folder to bookmarks list"
+msgstr ""
+
+#: src/pcmanfm/main-win-ui.c:315
+msgid "Too_ls"
+msgstr ""
+
+#: src/pcmanfm/main-win-ui.c:316
+msgid "Open Current Folder in _Terminal"
+msgstr ""
+
+#: src/pcmanfm/main-win-ui.c:317
+msgid "Fin_d Files..."
+msgstr ""
+
+#: src/pcmanfm/main-win-ui.c:317
+msgid "Open search dialog"
+msgstr ""
+
+#: src/pcmanfm/main-win-ui.c:318
+msgid "_Run a Command in Current Folder..."
+msgstr ""
+
+#. Note to translators: "Mingle..." means "Do not put folders before files" but make the translation as short as possible, please!
+#: src/pcmanfm/main-win-ui.c:334 src/libfm/gtk/fm-folder-view.c:210
+msgid "Mingle _Files and Folders"
+msgstr ""
+
+#: src/pcmanfm/main-win-ui.c:335 src/libfm/gtk/fm-folder-view.c:211
+msgid "_Ignore Name Case"
+msgstr ""
+
+#: src/pcmanfm/main-win-ui.c:336
+msgid "Sho_w Hidden"
+msgstr ""
+
+#: src/pcmanfm/main-win-ui.c:337
+msgid "Show Thum_bnails"
+msgstr ""
+
+#. Note to translators: this save is meant for folder's settings such as sort
+#: src/pcmanfm/main-win-ui.c:339
+msgid "Preserve This Folder's Settings"
+msgstr ""
+
+#: src/pcmanfm/main-win-ui.c:340
 msgid ""
-"<b>These special codes can be used in the command line:</b>\n"
-"  <b>%f</b>: Represents a single file name\n"
-"  <b>%F</b>: Represents multiple file names\n"
-"  <b>%u</b>: Represents a single URI of the file\n"
-"  <b>%U</b>: Represents multiple URIs"
+"Check to remember view and sort as folder setting rather than global one"
 msgstr ""
 
-#: libfm/data/ui/app-chooser.glade:237
-msgid "<b>_Application name (optional, set it to keep association)</b>"
+#: src/pcmanfm/main-win-ui.c:342
+msgid "_Show Toolbar"
 msgstr ""
 
-#: libfm/data/ui/app-chooser.glade:281
-msgid "Execute custom command line to open files"
+#: src/pcmanfm/main-win-ui.c:343
+msgid "Show 'New _Window' Button"
 msgstr ""
 
-#: libfm/data/ui/app-chooser.glade:282
-msgid "C_ustom Command Line"
+#: src/pcmanfm/main-win-ui.c:344
+msgid "Show 'New _Tab' Button"
 msgstr ""
 
-#: libfm/data/ui/app-chooser.glade:309
-msgid "_Set selected application as default action for this file type"
+#: src/pcmanfm/main-win-ui.c:345
+msgid "Show _Navigation Buttons"
 msgstr ""
 
-#: libfm/data/ui/ask-rename.glade:8
-msgid "Confirm File Replacing"
+#: src/pcmanfm/main-win-ui.c:346
+msgid "Show '_Home' Button"
 msgstr ""
 
-#: libfm/data/ui/ask-rename.glade:37
-msgid "_Skip"
+#: src/pcmanfm/main-win-ui.c:347
+msgid "Sho_w Side Pane"
 msgstr ""
 
-#: libfm/data/ui/ask-rename.glade:54
-msgid "_Rename"
+#: src/pcmanfm/main-win-ui.c:348
+msgid "Show Status B_ar"
 msgstr ""
 
-#: libfm/data/ui/ask-rename.glade:71
-msgid "_Overwrite"
+#: src/pcmanfm/main-win-ui.c:349
+msgid "_Dual Pane Mode"
 msgstr ""
 
-#: libfm/data/ui/ask-rename.glade:121
+#: src/pcmanfm/main-win-ui.c:349
+msgid "Show two panels with folder views"
+msgstr ""
+
+#: src/pcmanfm/main-win-ui.c:350
+msgid "Fullscreen _Mode"
+msgstr ""
+
+#: src/pcmanfm/main-win-ui.c:361 src/libfm/gtk/fm-folder-view.c:222
+msgid "By _Name"
+msgstr ""
+
+#: src/pcmanfm/main-win-ui.c:362 src/libfm/gtk/fm-folder-view.c:223
+msgid "By _Modification Time"
+msgstr ""
+
+#: src/pcmanfm/main-win-ui.c:363 src/libfm/gtk/fm-folder-view.c:224
+msgid "By _Size"
+msgstr ""
+
+#: src/pcmanfm/main-win-ui.c:364 src/libfm/gtk/fm-folder-view.c:225
+msgid "By File _Type"
+msgstr ""
+
+#: src/pcmanfm/main-win-ui.c:365
+msgid "By _Extension"
+msgstr ""
+
+#: src/pcmanfm/main-win-ui.c:370
+msgid "_Location"
+msgstr ""
+
+#: src/pcmanfm/main-win-ui.c:371
+msgid "_Buttons"
+msgstr ""
+
+#: src/pcmanfm/main-win-ui.c:376 src/libfm/gtk/fm-standard-view.c:2006
+msgid "_Icon View"
+msgstr ""
+
+#: src/pcmanfm/main-win-ui.c:377
+msgid "_List View"
+msgstr ""
+
+#: src/pcmanfm/main-win.c:885
+msgid "Show history of visited folders"
+msgstr ""
+
+#: src/pcmanfm/main-win.c:889
+msgid "History"
+msgstr ""
+
+#: src/pcmanfm/main-win.c:901
+msgid "View as icons"
+msgstr ""
+
+#: src/pcmanfm/main-win.c:909
+msgid "View as detailed list"
+msgstr ""
+
+#: src/pcmanfm/main-win.c:930
+msgid "You are in super user mode"
+msgstr ""
+
+#: src/pcmanfm/main-win.c:1115
+msgid "Lightweight file manager\n"
+msgstr ""
+
+#: src/pcmanfm/main-win.c:1118
+#, c-format
+msgid "using LibFM ver. %s\n"
+msgstr ""
+
+#: src/pcmanfm/main-win.c:1119
 msgid ""
-"<b>There is already a file with the same name in this location.</b>\n"
 "\n"
-"Do you want to replace the existing file"
+"Developed by Hon Jen Yee (PCMan)"
 msgstr ""
 
-#: libfm/data/ui/ask-rename.glade:174
-msgid "with the following file?"
+#: src/pcmanfm/main-win.c:1144 src/pcmanfm/main-win.c:1152
+msgid "Keyboard Navigation"
 msgstr ""
 
-#: libfm/data/ui/ask-rename.glade:229
-msgid "_File name:"
-msgstr ""
-
-#: libfm/data/ui/ask-rename.glade:279
-msgid "_Apply this option to all existing files"
-msgstr ""
-
-#: libfm/data/ui/choose-icon.ui:6
-msgid "Choose An Icon..."
-msgstr ""
-
-#. genitive case is here: Choose icon from: ...
-#: libfm/data/ui/choose-icon.ui:82
-msgid "system icon theme"
-msgstr ""
-
-#. genitive case is here: Choose icon from: ...
-#: libfm/data/ui/choose-icon.ui:100
-msgid "image files"
-msgstr ""
-
-#: libfm/data/ui/choose-icon.ui:122
-msgid "<b>Choose icon from:</b>"
-msgstr ""
-
-#: libfm/data/ui/exec-file.glade:7
-msgid "Execute File"
-msgstr ""
-
-#: libfm/data/ui/exec-file.glade:66
-msgid "Execute in _Terminal"
-msgstr ""
-
-#: libfm/data/ui/file-prop.glade:8
-msgid "File Properties"
-msgstr ""
-
-#: libfm/data/ui/file-prop.glade:98
-msgid "Icon of the file in folder view"
-msgstr ""
-
-#: libfm/data/ui/file-prop.glade:141
-msgid "<b>_Name:</b>"
-msgstr ""
-
-#: libfm/data/ui/file-prop.glade:177
-msgid "<b>Location:</b>"
-msgstr ""
-
-#: libfm/data/ui/file-prop.glade:211
-msgid "<b>Target file:</b>"
-msgstr ""
-
-#: libfm/data/ui/file-prop.glade:246
-msgid "<b>File type:</b>"
-msgstr ""
-
-#: libfm/data/ui/file-prop.glade:282
-msgid "<b>Open _with:</b>"
-msgstr ""
-
-#: libfm/data/ui/file-prop.glade:299
-msgid "Select the application used to open files of this type "
-msgstr ""
-
-#: libfm/data/ui/file-prop.glade:314
-msgid "<b>Total count of files:</b>"
-msgstr ""
-
-#: libfm/data/ui/file-prop.glade:346
-msgid "<b>Total size of files:</b>"
-msgstr ""
-
-#: libfm/data/ui/file-prop.glade:380
-msgid "<b>Size on disk:</b>"
-msgstr ""
-
-#: libfm/data/ui/file-prop.glade:414
-msgid "<b>Last modification:</b>"
-msgstr ""
-
-#: libfm/data/ui/file-prop.glade:448
-msgid "<b>Last access:</b>"
-msgstr ""
-
-#: libfm/data/ui/file-prop.glade:480
-msgid "<b>Last permissions change:</b>"
-msgstr ""
-
-#: libfm/data/ui/file-prop.glade:548
-msgid "<b>O_wner:</b>"
-msgstr ""
-
-#: libfm/data/ui/file-prop.glade:563
-msgid "<b>G_roup:</b>"
-msgstr ""
-
-#: libfm/data/ui/file-prop.glade:641
-msgid "<b>_View content:</b>"
-msgstr ""
-
-#: libfm/data/ui/file-prop.glade:656
-msgid "<b>C_hange content:</b>"
-msgstr ""
-
-#: libfm/data/ui/file-prop.glade:673
-msgid "<b>_Execute:</b>"
-msgstr ""
-
-#: libfm/data/ui/file-prop.glade:690
-msgid "<b>Special bits:</b>"
-msgstr ""
-
-#: libfm/data/ui/file-prop.glade:704
-msgid "Who can read content of the file/directory"
-msgstr ""
-
-#: libfm/data/ui/file-prop.glade:723
-msgid "Who can change content of the file/directory"
-msgstr ""
-
-#: libfm/data/ui/file-prop.glade:744
-msgid "Who can execute the file or enter the directory"
-msgstr ""
-
-#: libfm/data/ui/file-prop.glade:765
-msgid "Special flags for file execution"
-msgstr ""
-
-#: libfm/data/ui/file-prop.glade:786
-msgid "Special flags for directory access"
-msgstr ""
-
-#: libfm/data/ui/file-prop.glade:811
-msgid "<b>Access Control</b>"
-msgstr ""
-
-#: libfm/data/ui/file-prop.glade:824
-msgid "Hidden file"
-msgstr ""
-
-#: libfm/data/ui/file-prop.glade:848
-msgid "_Permissions"
-msgstr ""
-
-#: libfm/data/ui/file-prop.glade:902 libfm/data/ui/file-prop.glade:925
-#: libfm/data/ui/file-prop.glade:948 libfm/data/ui/file-prop.glade:968
-msgid "---"
-msgstr ""
-
-#: libfm/data/ui/file-prop.glade:905 libfm/data/ui/file-prop.glade:928
-msgid "None"
-msgstr ""
-
-#. this is a directory access bit - only owner can delete a file from it
-#: libfm/data/ui/file-prop.glade:908
-msgid "Sticky"
-msgstr ""
-
-#: libfm/data/ui/file-prop.glade:911 libfm/data/ui/file-prop.glade:934
-msgid "Set GID"
-msgstr ""
-
-#: libfm/data/ui/file-prop.glade:914
-msgid "Sticky & set GID"
-msgstr ""
-
-#. this is a file access mode bit - executable files run with permissions of owner
-#: libfm/data/ui/file-prop.glade:931
-msgid "Set UID"
-msgstr ""
-
-#: libfm/data/ui/file-prop.glade:937
-msgid "Set UID & GID"
-msgstr ""
-
-#. this is a file access mode - only owner can access the file, for others access is denied
-#: libfm/data/ui/file-prop.glade:951 libfm/data/ui/file-prop.glade:974
-msgid "Only owner"
-msgstr ""
-
-#: libfm/data/ui/file-prop.glade:954 libfm/data/ui/file-prop.glade:977
-msgid "Only owner and group"
-msgstr ""
-
-#: libfm/data/ui/file-prop.glade:957 libfm/data/ui/file-prop.glade:980
-msgid "Anyone"
-msgstr ""
-
-#: libfm/data/ui/file-prop.glade:971
-msgid "Nobody"
-msgstr ""
-
-#: libfm/data/ui/filesearch.glade:17 libfm/data/ui/filesearch.glade:1078
-msgid "Bytes"
-msgstr ""
-
-#: libfm/data/ui/filesearch.glade:20 libfm/data/ui/filesearch.glade:1081
-msgid "KB"
-msgstr ""
-
-#: libfm/data/ui/filesearch.glade:23 libfm/data/ui/filesearch.glade:1084
-#: libfm/src/base/fm-utils.c:143
-msgid "MB"
-msgstr ""
-
-#: libfm/data/ui/filesearch.glade:26 libfm/data/ui/filesearch.glade:1087
-#: libfm/src/base/fm-utils.c:149
-msgid "GB"
-msgstr ""
-
-#: libfm/data/ui/filesearch.glade:33
-msgid "Choose Date"
-msgstr ""
-
-#: libfm/data/ui/filesearch.glade:91
-msgid "Choose a date from the following calendar"
-msgstr ""
-
-#: libfm/data/ui/filesearch.glade:120
-msgid "Search Files"
-msgstr ""
-
-#: libfm/data/ui/filesearch.glade:194
-msgid "<b>File _Name Patterns:</b>"
-msgstr ""
-
-#: libfm/data/ui/filesearch.glade:221
+#: src/pcmanfm/main-win.c:1146
 msgid ""
-"Pattern may be either POSIX shell pattern list (with ',' as separator) or "
-"POSIX regular expression."
+"Tab: cycle focus Folder View -> Side Pane -> Tools Bar\n"
+"Shift+Tab: cycle focus Tools Bar -> Side Pane -> Folder View\n"
+"F6: change focus Side pane <-> Folder view\n"
+"F8: focus divider between Side pane and Folder view\n"
+"F10: activate main menu\n"
+"Ctrl+L or Alt+D: jump focus to Path Bar"
 msgstr ""
 
-#: libfm/data/ui/filesearch.glade:238 libfm/data/ui/filesearch.glade:710
-msgid "Case insensiti_ve"
+#: src/pcmanfm/main-win.c:1183
+msgid "Run a command"
 msgstr ""
 
-#: libfm/data/ui/filesearch.glade:256 libfm/data/ui/filesearch.glade:727
-msgid "_Use regular expression"
+#: src/pcmanfm/main-win.c:1184
+msgid "Enter a command to run:"
 msgstr ""
 
-#: libfm/data/ui/filesearch.glade:284
-msgid "<b>Plac_es to Search:</b>"
+#: src/pcmanfm/main-win.c:1191
+msgid "Current folder is inaccessible"
 msgstr ""
 
-#: libfm/data/ui/filesearch.glade:397
-msgid "_Search in sub directories"
-msgstr ""
-
-#: libfm/data/ui/filesearch.glade:414
-msgid "Search _hidden files"
-msgstr ""
-
-#: libfm/data/ui/filesearch.glade:443
-msgid "Name/_Location"
-msgstr ""
-
-#: libfm/data/ui/filesearch.glade:461
-msgid "<b>File Type</b>"
-msgstr ""
-
-#: libfm/data/ui/filesearch.glade:486
-msgid "Only search for files of following types:"
-msgstr ""
-
-#: libfm/data/ui/filesearch.glade:496
-msgid "Te_xt files"
-msgstr ""
-
-#: libfm/data/ui/filesearch.glade:512
-msgid "_Image files"
-msgstr ""
-
-#: libfm/data/ui/filesearch.glade:528
-msgid "_Audio files"
-msgstr ""
-
-#: libfm/data/ui/filesearch.glade:544
-msgid "_Video files"
-msgstr ""
-
-#: libfm/data/ui/filesearch.glade:560
-msgid "_Documents"
-msgstr ""
-
-#: libfm/data/ui/filesearch.glade:576
-msgid "Folde_rs"
-msgstr ""
-
-#: libfm/data/ui/filesearch.glade:596
-msgid "Ot_her:"
-msgstr ""
-
-#: libfm/data/ui/filesearch.glade:612
+#: src/pcmanfm/main-win.c:1922
+#, c-format
 msgid ""
-"Any valid content type can be entered here. Wildcard '*' is allowed at end "
-"of the type. Multiple types should be separated with ';'."
+"Add following folder to bookmarks:\n"
+"'%s'\n"
+"Enter a name for the new bookmark item:"
 msgstr ""
 
-#: libfm/data/ui/filesearch.glade:649
-msgid "File _Type"
+#: src/pcmanfm/main-win.c:1926
+msgid "Add to Bookmarks"
 msgstr ""
 
-#: libfm/data/ui/filesearch.glade:668
-msgid "<b>File Contain_s:</b>"
+#: src/pcmanfm/main-win.c:2698
+msgid "Select filter"
 msgstr ""
 
-#: libfm/data/ui/filesearch.glade:759
-msgid "C_ontent"
+#: src/pcmanfm/main-win.c:2699
+msgid "Choose a new shell pattern to show files:"
 msgstr ""
 
-#: libfm/data/ui/filesearch.glade:778
-msgid "<b>File Size</b>"
+#. options only acceptable by first pcmanfm instance. These options are not passed through IPC
+#: src/pcmanfm/pcmanfm.c:78
+msgid "Name of configuration profile"
 msgstr ""
 
-#: libfm/data/ui/filesearch.glade:844
-msgid "_Smaller than:"
+#: src/pcmanfm/pcmanfm.c:78
+msgid "PROFILE"
 msgstr ""
 
-#: libfm/data/ui/filesearch.glade:861
-msgid "_Bigger than:"
+#: src/pcmanfm/pcmanfm.c:79
+msgid "Run PCManFM as a daemon"
 msgstr ""
 
-#: libfm/data/ui/filesearch.glade:931
-msgid "<b>Last Modified Time</b>"
+#: src/pcmanfm/pcmanfm.c:80
+msgid "No function. Just to be compatible with nautilus"
 msgstr ""
 
-#: libfm/data/ui/filesearch.glade:956 libfm/data/ui/filesearch.glade:971
-#: libfm/src/gtk/fm-gtk-file-launcher.c:669
-#: libfm/src/gtk/fm-gtk-file-launcher.c:676
-msgid "(None)"
+#. options that are acceptable for every instance of pcmanfm and will be passed through IPC.
+#: src/pcmanfm/pcmanfm.c:83
+msgid "Launch desktop manager"
 msgstr ""
 
-#: libfm/data/ui/filesearch.glade:988
-msgid "_Earlier than:"
+#: src/pcmanfm/pcmanfm.c:84
+msgid "Turn off desktop manager if it's running"
 msgstr ""
 
-#: libfm/data/ui/filesearch.glade:1004
-msgid "L_ater than:"
+#: src/pcmanfm/pcmanfm.c:85
+msgid "Open desktop preference dialog"
 msgstr ""
 
-#: libfm/data/ui/filesearch.glade:1038
-msgid "_Properties"
+#: src/pcmanfm/pcmanfm.c:86
+msgid "Reload desktop config file"
 msgstr ""
 
-#. To: <Destination folder> ex. Copy file to..., Move file to...etc.
-#: libfm/data/ui/progress.glade:129
-msgid "<b>To:</b>"
+#: src/pcmanfm/pcmanfm.c:87
+msgid "Use --desktop option only for one screen"
 msgstr ""
 
-#. Preparing to do some file operation (Copy, Move, Delete...)
-#: libfm/data/ui/progress.glade:174
-msgid "Preparing..."
+#: src/pcmanfm/pcmanfm.c:88
+msgid "Set desktop wallpaper from image FILE"
 msgstr ""
 
-#: libfm/data/ui/progress.glade:189
-msgid "<b>Data transferred:</b>"
+#: src/pcmanfm/pcmanfm.c:88
+msgid "FILE"
 msgstr ""
 
-#: libfm/data/ui/progress.glade:220
-msgid "<b>Time remaining:</b>"
+#. don't translate list of modes in description, please
+#: src/pcmanfm/pcmanfm.c:90
+msgid ""
+"Set mode of desktop wallpaper. MODE=(color|stretch|fit|crop|center|tile|"
+"screen)"
 msgstr ""
 
-#: libfm/data/ui/progress.glade:262
-msgid "<b>Errors occurred:</b>"
+#: src/pcmanfm/pcmanfm.c:90
+msgid "MODE"
 msgstr ""
 
-#: libfm/src/base/fm-action.c:274
+#: src/pcmanfm/pcmanfm.c:91
+msgid "Open Preferences dialog on the page N"
+msgstr ""
+
+#: src/pcmanfm/pcmanfm.c:91
+msgid "N"
+msgstr ""
+
+#: src/pcmanfm/pcmanfm.c:92
+msgid "Open new window"
+msgstr ""
+
+#: src/pcmanfm/pcmanfm.c:93
+msgid "Open a Find Files window"
+msgstr ""
+
+#: src/pcmanfm/pcmanfm.c:94
+msgid "Window role for usage by window manager"
+msgstr ""
+
+#: src/pcmanfm/pcmanfm.c:94
+msgid "ROLE"
+msgstr ""
+
+#: src/pcmanfm/pcmanfm.c:95
+msgid "[FILE1, FILE2,...]"
+msgstr ""
+
+#. FIXME: add "on this X screen/monitor" into diagnostics
+#: src/pcmanfm/pcmanfm.c:362
+msgid "Desktop manager is not active."
+msgstr ""
+
+#: src/pcmanfm/pcmanfm.c:638
+msgid "Terminal emulator is not set."
+msgstr ""
+
+#: src/pcmanfm/tab-page.c:64
+msgid "Open in New T_ab"
+msgstr ""
+
+#. Note to translators: this is the information (name, size, type)
+#. about the selected file in the status bar
+#: src/pcmanfm/tab-page.c:336
+#, c-format
+msgid "\"%s\" (%s) %s"
+msgstr ""
+
+#. Note to translators: this is the information (name, type)
+#. about the selected file in the status bar
+#: src/pcmanfm/tab-page.c:345
+#, c-format
+msgid "\"%s\" %s"
+msgstr ""
+
+#: src/pcmanfm/tab-page.c:371
+#, c-format
+msgid "%d item selected"
+msgid_plural "%d items selected"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/pcmanfm/tab-page.c:678
+#, c-format
+msgid "Free space: %s (Total: %s)"
+msgstr ""
+
+#: src/pcmanfm/tab-page.c:698
+#, c-format
+msgid "%d item"
+msgid_plural "%d items"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/pcmanfm/tab-page.c:699
+#, c-format
+msgid " (%d hidden)"
+msgid_plural " (%d hidden)"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/pcmanfm/pref.c:532
+msgid "Add to Modules Blacklist"
+msgstr ""
+
+#: src/pcmanfm/pref.c:533
+msgid "Enter a blacklisted module mask:"
+msgstr ""
+
+#: src/pcmanfm/pref.c:624
+msgid "Add to Modules Whitelist"
+msgstr ""
+
+#: src/pcmanfm/pref.c:625
+msgid "Enter a whitelisted module mask:"
+msgstr ""
+
+#: src/libfm/base/fm-action.c:274
 msgid "Empty value"
 msgstr ""
 
-#: libfm/src/base/fm-action.c:282
+#: src/libfm/base/fm-action.c:282
 msgid "Invalid selection"
 msgstr ""
 
 #. ---- GFile implementation ----
-#: libfm/src/base/fm-action.c:810 libfm/src/job/fm-file-ops-job.c:270
-#: libfm/src/modules/vfs-menu.c:1166 libfm/src/modules/vfs-search.c:928
+#: src/libfm/base/fm-action.c:810 src/libfm/job/fm-file-ops-job.c:270
+#: src/libfm/modules/vfs-menu.c:1166 src/libfm/modules/vfs-search.c:928
 msgid "Operation not supported"
 msgstr ""
 
-#: libfm/src/base/fm-file-launcher.c:87
+#: src/libfm/base/fm-file-launcher.c:87
 #, c-format
 msgid "Invalid desktop entry file: '%s'"
 msgstr ""
 
-#: libfm/src/base/fm-file-launcher.c:254 libfm/src/base/fm-file-launcher.c:408
+#: src/libfm/base/fm-file-launcher.c:254 src/libfm/base/fm-file-launcher.c:408
 #, c-format
 msgid "Could not determine content type of file '%s' to launch it"
 msgstr ""
 
-#: libfm/src/base/fm-file-launcher.c:293
+#: src/libfm/base/fm-file-launcher.c:293
 #, c-format
 msgid "No default application is set to launch URIs %s://"
 msgstr ""
 
-#: libfm/src/base/fm-file-launcher.c:361
+#: src/libfm/base/fm-file-launcher.c:361
 #, c-format
 msgid "Cannot set working directory to '%s': %s"
 msgstr ""
 
-#: libfm/src/base/fm-file-launcher.c:455 libfm/src/base/fm-templates.c:1114
+#: src/libfm/base/fm-file-launcher.c:455 src/libfm/base/fm-templates.c:1114
 #, c-format
 msgid "No default application is set for MIME type %s"
 msgstr ""
 
-#: libfm/src/base/fm-path.c:179 libfm/src/gtk/fm-places-model.c:859
-#: libfm/src/gtk/fm-places-model.c:1066 libfm/src/gtk/fm-places-model.c:1198
+#: src/libfm/base/fm-path.c:179 src/libfm/gtk/fm-places-model.c:859
+#: src/libfm/gtk/fm-places-model.c:1066 src/libfm/gtk/fm-places-model.c:1198
 msgid "Devices"
 msgstr ""
 
-#: libfm/src/base/fm-path.c:185 libfm/src/gtk/fm-places-model.c:877
-#: libfm/src/gtk/fm-places-model.c:1076 libfm/src/gtk/fm-places-model.c:1213
+#: src/libfm/base/fm-path.c:185 src/libfm/gtk/fm-places-model.c:877
+#: src/libfm/gtk/fm-places-model.c:1076 src/libfm/gtk/fm-places-model.c:1213
 msgid "Network"
 msgstr ""
 
-#: libfm/src/base/fm-path.c:1316 libfm/src/gtk/fm-places-model.c:909
+#: src/libfm/base/fm-path.c:1316 src/libfm/gtk/fm-places-model.c:909
 msgid "Trash Can"
 msgstr ""
 
-#: libfm/src/base/fm-mime-type.c:89
+#: src/libfm/base/fm-mime-type.c:89
 msgid "shortcut to URI"
 msgstr ""
 
-#: libfm/src/base/fm-templates.c:1053
+#: src/libfm/base/fm-templates.c:1053
 msgid "fm_template_create_file: invalid argument"
 msgstr ""
 
-#: libfm/src/base/fm-terminal.c:258
+#: src/libfm/base/fm-terminal.c:258
 msgid "No terminal emulator is set in libfm config"
 msgstr ""
 
-#: libfm/src/base/fm-thumbnailer.c:284
+#: src/libfm/base/fm-thumbnailer.c:284
 msgid "Invalid description of thumbnailer application"
 msgstr ""
 
-#: libfm/src/base/fm-utils.c:137
+#: src/libfm/base/fm-utils.c:137
 msgid "kB"
 msgstr ""
 
-#: libfm/src/base/fm-utils.c:154
+#: src/libfm/base/fm-utils.c:154
 msgid "TB"
 msgstr ""
 
-#: libfm/src/base/fm-utils.c:165
+#: src/libfm/base/fm-utils.c:165
 #, c-format
 msgid "%u byte"
 msgid_plural "%u bytes"
 msgstr[0] ""
 msgstr[1] ""
 
-#: libfm/src/base/fm-utils.c:174
+#: src/libfm/base/fm-utils.c:174
 msgid "KiB"
 msgstr ""
 
-#: libfm/src/base/fm-utils.c:180
+#: src/libfm/base/fm-utils.c:180
 msgid "MiB"
 msgstr ""
 
-#: libfm/src/base/fm-utils.c:186
+#: src/libfm/base/fm-utils.c:186
 msgid "GiB"
 msgstr ""
 
-#: libfm/src/base/fm-utils.c:191
+#: src/libfm/base/fm-utils.c:191
 msgid "TiB"
 msgstr ""
 
-#: libfm/src/base/fm-utils.c:573
+#: src/libfm/base/fm-utils.c:573
 #, c-format
 msgid "The URI subpath '%s' contains invalid escaped characters"
 msgstr ""
 
-#: libfm/src/extra/fm-xml-file.c:205
+#: src/libfm/extra/fm-xml-file.c:205
 #, c-format
 msgid "Duplicate handler for tag <%s>"
 msgstr ""
 
-#: libfm/src/extra/fm-xml-file.c:299
+#: src/libfm/extra/fm-xml-file.c:299
 #, c-format
 msgid ""
 "Failed to parse '%-.*s', which should have been a digit inside a character "
 "reference (&#234; for example) - perhaps the digit is too large"
 msgstr ""
 
-#: libfm/src/extra/fm-xml-file.c:310
+#: src/libfm/extra/fm-xml-file.c:310
 #, c-format
 msgid ""
 "Character reference did not end with a semicolon; most likely you used an "
@@ -1907,470 +1904,470 @@ msgid ""
 "as &amp;"
 msgstr ""
 
-#: libfm/src/extra/fm-xml-file.c:336
+#: src/libfm/extra/fm-xml-file.c:336
 #, c-format
 msgid "Character reference '%-.*s' does not encode a permitted character"
 msgstr ""
 
-#: libfm/src/extra/fm-xml-file.c:373
+#: src/libfm/extra/fm-xml-file.c:373
 #, c-format
 msgid ""
 "Empty entity '&;' seen; valid entities are: &amp; &quot; &lt; &gt; &apos;"
 msgstr ""
 
-#: libfm/src/extra/fm-xml-file.c:380
+#: src/libfm/extra/fm-xml-file.c:380
 #, c-format
 msgid "Entity name '%-.*s' is not known"
 msgstr ""
 
-#: libfm/src/extra/fm-xml-file.c:384
+#: src/libfm/extra/fm-xml-file.c:384
 #, c-format
 msgid ""
 "Entity did not end with a semicolon; most likely you used an ampersand "
 "character without intending to start an entity - escape ampersand as &amp;"
 msgstr ""
 
-#: libfm/src/extra/fm-xml-file.c:594
+#: src/libfm/extra/fm-xml-file.c:594
 msgid "Space isn't allowed in the close tag"
 msgstr ""
 
-#: libfm/src/extra/fm-xml-file.c:603
+#: src/libfm/extra/fm-xml-file.c:603
 #, c-format
 msgid "Element '%s' was closed but no element was opened"
 msgstr ""
 
-#: libfm/src/extra/fm-xml-file.c:619
+#: src/libfm/extra/fm-xml-file.c:619
 #, c-format
 msgid "Element '%s' was closed but the currently open element is '%s'"
 msgstr ""
 
-#: libfm/src/extra/fm-xml-file.c:675
+#: src/libfm/extra/fm-xml-file.c:675
 #, c-format
 msgid "Invalid char '%c' at start of attribute value"
 msgstr ""
 
-#: libfm/src/extra/fm-xml-file.c:686
+#: src/libfm/extra/fm-xml-file.c:686
 #, c-format
 msgid "Invalid char '%c' at end of attribute value, expected '%c'"
 msgstr ""
 
-#: libfm/src/extra/fm-xml-file.c:834
+#: src/libfm/extra/fm-xml-file.c:834
 msgid "Document ended unexpectedly"
 msgstr ""
 
-#: libfm/src/extra/fm-xml-file.c:842
+#: src/libfm/extra/fm-xml-file.c:842
 msgid "Document was empty or contained only whitespace"
 msgstr ""
 
-#: libfm/src/extra/fm-xml-file.c:1258
+#: src/libfm/extra/fm-xml-file.c:1258
 msgid "fm_xml_file_to_data: XML data error"
 msgstr ""
 
-#: libfm/src/gtk/fm-app-chooser-combo-box.c:217
+#: src/libfm/gtk/fm-app-chooser-combo-box.c:217
 msgid "Customize"
 msgstr ""
 
-#: libfm/src/gtk/fm-app-chooser-dlg.c:225
-#: libfm/src/modules/gtk-fileprop-x-desktop.c:72
+#: src/libfm/gtk/fm-app-chooser-dlg.c:225
+#: src/libfm/modules/gtk-fileprop-x-desktop.c:72
 msgid "Executable files"
 msgstr ""
 
-#: libfm/src/gtk/fm-app-chooser-dlg.c:317
+#: src/libfm/gtk/fm-app-chooser-dlg.c:317
 #, c-format
 msgid "<b>Select an application to open \"%s\" files</b>"
 msgstr ""
 
-#: libfm/src/gtk/fm-app-menu-view.c:201
+#: src/libfm/gtk/fm-app-menu-view.c:201
 msgid "Installed Applications"
 msgstr ""
 
-#: libfm/src/gtk/fm-dir-tree-model.c:441 libfm/src/gtk/fm-dir-tree-model.c:1280
+#: src/libfm/gtk/fm-dir-tree-model.c:441 src/libfm/gtk/fm-dir-tree-model.c:1280
 msgid "<No subfolders>"
 msgstr ""
 
-#: libfm/src/gtk/fm-dir-tree-model.c:443 libfm/src/gtk/fm-dir-tree-model.c:1281
+#: src/libfm/gtk/fm-dir-tree-model.c:443 src/libfm/gtk/fm-dir-tree-model.c:1281
 msgid "Loading..."
 msgstr ""
 
-#: libfm/src/gtk/fm-dir-tree-view.c:599 libfm/src/gtk/fm-side-pane.c:733
+#: src/libfm/gtk/fm-dir-tree-view.c:599 src/libfm/gtk/fm-side-pane.c:733
 msgid "Shows tree of directories in sidebar"
 msgstr ""
 
-#: libfm/src/gtk/fm-dnd-dest.c:412
+#: src/libfm/gtk/fm-dnd-dest.c:412
 msgid "_Cancel"
 msgstr ""
 
-#: libfm/src/gtk/fm-dnd-dest.c:413
+#: src/libfm/gtk/fm-dnd-dest.c:413
 msgid "C_opy Here"
 msgstr ""
 
-#: libfm/src/gtk/fm-dnd-dest.c:414
+#: src/libfm/gtk/fm-dnd-dest.c:414
 msgid "_Move Here"
 msgstr ""
 
 #. Note to translators: Link in not noun but verb here
-#: libfm/src/gtk/fm-dnd-dest.c:416
+#: src/libfm/gtk/fm-dnd-dest.c:416
 msgid "_Link Here"
 msgstr ""
 
-#: libfm/src/gtk/fm-dnd-dest.c:879
+#: src/libfm/gtk/fm-dnd-dest.c:879
 msgid "XDirectSave failed."
 msgstr ""
 
-#: libfm/src/gtk/fm-file-menu.c:150
+#: src/libfm/gtk/fm-file-menu.c:150
 msgid "_Open"
 msgstr ""
 
-#: libfm/src/gtk/fm-file-menu.c:151
+#: src/libfm/gtk/fm-file-menu.c:151
 msgid "Open _With..."
 msgstr ""
 
-#: libfm/src/gtk/fm-file-menu.c:152
+#: src/libfm/gtk/fm-file-menu.c:152
 msgid "Open _With"
 msgstr ""
 
-#: libfm/src/gtk/fm-file-menu.c:157
+#: src/libfm/gtk/fm-file-menu.c:157
 msgid "Copy Pa_th(s)"
 msgstr ""
 
-#: libfm/src/gtk/fm-file-menu.c:158
+#: src/libfm/gtk/fm-file-menu.c:158
 msgid "H_ide"
 msgstr ""
 
-#: libfm/src/gtk/fm-file-menu.c:159
+#: src/libfm/gtk/fm-file-menu.c:159
 msgid "Unh_ide"
 msgstr ""
 
-#: libfm/src/gtk/fm-file-menu.c:160
+#: src/libfm/gtk/fm-file-menu.c:160
 msgid "_Add to Bookmarks"
 msgstr ""
 
-#: libfm/src/gtk/fm-file-menu.c:161
+#: src/libfm/gtk/fm-file-menu.c:161
 msgid "_Rename..."
 msgstr ""
 
-#: libfm/src/gtk/fm-file-menu.c:162
+#: src/libfm/gtk/fm-file-menu.c:162
 msgid "Co_mpress..."
 msgstr ""
 
-#: libfm/src/gtk/fm-file-menu.c:163
+#: src/libfm/gtk/fm-file-menu.c:163
 msgid "Extract _Here"
 msgstr ""
 
-#: libfm/src/gtk/fm-file-menu.c:164
+#: src/libfm/gtk/fm-file-menu.c:164
 msgid "E_xtract To..."
 msgstr ""
 
-#: libfm/src/gtk/fm-file-menu.c:165 libfm/src/gtk/fm-folder-view.c:201
+#: src/libfm/gtk/fm-file-menu.c:165 src/libfm/gtk/fm-folder-view.c:201
 msgid "Prop_erties"
 msgstr ""
 
-#: libfm/src/gtk/fm-file-menu.c:796
+#: src/libfm/gtk/fm-file-menu.c:796
 msgid "Your bookmarks already have a bookmark for this folder."
 msgstr ""
 
-#: libfm/src/gtk/fm-file-properties.c:368
+#: src/libfm/gtk/fm-file-properties.c:368
 msgid "Image files"
 msgstr ""
 
-#: libfm/src/gtk/fm-file-properties.c:497
-#: libfm/src/gtk/fm-file-properties.c:506
+#: src/libfm/gtk/fm-file-properties.c:497
+#: src/libfm/gtk/fm-file-properties.c:506
 msgid "byte"
 msgid_plural "bytes"
 msgstr[0] ""
 msgstr[1] ""
 
-#: libfm/src/gtk/fm-file-properties.c:513
+#: src/libfm/gtk/fm-file-properties.c:513
 #, c-format
 msgid "scanning... %d"
 msgstr ""
 
-#: libfm/src/gtk/fm-file-properties.c:591
+#: src/libfm/gtk/fm-file-properties.c:591
 msgid "Please enter a valid user name or numeric id."
 msgstr ""
 
-#: libfm/src/gtk/fm-file-properties.c:621
+#: src/libfm/gtk/fm-file-properties.c:621
 msgid "Please enter a valid group name or numeric id."
 msgstr ""
 
 #. FIXME: may special bits and exec flags still be messed up?
-#: libfm/src/gtk/fm-file-properties.c:830
+#: src/libfm/gtk/fm-file-properties.c:830
 msgid ""
 "Do you want to recursively apply these changes to all files and sub-folders?"
 msgstr ""
 
-#: libfm/src/gtk/fm-file-properties.c:963
+#: src/libfm/gtk/fm-file-properties.c:963
 msgid "Hide or unhide the file"
 msgstr ""
 
-#: libfm/src/gtk/fm-file-properties.c:968
+#: src/libfm/gtk/fm-file-properties.c:968
 msgid "This file is hidden because its name starts with a dot ('.')."
 msgstr ""
 
-#: libfm/src/gtk/fm-file-properties.c:972
+#: src/libfm/gtk/fm-file-properties.c:972
 msgid ""
 "Files on this system are hidden if their name starts with a dot ('.'). Hit "
 "<Ctrl+H> to toggle displaying hidden files."
 msgstr ""
 
-#: libfm/src/gtk/fm-file-properties.c:1029
+#: src/libfm/gtk/fm-file-properties.c:1029
 msgid "scanning..."
 msgstr ""
 
-#: libfm/src/gtk/fm-file-properties.c:1091
+#: src/libfm/gtk/fm-file-properties.c:1091
 msgid "<b>_Access content:</b>"
 msgstr ""
 
-#: libfm/src/gtk/fm-file-properties.c:1245
+#: src/libfm/gtk/fm-file-properties.c:1245
 msgid "Files of different types"
 msgstr ""
 
-#: libfm/src/gtk/fm-file-properties.c:1289
+#: src/libfm/gtk/fm-file-properties.c:1289
 msgid "<b>File:</b>"
 msgstr ""
 
-#: libfm/src/gtk/fm-file-properties.c:1355
+#: src/libfm/gtk/fm-file-properties.c:1355
 msgid "Multiple files"
 msgstr ""
 
 #. columns visible to the users
-#: libfm/src/gtk/fm-folder-model.c:191
+#: src/libfm/gtk/fm-folder-model.c:191
 msgid "Name"
 msgstr ""
 
-#: libfm/src/gtk/fm-folder-model.c:192
+#: src/libfm/gtk/fm-folder-model.c:192
 msgid "Description"
 msgstr ""
 
-#: libfm/src/gtk/fm-folder-model.c:193
+#: src/libfm/gtk/fm-folder-model.c:193
 msgid "Size"
 msgstr ""
 
-#: libfm/src/gtk/fm-folder-model.c:194
+#: src/libfm/gtk/fm-folder-model.c:194
 msgid "Permissions"
 msgstr ""
 
-#: libfm/src/gtk/fm-folder-model.c:195
+#: src/libfm/gtk/fm-folder-model.c:195
 msgid "Owner"
 msgstr ""
 
-#: libfm/src/gtk/fm-folder-model.c:196
+#: src/libfm/gtk/fm-folder-model.c:196
 msgid "Modified"
 msgstr ""
 
-#: libfm/src/gtk/fm-folder-model.c:197
+#: src/libfm/gtk/fm-folder-model.c:197
 msgid "Location"
 msgstr ""
 
-#: libfm/src/gtk/fm-folder-model.c:198
+#: src/libfm/gtk/fm-folder-model.c:198
 msgid "Extension"
 msgstr ""
 
-#: libfm/src/gtk/fm-folder-view.c:179
+#: src/libfm/gtk/fm-folder-view.c:179
 msgid "Create _New..."
 msgstr ""
 
-#: libfm/src/gtk/fm-folder-view.c:198
+#: src/libfm/gtk/fm-folder-view.c:198
 msgid "_Sort Files"
 msgstr ""
 
-#: libfm/src/gtk/fm-folder-view.c:199
+#: src/libfm/gtk/fm-folder-view.c:199
 msgid "_Rename Folder..."
 msgstr ""
 
-#: libfm/src/gtk/fm-folder-view.c:200
+#: src/libfm/gtk/fm-folder-view.c:200
 msgid "Folder Prop_erties"
 msgstr ""
 
-#: libfm/src/gtk/fm-folder-view.c:208
+#: src/libfm/gtk/fm-folder-view.c:208
 msgid "Show _Hidden"
 msgstr ""
 
-#: libfm/src/gtk/fm-folder-view.c:848
+#: src/libfm/gtk/fm-folder-view.c:848
 msgid "Enter a name for the newly created folder:"
 msgstr ""
 
-#: libfm/src/gtk/fm-folder-view.c:849
+#: src/libfm/gtk/fm-folder-view.c:849
 msgid "Creating New Folder"
 msgstr ""
 
-#: libfm/src/gtk/fm-folder-view.c:862
+#: src/libfm/gtk/fm-folder-view.c:862
 msgid "Enter a name for empty file:"
 msgstr ""
 
-#: libfm/src/gtk/fm-folder-view.c:863
+#: src/libfm/gtk/fm-folder-view.c:863
 msgid "Creating ..."
 msgstr ""
 
-#: libfm/src/gtk/fm-folder-view.c:869
+#: src/libfm/gtk/fm-folder-view.c:869
 msgid "New"
 msgstr ""
 
-#: libfm/src/gtk/fm-folder-view.c:879
+#: src/libfm/gtk/fm-folder-view.c:879
 #, c-format
 msgid "Enter a name for the new %s:"
 msgstr ""
 
-#: libfm/src/gtk/fm-folder-view.c:882
+#: src/libfm/gtk/fm-folder-view.c:882
 #, c-format
 msgid "Creating %s"
 msgstr ""
 
-#: libfm/src/gtk/fm-folder-view.c:886
+#: src/libfm/gtk/fm-folder-view.c:886
 msgid "_Run default application on file after creation"
 msgstr ""
 
-#: libfm/src/gtk/fm-gtk-file-launcher.c:143
+#: src/libfm/gtk/fm-gtk-file-launcher.c:143
 #, c-format
 msgid ""
 "This text file '%s' seems to be an executable script.\n"
 "What do you want to do with it?"
 msgstr ""
 
-#: libfm/src/gtk/fm-gtk-file-launcher.c:150
+#: src/libfm/gtk/fm-gtk-file-launcher.c:150
 #, c-format
 msgid "This file '%s' is executable. Do you want to execute it?"
 msgstr ""
 
 #. show error if no paths are added
-#: libfm/src/gtk/fm-gtk-file-launcher.c:735
+#: src/libfm/gtk/fm-gtk-file-launcher.c:735
 msgid "No folders are specified."
 msgstr ""
 
-#: libfm/src/gtk/fm-gtk-file-launcher.c:774 libfm/src/gtk/fm-gtk-utils.c:554
+#: src/libfm/gtk/fm-gtk-file-launcher.c:774 src/libfm/gtk/fm-gtk-utils.c:554
 msgid "Select Folder"
 msgstr ""
 
 #. g_message("(!) %s", msg);
-#: libfm/src/gtk/fm-gtk-utils.c:70
+#: src/libfm/gtk/fm-gtk-utils.c:70
 msgid "Error"
 msgstr ""
 
-#: libfm/src/gtk/fm-gtk-utils.c:99 libfm/src/gtk/fm-gtk-utils.c:130
+#: src/libfm/gtk/fm-gtk-utils.c:99 src/libfm/gtk/fm-gtk-utils.c:130
 msgid "Confirm"
 msgstr ""
 
-#: libfm/src/gtk/fm-gtk-utils.c:184
+#: src/libfm/gtk/fm-gtk-utils.c:184
 msgid "Question"
 msgstr ""
 
-#: libfm/src/gtk/fm-gtk-utils.c:708
+#: src/libfm/gtk/fm-gtk-utils.c:708
 msgid "Only system administrators have the permission to do this."
 msgstr ""
 
-#: libfm/src/gtk/fm-gtk-utils.c:923
+#: src/libfm/gtk/fm-gtk-utils.c:923
 #, c-format
 msgid "Do you want to move the file '%s' to trash can?"
 msgstr ""
 
-#: libfm/src/gtk/fm-gtk-utils.c:928
+#: src/libfm/gtk/fm-gtk-utils.c:928
 #, c-format
 msgid "Do you want to move the %d selected file to trash can?"
 msgid_plural "Do you want to move the %d selected files to trash can?"
 msgstr[0] ""
 msgstr[1] ""
 
-#: libfm/src/gtk/fm-gtk-utils.c:988
+#: src/libfm/gtk/fm-gtk-utils.c:988
 #, c-format
 msgid "Do you want to delete the file '%s'?"
 msgstr ""
 
-#: libfm/src/gtk/fm-gtk-utils.c:993
+#: src/libfm/gtk/fm-gtk-utils.c:993
 #, c-format
 msgid "Do you want to delete the %d selected file?"
 msgid_plural "Do you want to delete the %d selected files?"
 msgstr[0] ""
 msgstr[1] ""
 
-#: libfm/src/gtk/fm-gtk-utils.c:1092
+#: src/libfm/gtk/fm-gtk-utils.c:1092
 msgid "Rename File"
 msgstr ""
 
-#: libfm/src/gtk/fm-gtk-utils.c:1093
+#: src/libfm/gtk/fm-gtk-utils.c:1093
 msgid "Please enter a new name:"
 msgstr ""
 
-#: libfm/src/gtk/fm-gtk-utils.c:1165
+#: src/libfm/gtk/fm-gtk-utils.c:1165
 msgid "Are you sure you want to empty the trash can?"
 msgstr ""
 
-#: libfm/src/gtk/fm-path-entry.c:674
+#: src/libfm/gtk/fm-path-entry.c:674
 msgid "Pa_ste and Go"
 msgstr ""
 
-#: libfm/src/gtk/fm-path-entry.c:733
+#: src/libfm/gtk/fm-path-entry.c:733
 msgid "Folder location bar"
 msgstr ""
 
-#: libfm/src/gtk/fm-places-model.c:794 libfm/src/gtk/fm-places-model.c:1055
-#: libfm/src/gtk/fm-places-model.c:1177
+#: src/libfm/gtk/fm-places-model.c:794 src/libfm/gtk/fm-places-model.c:1055
+#: src/libfm/gtk/fm-places-model.c:1177
 msgid "Home Folder"
 msgstr ""
 
-#: libfm/src/gtk/fm-places-model.c:826 libfm/src/gtk/fm-places-model.c:1071
-#: libfm/src/gtk/fm-places-model.c:1205 libfm/src/modules/vfs-menu.c:1528
+#: src/libfm/gtk/fm-places-model.c:826 src/libfm/gtk/fm-places-model.c:1071
+#: src/libfm/gtk/fm-places-model.c:1205 src/libfm/modules/vfs-menu.c:1528
 msgid "Applications"
 msgstr ""
 
-#: libfm/src/gtk/fm-places-model.c:842 libfm/src/gtk/fm-places-model.c:1061
-#: libfm/src/gtk/fm-places-model.c:1191
+#: src/libfm/gtk/fm-places-model.c:842 src/libfm/gtk/fm-places-model.c:1061
+#: src/libfm/gtk/fm-places-model.c:1191
 msgid "Filesystem Root"
 msgstr ""
 
-#: libfm/src/gtk/fm-places-view.c:132
+#: src/libfm/gtk/fm-places-view.c:132
 msgid "_Mount Volume"
 msgstr ""
 
-#: libfm/src/gtk/fm-places-view.c:133
+#: src/libfm/gtk/fm-places-view.c:133
 msgid "_Unmount Volume"
 msgstr ""
 
-#: libfm/src/gtk/fm-places-view.c:134
+#: src/libfm/gtk/fm-places-view.c:134
 msgid "_Eject Removable Media"
 msgstr ""
 
-#: libfm/src/gtk/fm-places-view.c:135
+#: src/libfm/gtk/fm-places-view.c:135
 msgid "_Format Volume"
 msgstr ""
 
-#: libfm/src/gtk/fm-places-view.c:151
+#: src/libfm/gtk/fm-places-view.c:151
 msgid "_Rename Bookmark Item"
 msgstr ""
 
-#: libfm/src/gtk/fm-places-view.c:152
+#: src/libfm/gtk/fm-places-view.c:152
 msgid "Re_move from Bookmarks"
 msgstr ""
 
-#: libfm/src/gtk/fm-places-view.c:153
+#: src/libfm/gtk/fm-places-view.c:153
 msgid "Move Bookmark _Up"
 msgstr ""
 
-#: libfm/src/gtk/fm-places-view.c:154
+#: src/libfm/gtk/fm-places-view.c:154
 msgid "Move Bookmark _Down"
 msgstr ""
 
-#: libfm/src/gtk/fm-places-view.c:167 libfm/src/modules/gtk-menu-trash.c:87
-#: libfm/src/modules/gtk-menu-trash.c:114
+#: src/libfm/gtk/fm-places-view.c:167 src/libfm/modules/gtk-menu-trash.c:87
+#: src/libfm/modules/gtk-menu-trash.c:114
 msgid "_Empty Trash Can"
 msgstr ""
 
-#: libfm/src/gtk/fm-places-view.c:609 libfm/src/gtk/fm-side-pane.c:731
+#: src/libfm/gtk/fm-places-view.c:609 src/libfm/gtk/fm-side-pane.c:731
 msgid "Shows list of common places, devices, and bookmarks in sidebar"
 msgstr ""
 
-#: libfm/src/gtk/fm-places-view.c:1215
+#: src/libfm/gtk/fm-places-view.c:1215
 msgid "Rename Bookmark Item"
 msgstr ""
 
-#: libfm/src/gtk/fm-places-view.c:1216
+#: src/libfm/gtk/fm-places-view.c:1216
 msgid "Enter a new name:"
 msgstr ""
 
-#: libfm/src/gtk/fm-progress-dlg.c:136
+#: src/libfm/gtk/fm-progress-dlg.c:136
 msgid ": "
 msgstr ""
 
-#: libfm/src/gtk/fm-progress-dlg.c:214 libfm/src/gtk/fm-progress-dlg.c:232
+#: src/libfm/gtk/fm-progress-dlg.c:214 src/libfm/gtk/fm-progress-dlg.c:232
 #, c-format
 msgid ""
 "Type: %s\n"
@@ -2378,399 +2375,399 @@ msgid ""
 "Modified: %s"
 msgstr ""
 
-#: libfm/src/gtk/fm-progress-dlg.c:220 libfm/src/gtk/fm-progress-dlg.c:245
+#: src/libfm/gtk/fm-progress-dlg.c:220 src/libfm/gtk/fm-progress-dlg.c:245
 #, c-format
 msgid ""
 "Type: %s\n"
 "Modified: %s"
 msgstr ""
 
-#: libfm/src/gtk/fm-progress-dlg.c:346
+#: src/libfm/gtk/fm-progress-dlg.c:346
 msgid "<b>Errors occurred before file operation was stopped.</b>"
 msgstr ""
 
-#: libfm/src/gtk/fm-progress-dlg.c:348
+#: src/libfm/gtk/fm-progress-dlg.c:348
 msgid "Cancelled"
 msgstr ""
 
-#: libfm/src/gtk/fm-progress-dlg.c:352
+#: src/libfm/gtk/fm-progress-dlg.c:352
 msgid "<b>The file operation was completed with errors.</b>"
 msgstr ""
 
-#: libfm/src/gtk/fm-progress-dlg.c:354
+#: src/libfm/gtk/fm-progress-dlg.c:354
 msgid "Finished"
 msgstr ""
 
-#: libfm/src/gtk/fm-progress-dlg.c:376
+#: src/libfm/gtk/fm-progress-dlg.c:376
 msgid ""
 "Some files cannot be moved to trash can because the underlying file systems "
 "don't support this operation.\n"
 "Do you want to delete them instead?"
 msgstr ""
 
-#: libfm/src/gtk/fm-progress-dlg.c:417 libfm/src/gtk/fm-progress-dlg.c:566
+#: src/libfm/gtk/fm-progress-dlg.c:417 src/libfm/gtk/fm-progress-dlg.c:566
 msgid "_Pause"
 msgstr ""
 
-#: libfm/src/gtk/fm-progress-dlg.c:425
+#: src/libfm/gtk/fm-progress-dlg.c:425
 msgid "_Resume"
 msgstr ""
 
-#: libfm/src/gtk/fm-progress-dlg.c:600
+#: src/libfm/gtk/fm-progress-dlg.c:600
 msgid ", "
 msgstr ""
 
 #. translators: it is part of "Moving files:" or "Moving xxx.txt"
-#: libfm/src/gtk/fm-progress-dlg.c:620
+#: src/libfm/gtk/fm-progress-dlg.c:620
 msgid "Moving"
 msgstr ""
 
 #. translators: it is part of "Copying files:" or "Copying xxx.txt"
-#: libfm/src/gtk/fm-progress-dlg.c:624
+#: src/libfm/gtk/fm-progress-dlg.c:624
 msgid "Copying"
 msgstr ""
 
 #. translators: it is part of "Trashing files:" or "Trashing xxx.txt"
-#: libfm/src/gtk/fm-progress-dlg.c:628
+#: src/libfm/gtk/fm-progress-dlg.c:628
 msgid "Trashing"
 msgstr ""
 
 #. translators: it is part of "Deleting files:" or "Deleting xxx.txt"
-#: libfm/src/gtk/fm-progress-dlg.c:632
+#: src/libfm/gtk/fm-progress-dlg.c:632
 msgid "Deleting"
 msgstr ""
 
 #. translators: it is part of "Creating link /path/xxx.txt"
-#: libfm/src/gtk/fm-progress-dlg.c:636
+#: src/libfm/gtk/fm-progress-dlg.c:636
 msgid "Creating link"
 msgstr ""
 
 #. translators: 'In:' string is followed by destination folder path
-#: libfm/src/gtk/fm-progress-dlg.c:638
+#: src/libfm/gtk/fm-progress-dlg.c:638
 msgid "<b>In:</b>"
 msgstr ""
 
-#: libfm/src/gtk/fm-progress-dlg.c:639
+#: src/libfm/gtk/fm-progress-dlg.c:639
 msgid "Creating links to files"
 msgstr ""
 
 #. translators: it is part of "Changing attributes of xxx.txt"
-#: libfm/src/gtk/fm-progress-dlg.c:646
+#: src/libfm/gtk/fm-progress-dlg.c:646
 msgid "Changing attributes of"
 msgstr ""
 
-#: libfm/src/gtk/fm-progress-dlg.c:647
+#: src/libfm/gtk/fm-progress-dlg.c:647
 msgid "Changing attributes of files"
 msgstr ""
 
 #. translators: it is part of "Restoring files:" or "Restoring xxx.txt"
-#: libfm/src/gtk/fm-progress-dlg.c:653
+#: src/libfm/gtk/fm-progress-dlg.c:653
 msgid "Restoring"
 msgstr ""
 
 #. note to translators: resulting string is such as "Deleting files"
-#: libfm/src/gtk/fm-progress-dlg.c:663
+#: src/libfm/gtk/fm-progress-dlg.c:663
 #, c-format
 msgid "%s files"
 msgstr ""
 
-#: libfm/src/gtk/fm-progress-dlg.c:666
+#: src/libfm/gtk/fm-progress-dlg.c:666
 msgid "<b>File operation is in progress...</b>"
 msgstr ""
 
 #. note to translators: resulting string is such as "Deleting file"
-#: libfm/src/gtk/fm-progress-dlg.c:672
+#: src/libfm/gtk/fm-progress-dlg.c:672
 #, c-format
 msgid "<b>%s file:</b>"
 msgstr ""
 
 #. note to translators: resulting string is such as "Deleting files"
-#: libfm/src/gtk/fm-progress-dlg.c:675
+#: src/libfm/gtk/fm-progress-dlg.c:675
 #, c-format
 msgid "<b>%s files:</b>"
 msgstr ""
 
-#: libfm/src/gtk/fm-side-pane.c:67
+#: src/libfm/gtk/fm-side-pane.c:67
 msgid "_Off"
 msgstr ""
 
-#: libfm/src/gtk/fm-side-pane.c:68
+#: src/libfm/gtk/fm-side-pane.c:68
 msgid "_Places"
 msgstr ""
 
-#: libfm/src/gtk/fm-side-pane.c:69
+#: src/libfm/gtk/fm-side-pane.c:69
 msgid "_Directory Tree"
 msgstr ""
 
-#: libfm/src/gtk/fm-side-pane.c:70
+#: src/libfm/gtk/fm-side-pane.c:70
 msgid "_Remote"
 msgstr ""
 
-#: libfm/src/gtk/fm-side-pane.c:495 libfm/src/gtk/fm-side-pane.c:707
+#: src/libfm/gtk/fm-side-pane.c:495 src/libfm/gtk/fm-side-pane.c:707
 msgid "Places"
 msgstr ""
 
-#: libfm/src/gtk/fm-side-pane.c:513 libfm/src/gtk/fm-side-pane.c:709
+#: src/libfm/gtk/fm-side-pane.c:513 src/libfm/gtk/fm-side-pane.c:709
 msgid "Directory Tree"
 msgstr ""
 
-#: libfm/src/gtk/fm-standard-view.c:288
+#: src/libfm/gtk/fm-standard-view.c:288
 msgid "View of folder contents"
 msgstr ""
 
-#: libfm/src/gtk/fm-standard-view.c:900
+#: src/libfm/gtk/fm-standard-view.c:900
 #, c-format
 msgid "_Hide %s"
 msgstr ""
 
-#: libfm/src/gtk/fm-standard-view.c:908
+#: src/libfm/gtk/fm-standard-view.c:908
 msgid "_Move Left"
 msgstr ""
 
-#: libfm/src/gtk/fm-standard-view.c:914
+#: src/libfm/gtk/fm-standard-view.c:914
 msgid "Move _Right"
 msgstr ""
 
-#: libfm/src/gtk/fm-standard-view.c:937
+#: src/libfm/gtk/fm-standard-view.c:937
 #, c-format
 msgid "Show %s"
 msgstr ""
 
-#: libfm/src/gtk/fm-standard-view.c:949
+#: src/libfm/gtk/fm-standard-view.c:949
 msgid "_Forget Width"
 msgstr ""
 
-#: libfm/src/gtk/fm-standard-view.c:2007
+#: src/libfm/gtk/fm-standard-view.c:2007
 msgid "_Compact View"
 msgstr ""
 
-#: libfm/src/gtk/fm-standard-view.c:2008
+#: src/libfm/gtk/fm-standard-view.c:2008
 msgid "_Thumbnail View"
 msgstr ""
 
-#: libfm/src/gtk/fm-standard-view.c:2009
+#: src/libfm/gtk/fm-standard-view.c:2009
 msgid "Detailed _List View"
 msgstr ""
 
-#: libfm/src/gtk/fm-standard-view.c:2010
+#: src/libfm/gtk/fm-standard-view.c:2010
 msgid "_Icon or Thumb View"
 msgstr ""
 
-#: libfm/src/gtk/fm-tab-label.c:157
+#: src/libfm/gtk/fm-tab-label.c:157
 msgid "Changes active tab"
 msgstr ""
 
-#: libfm/src/job/fm-dir-list-job.c:237 libfm/src/job/fm-dir-list-job.c:250
-#: libfm/src/job/fm-dir-list-job.c:362
+#: src/libfm/job/fm-dir-list-job.c:237 src/libfm/job/fm-dir-list-job.c:250
+#: src/libfm/job/fm-dir-list-job.c:362
 #, c-format
 msgid "The specified directory '%s' is not valid"
 msgstr ""
 
-#: libfm/src/job/fm-file-ops-job.c:528 libfm/src/job/fm-file-ops-job.c:603
+#: src/libfm/job/fm-file-ops-job.c:528 src/libfm/job/fm-file-ops-job.c:603
 msgid "Cannot access destination file"
 msgstr ""
 
-#: libfm/src/job/fm-file-ops-job.c:649
+#: src/libfm/job/fm-file-ops-job.c:649
 msgid "Cannot create a link on non-native filesystem"
 msgstr ""
 
-#: libfm/src/job/fm-file-ops-job-delete.c:501
+#: src/libfm/job/fm-file-ops-job-delete.c:501
 #, c-format
 msgid "Cannot untrash file '%s': original path not known"
 msgstr ""
 
-#: libfm/src/job/fm-file-ops-job-xfer.c:58
+#: src/libfm/job/fm-file-ops-job-xfer.c:58
 msgid "Destination does not exist"
 msgstr ""
 
-#: libfm/src/job/fm-file-ops-job-xfer.c:63
+#: src/libfm/job/fm-file-ops-job-xfer.c:63
 msgid "Source and destination are the same."
 msgstr ""
 
-#: libfm/src/job/fm-file-ops-job-xfer.c:70
+#: src/libfm/job/fm-file-ops-job-xfer.c:70
 msgid "Cannot move a folder into its sub folder"
 msgstr ""
 
-#: libfm/src/job/fm-file-ops-job-xfer.c:72
+#: src/libfm/job/fm-file-ops-job-xfer.c:72
 msgid "Cannot copy a folder into its sub folder"
 msgstr ""
 
-#: libfm/src/job/fm-file-ops-job-xfer.c:74
+#: src/libfm/job/fm-file-ops-job-xfer.c:74
 msgid "Destination is a sub folder of source"
 msgstr ""
 
-#: libfm/src/job/fm-file-ops-job-xfer.c:391
+#: src/libfm/job/fm-file-ops-job-xfer.c:391
 #, c-format
 msgid "Cannot copy file '%s': not supported"
 msgstr ""
 
-#: libfm/src/job/fm-file-ops-job-change-attr.c:314
+#: src/libfm/job/fm-file-ops-job-change-attr.c:314
 #, c-format
 msgid "Setting display name can be done only for single file"
 msgstr ""
 
-#: libfm/src/job/fm-file-ops-job-change-attr.c:317
+#: src/libfm/job/fm-file-ops-job-change-attr.c:317
 #, c-format
 msgid "Setting target can be done only for single file"
 msgstr ""
 
-#: libfm/src/modules/vfs-menu.c:289
+#: src/libfm/modules/vfs-menu.c:289
 #, c-format
 msgid "XML file '%s' error (%d:%d): "
 msgstr ""
 
-#: libfm/src/modules/vfs-menu.c:299
+#: src/libfm/modules/vfs-menu.c:299
 msgid "XML file doesn't contain Applications root"
 msgstr ""
 
-#: libfm/src/modules/vfs-menu.c:374 libfm/src/modules/vfs-menu.c:454
-#: libfm/src/modules/vfs-menu.c:558 libfm/src/modules/vfs-menu.c:672
+#: src/libfm/modules/vfs-menu.c:374 src/libfm/modules/vfs-menu.c:454
+#: src/libfm/modules/vfs-menu.c:558 src/libfm/modules/vfs-menu.c:672
 #, c-format
 msgid "Cannot create XML definition for '%s'"
 msgstr ""
 
-#: libfm/src/modules/vfs-menu.c:439 libfm/src/modules/vfs-menu.c:2624
+#: src/libfm/modules/vfs-menu.c:439 src/libfm/modules/vfs-menu.c:2624
 #, c-format
 msgid "Menu path '%s' already exists"
 msgstr ""
 
-#: libfm/src/modules/vfs-menu.c:1092 libfm/src/modules/vfs-menu.c:1397
-#: libfm/src/modules/vfs-menu.c:1483
+#: src/libfm/modules/vfs-menu.c:1092 src/libfm/modules/vfs-menu.c:1397
+#: src/libfm/modules/vfs-menu.c:1483
 msgid "Menu cache error"
 msgstr ""
 
-#: libfm/src/modules/vfs-menu.c:1357
+#: src/libfm/modules/vfs-menu.c:1357
 msgid "Invalid menu directory"
 msgstr ""
 
-#: libfm/src/modules/vfs-menu.c:1420 libfm/src/modules/vfs-menu.c:1696
+#: src/libfm/modules/vfs-menu.c:1420 src/libfm/modules/vfs-menu.c:1696
 msgid "Menu item name cannot be empty"
 msgstr ""
 
-#: libfm/src/modules/vfs-menu.c:1470
+#: src/libfm/modules/vfs-menu.c:1470
 #, c-format
 msgid "Invalid menu directory '%s'"
 msgstr ""
 
-#: libfm/src/modules/vfs-menu.c:1613 libfm/src/modules/vfs-menu.c:1754
+#: src/libfm/modules/vfs-menu.c:1613 src/libfm/modules/vfs-menu.c:1754
 msgid "Invalid menu item"
 msgstr ""
 
-#: libfm/src/modules/vfs-menu.c:1617 libfm/src/modules/vfs-menu.c:1758
+#: src/libfm/modules/vfs-menu.c:1617 src/libfm/modules/vfs-menu.c:1758
 #, c-format
 msgid "The menu item '%s' doesn't have appropriate entry file"
 msgstr ""
 
-#: libfm/src/modules/vfs-menu.c:1780
+#: src/libfm/modules/vfs-menu.c:1780
 msgid "Change hidden status isn't supported for menu directory"
 msgstr ""
 
-#: libfm/src/modules/vfs-menu.c:1938
+#: src/libfm/modules/vfs-menu.c:1938
 #, c-format
 msgid "Setting attribute '%s' not supported"
 msgstr ""
 
-#: libfm/src/modules/vfs-menu.c:1948
+#: src/libfm/modules/vfs-menu.c:1948
 #, c-format
 msgid "Invalid value for attribute '%s'"
 msgstr ""
 
-#: libfm/src/modules/vfs-menu.c:1985
+#: src/libfm/modules/vfs-menu.c:1985
 #, c-format
 msgid "The '%s' is a menu directory"
 msgstr ""
 
-#: libfm/src/modules/vfs-menu.c:1988 libfm/src/modules/vfs-menu.c:2617
+#: src/libfm/modules/vfs-menu.c:1988 src/libfm/modules/vfs-menu.c:2617
 #, c-format
 msgid "The '%s' isn't a menu item"
 msgstr ""
 
-#: libfm/src/modules/vfs-menu.c:2012
+#: src/libfm/modules/vfs-menu.c:2012
 #, c-format
 msgid "The '%s' entry file is broken"
 msgstr ""
 
-#: libfm/src/modules/vfs-menu.c:2298 libfm/src/modules/vfs-menu.c:2387
+#: src/libfm/modules/vfs-menu.c:2298 src/libfm/modules/vfs-menu.c:2387
 #, c-format
 msgid "Cannot create menu item '%s'"
 msgstr ""
 
-#: libfm/src/modules/vfs-menu.c:2532
+#: src/libfm/modules/vfs-menu.c:2532
 msgid "Name of menu directory should not end with \".desktop\""
 msgstr ""
 
-#: libfm/src/modules/vfs-menu.c:2577
+#: src/libfm/modules/vfs-menu.c:2577
 msgid "Invalid operation with menu root"
 msgstr ""
 
-#: libfm/src/modules/vfs-menu.c:2666
+#: src/libfm/modules/vfs-menu.c:2666
 msgid "Invalid destination"
 msgstr ""
 
-#: libfm/src/modules/vfs-menu.c:2942
+#: src/libfm/modules/vfs-menu.c:2942
 #, c-format
 msgid "FmMenuVFileMonitor: folder '%s' not found in menu cache"
 msgstr ""
 
 #. FIXME: need name to be converted to UTF-8?
-#: libfm/src/modules/vfs-search.c:991
+#: src/libfm/modules/vfs-search.c:991
 msgid "Search"
 msgstr ""
 
-#: libfm/src/modules/vfs-search.c:1058
+#: src/libfm/modules/vfs-search.c:1058
 msgid "Search Results"
 msgstr ""
 
-#: libfm/src/modules/gtk-fileprop-x-desktop.c:66
+#: src/libfm/modules/gtk-fileprop-x-desktop.c:66
 msgid "Choose Executable File"
 msgstr ""
 
-#: libfm/src/modules/gtk-fileprop-x-desktop.c:267
+#: src/libfm/modules/gtk-fileprop-x-desktop.c:267
 msgid "<b>Co_mmand:</b>"
 msgstr ""
 
-#: libfm/src/modules/gtk-fileprop-x-desktop.c:288
+#: src/libfm/modules/gtk-fileprop-x-desktop.c:288
 msgid "Command to execute when the application icon is activated"
 msgstr ""
 
-#: libfm/src/modules/gtk-fileprop-x-desktop.c:322
+#: src/libfm/modules/gtk-fileprop-x-desktop.c:322
 msgid "<b>D_escription:</b>"
 msgstr ""
 
-#: libfm/src/modules/gtk-fileprop-x-desktop.c:332
+#: src/libfm/modules/gtk-fileprop-x-desktop.c:332
 msgid "Generic name of the application"
 msgstr ""
 
-#: libfm/src/modules/gtk-fileprop-x-desktop.c:340
+#: src/libfm/modules/gtk-fileprop-x-desktop.c:340
 msgid "<b>_Working directory:</b>"
 msgstr ""
 
-#: libfm/src/modules/gtk-fileprop-x-desktop.c:351
+#: src/libfm/modules/gtk-fileprop-x-desktop.c:351
 msgid "The working directory to run the program in"
 msgstr ""
 
-#: libfm/src/modules/gtk-fileprop-x-desktop.c:359
+#: src/libfm/modules/gtk-fileprop-x-desktop.c:359
 msgid "<b>_Tooltip:</b>"
 msgstr ""
 
-#: libfm/src/modules/gtk-fileprop-x-desktop.c:369
+#: src/libfm/modules/gtk-fileprop-x-desktop.c:369
 msgid "Tooltip to show on application"
 msgstr ""
 
 #. TODO: handle "TryExec" field ?
 #. row 7: "StartupNotify" GtkCheckButton
-#: libfm/src/modules/gtk-fileprop-x-desktop.c:375
+#: src/libfm/modules/gtk-fileprop-x-desktop.c:375
 msgid "_Use startup notification"
 msgstr ""
 
-#: libfm/src/modules/gtk-fileprop-x-desktop.c:388
+#: src/libfm/modules/gtk-fileprop-x-desktop.c:388
 msgid "_Desktop Entry"
 msgstr ""
 
-#: libfm/src/modules/gtk-menu-trash.c:74
+#: src/libfm/modules/gtk-menu-trash.c:74
 msgid "_Restore"
 msgstr ""
 
-#: libfm/src/modules/gtk-menu-trash.c:75
+#: src/libfm/modules/gtk-menu-trash.c:75
 msgid "Restore trashed files to original paths"
 msgstr ""
