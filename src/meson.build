@@ -123,7 +123,7 @@ path_c_args = [
   '-DPACKAGE_DATA_DIR="' + datadir + '"',
   '-DPACKAGE_MODULES_DIR="' + moduledir + '"',
   '-DPACKAGE_UI_DIR="' + uidir + '"',
-  '-DPACKAGE_THEME_DIR="' + datadir + '/images"',
+  '-DPACKAGE_THEME_DIR="' + themedir + '"',
 ]
 
 extra_c_args = [

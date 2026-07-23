@@ -32,11 +32,11 @@ install_data('libfm.xml',
 )
 
 install_data('archivers.list', 'terminals.list',
-  install_dir : get_option('datadir') / 'pcmanfm',
+  install_dir : datadir,
 )
 
-install_data('images/unknown.png', 'images/folder.png',
-  install_dir : get_option('datadir') / 'pcmanfm' / 'images',
+install_data('unknown.png', 'folder.png',
+  install_dir : themedir,
 )
 
 subdir('ui')

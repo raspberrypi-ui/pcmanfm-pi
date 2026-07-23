@@ -1,4 +1,3 @@
-# GtkBuilder UI definition files
 ui_sources = [
   'pref.glade',
   'desktop-pref.glade',
@@ -6,9 +5,6 @@ ui_sources = [
   'connect.glade',
 ]
 
-# libfm's own GtkBuilder UI files; libfm's PACKAGE_UI_DIR is now pcmanfm's
-# own ui_install_dir too (no separate datadir/libfm), and none of these
-# filenames collide with pcmanfm's own ui_sources above.
 libfm_ui_sources = [
   'file-prop.glade',
   'progress.glade',
@@ -19,8 +15,6 @@ libfm_ui_sources = [
   'choose-icon.glade',
 ]
 
-ui_install_dir = get_option('datadir') / 'pcmanfm' / 'ui'
-
 about_conf = configuration_data()
 about_conf.set('VERSION', meson.project_version())
 
@@ -30,7 +24,6 @@ about_glade = configure_file(
   configuration : about_conf,
 )
 
-# Purge GtkBuilder UI files: strip comments and collapse inter-tag whitespace
 glade_to_ui = files('glade2ui.sh')
 
 foreach f : ui_sources + libfm_ui_sources
@@ -40,7 +33,7 @@ foreach f : ui_sources + libfm_ui_sources
     output : out,
     command : [glade_to_ui, '@INPUT@', '@OUTPUT@'],
     install : true,
-    install_dir : ui_install_dir,
+    install_dir : uidir,
   )
 endforeach
 
@@ -49,5 +42,5 @@ custom_target('about.ui',
   output : 'about.ui',
   command : [glade_to_ui, '@INPUT@', '@OUTPUT@'],
   install : true,
-  install_dir : ui_install_dir,
+  install_dir : uidir,
 )
