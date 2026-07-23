@@ -64,17 +64,11 @@ static gboolean add_menu_items(GtkTreeIter* parent_it, MenuCacheDir* dir)
 {
     GtkTreeIter it;
     GSList * l;
-#if MENU_CACHE_CHECK_VERSION(0, 4, 0)
     GSList *list;
-#endif
     GIcon* gicon;
     gboolean has_items = FALSE;
     /* Iterate over all menu items in this directory. */
-#if MENU_CACHE_CHECK_VERSION(0, 4, 0)
     for (l = list = menu_cache_dir_list_children(dir); l != NULL; l = l->next)
-#else
-    for (l = menu_cache_dir_get_children(dir); l != NULL; l = l->next)
-#endif
     {
         /* Get the menu item. */
         MenuCacheItem* item = MENU_CACHE_ITEM(l->data);
@@ -104,32 +98,20 @@ static gboolean add_menu_items(GtkTreeIter* parent_it, MenuCacheDir* dir)
                 break;
         }
     }
-#if MENU_CACHE_CHECK_VERSION(0, 4, 0)
     g_slist_free_full(list, (GDestroyNotify)menu_cache_item_unref);
-#endif
     return has_items;
 }
 
-#if MENU_CACHE_CHECK_VERSION(0, 4, 0)
 static void on_menu_cache_reload(MenuCache* mc, gpointer user_data)
-#else
-static void on_menu_cache_reload(gpointer mc, gpointer user_data)
-#endif
 {
     g_return_if_fail(store);
     gtk_tree_store_clear(store);
-#if MENU_CACHE_CHECK_VERSION(0, 4, 0)
     MenuCacheDir* dir = menu_cache_dup_root_dir(mc);
-#else
-    MenuCacheDir* dir = menu_cache_get_root_dir(menu_cache);
-#endif
     /* FIXME: preserve original selection */
     if(dir)
     {
         add_menu_items(NULL, dir);
-#if MENU_CACHE_CHECK_VERSION(0, 4, 0)
         menu_cache_item_unref(MENU_CACHE_ITEM(dir));
-#endif
     }
 }
 
@@ -173,18 +155,12 @@ GtkTreeView *fm_app_menu_view_new(void)
 
         if(menu_cache)
         {
-#if MENU_CACHE_CHECK_VERSION(0, 4, 0)
             MenuCacheDir* dir = menu_cache_dup_root_dir(menu_cache);
-#else
-            MenuCacheDir* dir = menu_cache_get_root_dir(menu_cache);
-#endif
             menu_cache_reload_notify = menu_cache_add_reload_notify(menu_cache, on_menu_cache_reload, NULL);
             if(dir) /* content of menu is already loaded */
             {
                 add_menu_items(NULL, dir);
-#if MENU_CACHE_CHECK_VERSION(0, 4, 0)
                 menu_cache_item_unref(MENU_CACHE_ITEM(dir));
-#endif
             }
         }
     }

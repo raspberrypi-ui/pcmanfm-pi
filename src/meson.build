@@ -140,13 +140,13 @@ extra_c_args = [
   '-Werror-implicit-function-declaration',
 ]
 
-libfm_includes = include_directories('libfm', 'libfm/base', 'libfm/job', 'libfm/gtk','libfm/extra')
+libfm_includes = include_directories('libfm', 'libfm/base', 'libfm/job', 'libfm/gtk', 'libfm/extra')
 
 glib = dependency('glib-2.0', version : '>=2.80')
 gtk = dependency('gtk+-3.0', version : '>=3.24')
 x11 = dependency('x11')
 layershell = dependency('gtk-layer-shell-0')
-menucache = dependency('libmenu-cache')
+menucache = dependency('libmenu-cache', version : '>=1.1.0')
 
 math = meson.get_compiler('c').find_library('m', required : false)
 

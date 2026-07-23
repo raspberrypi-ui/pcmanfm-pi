@@ -804,9 +804,7 @@ void fm_file_info_set_from_menu_cache_item(FmFileInfo* fi, MenuCacheItem* item)
     {
         fi->mode = S_IFDIR;
         fi->mime_type = fm_mime_type_ref(_fm_mime_type_get_inode_directory());
-#if MENU_CACHE_CHECK_VERSION(0, 5, 0)
         fi->hidden = !menu_cache_dir_is_visible(MENU_CACHE_DIR(item));
-#endif
     }
     else if(menu_cache_item_get_type(item) == MENU_CACHE_TYPE_APP)
     {
