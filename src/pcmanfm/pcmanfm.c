@@ -249,7 +249,6 @@ int main(int argc, char** argv)
     fm_gtk_init(config);
 
     /* register our modules */
-    fm_modules_add_directory(PACKAGE_MODULES_DIR);
     fm_module_register_tab_page_status();
 
     /* load pcmanfm-specific config file */

@@ -50,6 +50,16 @@ m_dep = cc.find_library('m', required : false)
 # since there is no longer a standalone libfm.
 pcmanfm_datadir_abs = get_option('prefix') / get_option('datadir') / 'pcmanfm'
 pcmanfm_uidir_abs = pcmanfm_datadir_abs / 'ui'
+# Shared with src/libfm/meson.build too, so both honour the localedir option
+# the same way rather than libfm re-deriving it from datadir.
+pcmanfm_localedir_abs = get_option('prefix') / get_option('localedir')
+
+# Single shared third-party dlopen()-module directory. libfm no longer
+# exists as an installable/shared library other applications could load
+# modules from, so there is no longer a reason for libfm's own default
+# module directory (see src/libfm/meson.build) to differ from pcmanfm's.
+pcmanfm_modules_dir = get_option('libdir') / 'pcmanfm'
+pcmanfm_moduledir_abs = get_option('prefix') / pcmanfm_modules_dir
 
 # Vendored in src/libfm/ and compiled directly into this same build (no
 # subproject boundary, no separate libfm(-gtk3) shared libraries) so this
@@ -58,7 +68,13 @@ pcmanfm_uidir_abs = pcmanfm_datadir_abs / 'ui'
 # include dirs consumed by src/pcmanfm/meson.build below.
 subdir('src/libfm')
 
-fm_deps = [
+# Full link-dependency list for the pcmanfm binary itself (src/pcmanfm/
+# meson.build): its own direct deps plus the ones libfm's static libraries
+# were compiled against, since linking a static library into an executable
+# doesn't pull those along automatically - the final link still needs them
+# supplied explicitly. Only assemblable after subdir('src/libfm') has run,
+# since the fm_* ones are declared there.
+pcmanfm_deps = [
   gio_dep, gthread_dep, glib_dep, pango_dep, layer_shell_dep, gtk_dep, m_dep,
   fm_gobject_dep, fm_gio2_dep, fm_cairo_dep, fm_menu_cache_dep, fm_dl_dep,
 ]

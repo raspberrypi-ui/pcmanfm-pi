@@ -10,17 +10,11 @@
 
 gnome = import('gnome')
 
-# Absolute install directories, needed to bake paths into the binaries as
-# -D defines (datadir/libdir/sysconfdir are relative-to-prefix by default).
-prefix_abs = get_option('prefix')
-datadir_abs = prefix_abs / get_option('datadir')
-libdir_abs = prefix_abs / get_option('libdir')
-localedir_abs = datadir_abs / 'locale'
-# PACKAGE_MODULES_DIR is the one remaining libfm-specific directory: it is
-# no longer scanned by default (see base/fm-module.c) and nothing installs
-# there any more, but the historical location is kept for any third-party
-# module an admin might still drop in via fm_modules_add_directory().
-libfm_moduledir_abs = libdir_abs / 'libfm' / 'modules'
+# Shared with pcmanfm's own module directory (see root meson.build): libfm
+# is no longer an installable/shared library other applications could load
+# modules from, so there is no more reason for it to have a separate
+# default scan directory from pcmanfm's own.
+libfm_moduledir_abs = pcmanfm_moduledir_abs
 # PACKAGE_DATA_DIR/PACKAGE_UI_DIR are pcmanfm's own (see root meson.build);
 # libfm's data/ui files install alongside pcmanfm's, not to a separate
 # datadir/libfm.
@@ -41,7 +35,7 @@ fm_gio_deps = [glib_dep, fm_gobject_dep, gthread_dep, fm_gio2_dep, gio_dep]
 # -D flags. PACKAGE_DATA_DIR/PACKAGE_UI_DIR are pcmanfm's own shared dirs
 # (see root meson.build) - libfm has no separate datadir/libfm any more.
 fm_path_c_args = [
-  '-DPACKAGE_LOCALE_DIR="' + localedir_abs + '"',
+  '-DPACKAGE_LOCALE_DIR="' + pcmanfm_localedir_abs + '"',
   '-DPACKAGE_DATA_DIR="' + pcmanfm_datadir_abs + '"',
   '-DPACKAGE_MODULES_DIR="' + libfm_moduledir_abs + '"',
   '-DPACKAGE_UI_DIR="' + pcmanfm_uidir_abs + '"',
