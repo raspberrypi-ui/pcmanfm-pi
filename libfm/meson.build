@@ -15,10 +15,15 @@ prefix_abs = get_option('prefix')
 datadir_abs = prefix_abs / get_option('datadir')
 libdir_abs = prefix_abs / get_option('libdir')
 localedir_abs = datadir_abs / 'locale'
-libfm_datadir_abs = datadir_abs / 'libfm'
-libfm_uidir_abs = libfm_datadir_abs / 'ui'
-libfm_themedir_abs = libfm_datadir_abs / 'images'
+# PACKAGE_MODULES_DIR is the one remaining libfm-specific directory: it is
+# no longer scanned by default (see base/fm-module.c) and nothing installs
+# there any more, but the historical location is kept for any third-party
+# module an admin might still drop in via fm_modules_add_directory().
 libfm_moduledir_abs = libdir_abs / 'libfm' / 'modules'
+# PACKAGE_DATA_DIR/PACKAGE_UI_DIR are pcmanfm's own (see root meson.build);
+# libfm's data/ui files install alongside pcmanfm's, not to a separate
+# datadir/libfm.
+libfm_themedir_abs = pcmanfm_datadir_abs / 'images'
 
 fm_gobject_dep = dependency('gobject-2.0')
 fm_gio2_dep = dependency('gio-2.0', version : '>=2.26.0')
@@ -29,14 +34,16 @@ fm_dl_dep = cc.find_library('dl', required : false)
 # Combined "GIO_CFLAGS/GIO_LIBS" bundle, matching configure.ac's PKG_CHECK_MODULES(GIO, ...).
 fm_gio_deps = [glib_dep, fm_gobject_dep, gthread_dep, fm_gio2_dep, gio_dep]
 
-# Data-dir/locale paths baked into libfm's own sources; kept target-scoped
-# (see src/meson.build) rather than project-wide, since they differ from
-# pcmanfm's own PACKAGE_DATA_DIR etc.
+# Locale/module/theme paths baked into libfm's own sources; kept
+# target-scoped (see src/meson.build) rather than project-wide since they
+# differ from pcmanfm's own equivalent -D flags. PACKAGE_DATA_DIR/
+# PACKAGE_UI_DIR are pcmanfm's own shared dirs (see root meson.build) -
+# libfm has no separate datadir/libfm any more.
 fm_path_c_args = [
   '-DPACKAGE_LOCALE_DIR="' + localedir_abs + '"',
-  '-DPACKAGE_DATA_DIR="' + libfm_datadir_abs + '"',
+  '-DPACKAGE_DATA_DIR="' + pcmanfm_datadir_abs + '"',
   '-DPACKAGE_MODULES_DIR="' + libfm_moduledir_abs + '"',
-  '-DPACKAGE_UI_DIR="' + libfm_uidir_abs + '"',
+  '-DPACKAGE_UI_DIR="' + pcmanfm_uidir_abs + '"',
   '-DPACKAGE_THEME_DIR="' + libfm_themedir_abs + '"',
 ]
 
@@ -57,4 +64,3 @@ configure_file(output : 'config.h', configuration : fm_conf)
 fm_config_inc = include_directories('.')
 
 subdir('src')
-subdir('data')

@@ -45,6 +45,12 @@ layer_shell_dep = dependency('gtk-layer-shell-0', version : '>= 0.6')
 gtk_dep = dependency('gtk+-3.0')
 m_dep = cc.find_library('m', required : false)
 
+# Single shared data/ui install location. libfm's own data/ui files install
+# here too (see libfm/meson.build) rather than a separate datadir/libfm,
+# since there is no longer a standalone libfm.
+pcmanfm_datadir_abs = get_option('prefix') / get_option('datadir') / 'pcmanfm'
+pcmanfm_uidir_abs = pcmanfm_datadir_abs / 'ui'
+
 # Vendored in libfm/ and compiled directly into this same build (no
 # subproject boundary, no separate libfm(-gtk3) shared libraries) so this
 # project has no external dependency on libfm(-gtk3)(-dev). Provides the

@@ -38,3 +38,28 @@ custom_target('about.ui',
   install : true,
   install_dir : ui_install_dir,
 )
+
+# libfm's own GtkBuilder UI files; libfm's PACKAGE_UI_DIR is now pcmanfm's
+# own ui_install_dir too (no separate datadir/libfm), and none of these
+# filenames collide with pcmanfm's own ui_sources above.
+libfm_ui_sources = [
+  'file-prop.glade',
+  'progress.glade',
+  'ask-rename.glade',
+  'app-chooser.glade',
+  'exec-file.glade',
+  'filesearch.glade',
+]
+
+foreach f : libfm_ui_sources
+  out = f.replace('.glade', '.ui')
+  custom_target(out,
+    input : f,
+    output : out,
+    command : [glade_to_ui, '@INPUT@', '@OUTPUT@'],
+    install : true,
+    install_dir : ui_install_dir,
+  )
+endforeach
+
+install_data('choose-icon.ui', install_dir : ui_install_dir)

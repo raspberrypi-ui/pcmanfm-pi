@@ -13,8 +13,8 @@ pcmanfm_sources = files(
 pcmanfm_modules_dir = get_option('libdir') / 'pcmanfm'
 
 pcmanfm_c_args = [
-  '-DPACKAGE_DATA_DIR="' + get_option('prefix') / get_option('datadir') / 'pcmanfm' + '"',
-  '-DPACKAGE_UI_DIR="' + get_option('prefix') / get_option('datadir') / 'pcmanfm' / 'ui' + '"',
+  '-DPACKAGE_DATA_DIR="' + pcmanfm_datadir_abs + '"',
+  '-DPACKAGE_UI_DIR="' + pcmanfm_uidir_abs + '"',
   '-DPACKAGE_MODULES_DIR="' + get_option('prefix') / pcmanfm_modules_dir + '"',
   '-DPACKAGE_LOCALE_DIR="' + get_option('prefix') / get_option('localedir') + '"',
   '-Wall',
