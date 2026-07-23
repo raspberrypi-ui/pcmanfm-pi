@@ -5,7 +5,7 @@ data/ui/autorun.glade
 data/ui/connect.glade
 data/ui/app-chooser.glade
 data/ui/ask-rename.glade
-data/ui/choose-icon.ui
+data/ui/choose-icon.glade
 data/ui/exec-file.glade
 data/ui/file-prop.glade
 data/ui/filesearch.glade
