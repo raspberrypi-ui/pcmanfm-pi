@@ -1,10 +1,7 @@
-Source: pcmanfm
+Source: pcmanfm-pi
 Section: utils
 Priority: optional
-Maintainer: Debian LXDE Maintainers <team+lxde@tracker.debian.org>
-Uploaders: Andrew Lee (李健秋) <ajqlee@debian.org>,
-           Andriy Grytsenko <andrej@rep.kiev.ua>,
-           ChangZhuo Chen (陳昌倬) <czchen@debian.org>
+Uploaders: Simon Long <simon@raspberrypi.com>
 Build-Depends: debhelper-compat (= 13),
                meson (>= 0.61.0),
                ninja-build,
@@ -15,11 +12,9 @@ Build-Depends: debhelper-compat (= 13),
                pkgconf
 Standards-Version: 4.7.2
 Rules-Requires-Root: no
-Homepage: https://github.com/lxde/pcmanfm
-Vcs-Browser: https://salsa.debian.org/lxde-team/pcmanfm
-Vcs-Git: https://salsa.debian.org/lxde-team/pcmanfm.git
+Homepage: https://github.com/raspberrypi-ui/pcmanfm-pi
 
-Package: pcmanfm
+Package: pcmanfm-pi
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}
 Recommends: gvfs-backends,
