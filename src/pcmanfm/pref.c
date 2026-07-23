@@ -288,7 +288,6 @@ static void on_single_click_toggled(GtkToggleButton* btn, GObject **object)
         gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(object[1]), FALSE);
 }
 
-#if FM_CHECK_VERSION(1, 4, 0)
 static void on_middle_click_toggled(GtkToggleButton* btn, gpointer single_click)
 {
     gboolean new_val = gtk_toggle_button_get_active(btn);
@@ -301,7 +300,6 @@ static void on_middle_click_toggled(GtkToggleButton* btn, gpointer single_click)
     if (new_val)
         gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(single_click), FALSE);
 }
-#endif
 
 static void on_use_trash_toggled(GtkToggleButton* btn, gpointer vbox_trash)
 {
@@ -819,7 +817,6 @@ void fm_edit_preference( GtkWindow* parent, int page )
                          b_objects);
         gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder, "single_click")),
                                      fm_config->single_click);
-#if FM_CHECK_VERSION(1, 4, 0)
         /* special handling for middle_click */
         g_signal_connect(gtk_builder_get_object(builder, "middle_click"),
                          "toggled", G_CALLBACK(on_middle_click_toggled),
@@ -827,7 +824,6 @@ void fm_edit_preference( GtkWindow* parent, int page )
         gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder, "middle_click")),
                                      fm_config->middle_click);
         gtk_widget_show(GTK_WIDGET(gtk_builder_get_object(builder, "middle_click")));
-#endif
 
         init_auto_selection_delay_scale(builder);
         INIT_BOOL(builder, FmConfig, confirm_del, NULL);
@@ -882,9 +878,7 @@ void fm_edit_preference( GtkWindow* parent, int page )
             gtk_widget_hide (GTK_WIDGET(gtk_builder_get_object(builder, "show_thumbnail")));
 
         INIT_BOOL(builder, FmConfig, si_unit, NULL);
-#if FM_CHECK_VERSION(1, 4, 0)
         INIT_BOOL_SHOW(builder, FmConfig, date_iso_8601, NULL);
-#endif
         INIT_BOOL(builder, FmConfig, backup_as_hidden, NULL);
         INIT_BOOL_SHOW(builder, FmConfig, show_full_names, NULL);
         INIT_BOOL_SHOW(builder, FmConfig, shadow_hidden, NULL);

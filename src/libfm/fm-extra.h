@@ -23,7 +23,6 @@
 #ifndef __LIBFM_FM_EXTRA_H__
 #define __LIBFM_FM_EXTRA_H__
 
-#include "fm-version.h"
 #include "fm-xml-file.h"
 
 #endif

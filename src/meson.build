@@ -36,8 +36,7 @@ fm_path_c_args = [
   '-DPACKAGE_THEME_DIR="' + libfm_themedir_abs + '"',
 ]
 
-# fm-version.h is a generated header (see below), found via fm_config_inc;
-# config.h itself is the single, project-wide one from root meson.build
+# config.h is the single, project-wide one from root meson.build
 # (config_h_dir) - there is only one executable target now, so there can
 # only be one config.h shared by every source file.
 inc_top = include_directories('libfm')
@@ -99,17 +98,6 @@ fm_marshal = gnome.genmarshal('fm-marshal',
   sources : 'libfm/base/fm-marshal.list',
   prefix : 'fm_marshal',
 )
-
-configure_file(
-  input : 'libfm/fm-version.h.in',
-  output : 'fm-version.h',
-  configuration : {
-    'FM_VERSION_MAJOR': 1,
-    'FM_VERSION_MINOR': 4,
-    'FM_VERSION_MICRO': 0,
-  },
-)
-fm_config_inc = include_directories('.')
 
 libfm_sources = files('libfm/fm.c') + base_sources + job_sources + extra_sources + fm_marshal
 
@@ -199,7 +187,7 @@ pcmanfm_deps = [
 executable('pcmanfm',
   pcmanfm_sources + libfm_sources + libfm_gtk_sources,
   c_args : pcmanfm_c_args,
-  include_directories : [config_h_dir, fm_config_inc, inc_top, inc_common, inc_gtk, inc_extra],
+  include_directories : [config_h_dir, inc_top, inc_common, inc_gtk, inc_extra],
   dependencies : pcmanfm_deps + [x11_dep],
   install : true,
 )
