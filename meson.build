@@ -12,6 +12,14 @@ gettext_package = 'pcmanfm'
 
 conf = configuration_data()
 conf.set_quoted('GETTEXT_PACKAGE', gettext_package)
+# libfm's own sources (now compiled directly into the pcmanfm executable,
+# see src/meson.build) used to carry their own separate PACKAGE_VERSION/
+# HAVE_DECL_ENVIRON via a second config.h - now there is only ever one
+# executable target, and <config.h> is an angle-bracket include resolved
+# purely by include-path order, so there can only be one config.h shared
+# by every source file.
+conf.set_quoted('PACKAGE_VERSION', meson.project_version())
+conf.set10('HAVE_DECL_ENVIRON', cc.has_header_symbol('unistd.h', 'environ'))
 
 # Large file support
 conf.set('_LARGEFILE64_SOURCE', 1, description : 'Whether to enable large file support')
@@ -61,24 +69,9 @@ pcmanfm_localedir_abs = get_option('prefix') / get_option('localedir')
 pcmanfm_modules_dir = get_option('libdir') / 'pcmanfm'
 pcmanfm_moduledir_abs = get_option('prefix') / pcmanfm_modules_dir
 
-# Vendored in src/libfm/ and compiled directly into this same build (no
-# subproject boundary, no separate libfm(-gtk3) shared libraries) so this
-# project has no external dependency on libfm(-gtk3)(-dev). Provides the
-# libfm_lib/libfm_gtk_lib static libraries and inc_top/inc_common/inc_gtk
-# include dirs consumed by src/pcmanfm/meson.build below.
-subdir('src/libfm')
-
-# Full link-dependency list for the pcmanfm binary itself (src/pcmanfm/
-# meson.build): its own direct deps plus the ones libfm's static libraries
-# were compiled against, since linking a static library into an executable
-# doesn't pull those along automatically - the final link still needs them
-# supplied explicitly. Only assemblable after subdir('src/libfm') has run,
-# since the fm_* ones are declared there.
-pcmanfm_deps = [
-  gio_dep, gthread_dep, glib_dep, pango_dep, layer_shell_dep, gtk_dep, m_dep,
-  fm_gobject_dep, fm_gio2_dep, fm_cairo_dep, fm_menu_cache_dep, fm_dl_dep,
-]
-
-subdir('src/pcmanfm')
+# Builds libfm (vendored, static, no subproject boundary, no external
+# dependency on libfm(-gtk3)(-dev)) and pcmanfm itself as a single `pcmanfm`
+# executable.
+subdir('src')
 subdir('po')
 subdir('data')
