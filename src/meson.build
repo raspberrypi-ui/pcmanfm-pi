@@ -83,11 +83,7 @@ exo_sources = files(
   'libfm/gtk/exo/exo-icon-view.c',
   'libfm/gtk/exo/exo-private.c',
   'libfm/gtk/exo/exo-tree-view.c',
-  'libfm/gtk/exo/exo-icon-view.h',
-  'libfm/gtk/exo/exo-private.h',
-  'libfm/gtk/exo/exo-tree-view.h',
   'libfm/gtk/exo/exo-marshal.c',
-  'libfm/gtk/exo/exo-marshal.h',
 )
 
 module_sources = files(
