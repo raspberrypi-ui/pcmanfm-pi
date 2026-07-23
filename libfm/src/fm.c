@@ -73,10 +73,8 @@ gboolean fm_init(FmConfig* config)
 #endif
         return FALSE; /* duplicate call */
 
-#ifdef ENABLE_NLS
     bindtextdomain(GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR);
     bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
-#endif
 
 #if !GLIB_CHECK_VERSION(2, 36, 0)
     g_type_init();

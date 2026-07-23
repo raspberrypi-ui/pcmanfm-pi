@@ -40,12 +40,15 @@ fm_path_c_args = [
   '-DPACKAGE_THEME_DIR="' + libfm_themedir_abs + '"',
 ]
 
-# libfm's own GETTEXT_PACKAGE/PACKAGE_VERSION differ from pcmanfm's, so it
-# needs its own config.h, resolvable only when compiling libfm's own
-# sources (see fm_config_inc below and its use in src/meson.build).
+# libfm's own PACKAGE_VERSION differs from pcmanfm's, so it needs its own
+# config.h, resolvable only when compiling libfm's own sources (see
+# fm_config_inc below and its use in src/meson.build). GETTEXT_PACKAGE is
+# "pcmanfm", not "libfm": libfm's translatable strings are merged into
+# po/*.po and served from the single "pcmanfm" gettext domain, so there is
+# no separate libfm.mo/libfm/po build any more.
 fm_conf = configuration_data()
 fm_conf.set_quoted('PACKAGE_VERSION', '1.4.0')
-fm_conf.set_quoted('GETTEXT_PACKAGE', 'libfm')
+fm_conf.set_quoted('GETTEXT_PACKAGE', gettext_package)
 fm_conf.set10('HAVE_DECL_ENVIRON', cc.has_header_symbol('unistd.h', 'environ'))
 fm_conf.set('_LARGEFILE64_SOURCE', 1)
 fm_conf.set('_FILE_OFFSET_BITS', 64)
@@ -55,4 +58,3 @@ fm_config_inc = include_directories('.')
 
 subdir('src')
 subdir('data')
-subdir('po')
