@@ -192,7 +192,7 @@ static void fm_dnd_dest_class_init(FmDndDestClass *klass)
                      G_SIGNAL_RUN_LAST,
                      G_STRUCT_OFFSET ( FmDndDestClass, files_dropped ),
                      g_signal_accumulator_true_handled, NULL,
-                     fm_marshal_BOOL__INT_INT_UINT_UINT_POINTER,
+                     fm_marshal_BOOLEAN__INT_INT_UINT_UINT_POINTER,
                      G_TYPE_BOOLEAN, 5, G_TYPE_INT, G_TYPE_INT, G_TYPE_UINT, G_TYPE_UINT, G_TYPE_POINTER);
 
     for(i = 0; i < N_FM_DND_DEST_DEFAULT_TARGETS; i++)
