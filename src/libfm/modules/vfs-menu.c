@@ -834,7 +834,10 @@ static GFileInfo *_g_file_info_from_menu_cache_item(MenuCacheItem *item,
     /* FIXME: use g_uri_escape_string() for item name */
     g_file_info_set_name(fileinfo, menu_cache_item_get_id(item));
     if(menu_cache_item_get_name(item) != NULL)
+    {
         g_file_info_set_display_name(fileinfo, menu_cache_item_get_name(item));
+        g_file_info_set_edit_name(fileinfo, menu_cache_item_get_name(item));
+    }
 
     /* the setup below was in fm_file_info_set_from_menu_cache_item()
        so this setup makes latter API deprecated */
@@ -1420,7 +1423,10 @@ static GFileInfo *_fm_vfs_menu_query_info(GFile *file,
         if(g_file_attribute_matcher_matches(matcher, G_FILE_ATTRIBUTE_STANDARD_IS_HIDDEN))
             g_file_info_set_is_hidden(info, FALSE);
         if(g_file_attribute_matcher_matches(matcher, G_FILE_ATTRIBUTE_STANDARD_DISPLAY_NAME))
+        {
             g_file_info_set_display_name(info, _("Applications"));
+            g_file_info_set_edit_name(info, _("Applications"));
+        }
         if(g_file_attribute_matcher_matches(matcher, G_FILE_ATTRIBUTE_ACCESS_CAN_RENAME))
             g_file_info_set_attribute_boolean(info, G_FILE_ATTRIBUTE_ACCESS_CAN_RENAME, FALSE);
         if(g_file_attribute_matcher_matches(matcher, G_FILE_ATTRIBUTE_ACCESS_CAN_TRASH))

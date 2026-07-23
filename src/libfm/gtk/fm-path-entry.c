@@ -713,14 +713,12 @@ static void fm_path_entry_completion_render_func(GtkCellLayout *cell_layout,
 
     if( priv->highlight_completion_match && (model_file_name_len >= priv->typed_basename_len) )
     {
-        int buf_len = model_file_name_len + 14 + 1;
-        gchar* markup = g_malloc(buf_len);
-        gchar *trail = g_stpcpy(markup, "<b><u>");
-        strncpy(trail, model_file_name, priv->typed_basename_len);
-        trail += priv->typed_basename_len;
-        trail = g_stpcpy(trail, "</u></b>");
-        trail = g_stpcpy(trail, model_file_name + priv->typed_basename_len);
+        gchar *matched = g_markup_escape_text(model_file_name, priv->typed_basename_len);
+        gchar *rest = g_markup_escape_text(model_file_name + priv->typed_basename_len, -1);
+        gchar *markup = g_strconcat("<b><u>", matched, "</u></b>", rest, NULL);
         g_object_set(cell, "markup", markup, NULL);
+        g_free(matched);
+        g_free(rest);
         g_free(markup);
     }
     /* FIXME: We don't need a custom render func if we don't hightlight */
