@@ -1129,20 +1129,14 @@ static void popup_position_func(GtkMenu *menu, gint *x, gint *y,
         *y = mr.y;
     }
     /* position menu inside widget */
-#if GTK_CHECK_VERSION(3, 0, 0)
     *x += x2;
     *y += y2;
-#endif
     if(rtl) /* RTL */
         x2 = CLAMP(x2, a.x + 1, a.x + ma.width + a.width - 1);
     else /* LTR */
         x2 = CLAMP(x2, a.x + 1 - ma.width, a.x + a.width - 1);
     y2 = CLAMP(y2, a.y + 1 - ma.height, a.y + a.height - 1);
     /* calculate desired position for menu */
-#if !GTK_CHECK_VERSION(3, 0, 0)
-    *x += x2;
-    *y += y2;
-#endif
     /* get monitor geometry at the pointer: for desktop we already have it */
     if (parent_window)
     {

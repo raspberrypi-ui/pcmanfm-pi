@@ -1284,14 +1284,6 @@ static void on_empty_trash(GtkAction* act, gpointer user_data)
     fm_empty_trash(_get_gtk_window_from_action(act));
 }
 
-#if !GTK_CHECK_VERSION(3, 0, 0)
-static void on_set_scroll_adjustments(GtkTreeView* view, GtkAdjustment* hadj, GtkAdjustment* vadj)
-{
-    /* we don't want scroll horizontally, so we pass NULL instead of hadj. */
-    fm_dnd_set_dest_auto_scroll(GTK_WIDGET(view), NULL, vadj);
-    GTK_TREE_VIEW_CLASS(fm_places_view_parent_class)->set_scroll_adjustments(view, hadj, vadj);
-}
-#endif
 
 static void fm_places_view_set_property(GObject *object,
                                         guint prop_id,
@@ -1356,9 +1348,6 @@ static void fm_places_view_class_init(FmPlacesViewClass *klass)
 
     tv_class = GTK_TREE_VIEW_CLASS(klass);
     tv_class->row_activated = on_row_activated;
-#if !GTK_CHECK_VERSION(3, 0, 0)
-    tv_class->set_scroll_adjustments = on_set_scroll_adjustments;
-#endif
 
     g_object_class->get_property = fm_places_view_get_property;
     g_object_class->set_property = fm_places_view_set_property;

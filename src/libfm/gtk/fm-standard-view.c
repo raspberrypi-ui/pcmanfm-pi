@@ -1013,10 +1013,8 @@ static GtkTreeViewColumn* create_list_view_column(FmStandardView* fv,
                                             "info", FM_FOLDER_MODEL_COL_INFO, NULL);
         g_object_set(render, "ellipsize", PANGO_ELLIPSIZE_END, NULL);
         gtk_tree_view_column_set_expand(col, TRUE);
-#if GTK_CHECK_VERSION(3, 0, 0)
         /* Workaround for column collapse issue when double-clicking separator */
         gtk_tree_view_column_set_min_width(col, 50);
-#endif
         if(set->width <= 0)
             info->width = 200;
         break;
@@ -1041,17 +1039,7 @@ static GtkTreeViewColumn* create_list_view_column(FmStandardView* fv,
 
     g_signal_connect(col, "notify::width", G_CALLBACK(on_column_width_changed), fv);
 
-#if GTK_CHECK_VERSION(3, 0, 0)
     label = gtk_tree_view_column_get_button(col);
-#else
-    /* a little trick to fetch header button, taken from KIWI python library */
-    label = gtk_label_new(title);
-    gtk_widget_show(label);
-    gtk_tree_view_column_set_widget(col, label);
-    label = gtk_tree_view_column_get_widget(col);
-    while(label && !GTK_IS_BUTTON(label))
-        label = gtk_widget_get_parent(label);
-#endif
     if(label)
     {
         /* disable left-click handling for non-sortable columns */

@@ -143,12 +143,6 @@ struct _ExoIconViewClass
 {
   GtkContainerClass __parent__;
 
-#if !GTK_CHECK_VERSION(3, 0, 0)
-  /* virtual methods */
-  void     (*set_scroll_adjustments)    (ExoIconView     *icon_view,
-                                         GtkAdjustment   *hadjustment,
-                                         GtkAdjustment   *vadjustment);
-#endif
   /* signals */
   void     (*item_activated)            (ExoIconView     *icon_view,
                                          GtkTreePath     *path);

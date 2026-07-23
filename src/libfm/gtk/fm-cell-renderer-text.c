@@ -50,33 +50,20 @@ G_DEFINE_TYPE(FmCellRendererText, fm_cell_renderer_text, GTK_TYPE_CELL_RENDERER_
 
 static void fm_cell_renderer_text_get_size(GtkCellRenderer            *cell,
                                            GtkWidget                  *widget,
-#if GTK_CHECK_VERSION(3, 0, 0)
                                            const
-#endif
                                            GdkRectangle               *rectangle,
                                            gint                       *x_offset,
                                            gint                       *y_offset,
                                            gint                       *width,
                                            gint                       *height);
 
-#if GTK_CHECK_VERSION(3, 0, 0)
 static void fm_cell_renderer_text_render(GtkCellRenderer *cell,
                                          cairo_t *cr,
                                          GtkWidget *widget,
                                          const GdkRectangle *background_area,
                                          const GdkRectangle *cell_area,
                                          GtkCellRendererState flags);
-#else
-static void fm_cell_renderer_text_render(GtkCellRenderer *cell, 
-                                         GdkDrawable *window,
-                                         GtkWidget *widget,
-                                         GdkRectangle *background_area,
-                                         GdkRectangle *cell_area,
-                                         GdkRectangle *expose_area,
-                                         GtkCellRendererState  flags);
-#endif
 
-#if GTK_CHECK_VERSION(3, 0, 0)
 static void fm_cell_renderer_text_get_preferred_width(GtkCellRenderer *cell,
                                                       GtkWidget *widget,
                                                       gint *minimum_size,
@@ -92,7 +79,6 @@ static void fm_cell_renderer_text_get_preferred_height_for_width(GtkCellRenderer
                                                                  gint width,
                                                                  gint *minimum_height,
                                                                  gint *natural_height);
-#endif
 
 static void fm_cell_renderer_text_class_init(FmCellRendererTextClass *klass)
 {
@@ -104,11 +90,9 @@ static void fm_cell_renderer_text_class_init(FmCellRendererTextClass *klass)
 
     render_class->render = fm_cell_renderer_text_render;
     render_class->get_size = fm_cell_renderer_text_get_size;
-#if GTK_CHECK_VERSION(3, 0, 0)
     render_class->get_preferred_width = fm_cell_renderer_text_get_preferred_width;
     render_class->get_preferred_height = fm_cell_renderer_text_get_preferred_height;
     render_class->get_preferred_height_for_width = fm_cell_renderer_text_get_preferred_height_for_width;
-#endif
 
     /**
      * FmCellRendererText:max-height:
@@ -268,30 +252,15 @@ static void _get_size(GtkCellRenderer *cell, GtkWidget *widget,
     g_object_unref(layout);
 }
 
-#if GTK_CHECK_VERSION(3, 0, 0)
 static void fm_cell_renderer_text_render(GtkCellRenderer *cell,
                                          cairo_t *cr,
                                          GtkWidget *widget,
                                          const GdkRectangle *background_area,
                                          const GdkRectangle *cell_area,
                                          GtkCellRendererState flags)
-#else
-static void fm_cell_renderer_text_render(GtkCellRenderer *cell,
-                                         GdkDrawable *window,
-                                         GtkWidget *widget,
-                                         GdkRectangle *background_area,
-                                         GdkRectangle *cell_area,
-                                         GdkRectangle *expose_area,
-                                         GtkCellRendererState flags)
-#endif
 {
-#if GTK_CHECK_VERSION(3, 0, 0)
     GtkStyleContext* style;
     GtkStateFlags state;
-#else
-    GtkStyle* style;
-    GtkStateType state;
-#endif
     gchar* text;
     gint text_width;
     gint text_height;
@@ -329,17 +298,12 @@ static void fm_cell_renderer_text_render(GtkCellRenderer *cell,
         rect.height = text_height + (2 * ypad);
     }
 
-#if GTK_CHECK_VERSION(3, 0, 0)
     style = gtk_widget_get_style_context(widget);
 
     gtk_style_context_save(style);
     gtk_style_context_add_class(style, GTK_STYLE_CLASS_VIEW);
-#else
-    style = gtk_widget_get_style(widget);
-#endif
     if(flags & GTK_CELL_RENDERER_SELECTED) /* item is selected */
     {
-#if GTK_CHECK_VERSION(3, 0, 0)
         GdkRGBA clr;
 
         if(flags & GTK_CELL_RENDERER_INSENSITIVE) /* insensitive */
@@ -352,60 +316,18 @@ static void fm_cell_renderer_text_render(GtkCellRenderer *cell,
         gtk_style_context_get_background_color(style, state, &clr);
         gdk_cairo_rectangle(cr, &rect);
         gdk_cairo_set_source_rgba(cr, &clr);
-#else
-        cairo_t *cr = gdk_cairo_create (window);
-        GdkColor clr;
-
-        if(flags & GTK_CELL_RENDERER_INSENSITIVE) /* insensitive */
-            state = GTK_STATE_INSENSITIVE;
-        else
-            state = GTK_STATE_SELECTED;
-
-        clr = style->bg[state];
-
-        /* paint the background */
-        if(expose_area)
-        {
-            gdk_cairo_rectangle(cr, expose_area);
-            cairo_clip(cr);
-        }
-        gdk_cairo_rectangle(cr, &rect);
-
-        cairo_set_source_rgb(cr, clr.red / 65535., clr.green / 65535., clr.blue / 65535.);
-#endif
         cairo_fill (cr);
-
-#if !GTK_CHECK_VERSION(3, 0, 0)
-        cairo_destroy (cr);
-#endif
     }
-#if !GTK_CHECK_VERSION(3, 0, 0)
-    else
-        state = GTK_STATE_NORMAL;
-#endif
 
-#if GTK_CHECK_VERSION(3, 0, 0)
     gtk_render_layout(style, cr,
                       cell_area->x + x_offset + xpad - x_align_offset,
                       cell_area->y + y_offset + ypad, layout);
-#else
-    gtk_paint_layout(style, window, state, TRUE,
-                     expose_area, widget, "cellrenderertext",
-                     cell_area->x + x_offset + xpad - x_align_offset,
-                     cell_area->y + y_offset + ypad, layout);
-#endif
 
     g_object_unref(layout);
 
     if(G_UNLIKELY( flags & GTK_CELL_RENDERER_FOCUSED) ) /* focused */
     {
-#if GTK_CHECK_VERSION(3, 0, 0)
         gtk_render_focus(style, cr, rect.x, rect.y, rect.width, rect.height);
-#else
-        gtk_paint_focus(style, window, state, background_area,
-                        widget, "cellrenderertext", rect.x, rect.y,
-                        rect.width, rect.height);
-#endif
     }
 
     if(flags & GTK_CELL_RENDERER_PRELIT) /* hovered */
@@ -414,16 +336,12 @@ static void fm_cell_renderer_text_render(GtkCellRenderer *cell,
         g_object_set(G_OBJECT(widget), "tooltip-text", NULL, NULL);
     g_free(text);
 
-#if GTK_CHECK_VERSION(3, 0, 0)
     gtk_style_context_restore(style);
-#endif
 }
 
 static void fm_cell_renderer_text_get_size(GtkCellRenderer            *cell,
                                            GtkWidget                  *widget,
-#if GTK_CHECK_VERSION(3, 0, 0)
                                            const
-#endif
                                            GdkRectangle               *rectangle,
                                            gint                       *x_offset,
                                            gint                       *y_offset,
@@ -438,7 +356,6 @@ static void fm_cell_renderer_text_get_size(GtkCellRenderer            *cell,
     g_free(text);
 }
 
-#if GTK_CHECK_VERSION(3, 0, 0)
 static void fm_cell_renderer_text_get_preferred_width(GtkCellRenderer *cell,
                                                       GtkWidget *widget,
                                                       gint *minimum_size,
@@ -484,4 +401,3 @@ static void fm_cell_renderer_text_get_preferred_height_for_width(GtkCellRenderer
 {
     fm_cell_renderer_text_get_preferred_height(cell, widget, minimum_height, natural_height);
 }
-#endif

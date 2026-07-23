@@ -40,29 +40,16 @@
 
 G_DEFINE_TYPE(FmTabLabel, fm_tab_label, GTK_TYPE_EVENT_BOX);
 
-#if GTK_CHECK_VERSION(3, 0, 0)
 GtkCssProvider *provider;
-#endif
 
 static void fm_tab_label_class_init(FmTabLabelClass *klass)
 {
     /* special style used by close button */
-#if GTK_CHECK_VERSION(3, 0, 0)
     provider = gtk_css_provider_new();
     gtk_css_provider_load_from_data(provider,
         "#tab-close-btn {\n"
             "padding : 0;\n"
         "}\n", -1, NULL);
-#else
-    gtk_rc_parse_string(
-        "style \"close-btn-style\" {\n"
-            "GtkWidget::focus-padding = 0\n"
-            "GtkWidget::focus-line-width = 0\n"
-            "xthickness = 0\n"
-            "ythickness = 0\n"
-        "}\n"
-        "widget \"*.tab-close-btn\" style \"close-btn-style\"");
-#endif
 }
 
 /* FIXME: add g_object_unref (provider); on class destroy? */
@@ -92,9 +79,7 @@ static gboolean on_query_tooltip(GtkWidget *widget, gint x, gint y,
 static void fm_tab_label_init(FmTabLabel *self)
 {
     GtkBox* hbox;
-#if GTK_CHECK_VERSION(3, 0, 0)
     GtkStyleContext *context = gtk_widget_get_style_context(GTK_WIDGET(self));
-#endif
 
     gtk_event_box_set_visible_window(GTK_EVENT_BOX(self), FALSE);
 #if GTK_CHECK_VERSION(3, 2, 0)
@@ -123,10 +108,8 @@ static void fm_tab_label_init(FmTabLabel *self)
     gtk_container_add(GTK_CONTAINER(self), (GtkWidget*)hbox);
     gtk_widget_show_all((GtkWidget*)hbox);
 
-#if GTK_CHECK_VERSION(3, 0, 0)
     gtk_style_context_add_provider(context, GTK_STYLE_PROVIDER(provider),
                                    GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
-#endif
 
 /*
     gtk_drag_dest_set ( GTK_WIDGET( evt_box ), GTK_DEST_DEFAULT_ALL,

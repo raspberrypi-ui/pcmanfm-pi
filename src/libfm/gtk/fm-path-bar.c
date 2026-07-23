@@ -55,11 +55,7 @@ static void on_size_allocate(GtkWidget* widget, GtkAllocation* alloc)
 {
     FmPathBar* bar = FM_PATH_BAR(widget);
     GtkRequisition req;
-#if GTK_CHECK_VERSION(3, 0, 0)
     gtk_widget_get_preferred_size(bar->btn_box, &req, NULL);
-#else
-    gtk_widget_size_request(bar->btn_box, &req);
-#endif
     if(req.width > alloc->width) /* required width > allocated */
     {
         /* show scroll buttons */
@@ -138,11 +134,7 @@ static void emit_chdir(FmPathBar* bar, FmPath* path)
 
 static void on_scroll_btn_clicked(GtkButton* btn, FmPathBar* bar)
 {
-#if GTK_CHECK_VERSION(3, 0, 0)
     GtkAdjustment* hadj = gtk_scrollable_get_hadjustment(GTK_SCROLLABLE(bar->viewport));
-#else
-    GtkAdjustment* hadj = gtk_viewport_get_hadjustment(GTK_VIEWPORT(bar->viewport));
-#endif
     gdouble value = gtk_adjustment_get_value(hadj);
     gdouble page_increment = gtk_adjustment_get_page_increment(hadj);
     gdouble lower = gtk_adjustment_get_lower(hadj);

@@ -52,11 +52,7 @@ struct _FmMenuToolItemPrivate
     GtkMenu   *menu;
 };
 
-#if GTK_CHECK_VERSION(3, 0, 0)
 static void fm_menu_tool_item_destroy(GtkWidget *object);
-#else
-static void fm_menu_tool_item_destroy(GtkObject *object);
-#endif
 static int menu_deactivate_cb(GtkMenuShell *menu_shell, FmMenuToolItem *button);
 
 enum
@@ -148,26 +144,16 @@ static void fm_menu_tool_item_get_property(GObject *object, guint prop_id,
 static void fm_menu_tool_item_class_init (FmMenuToolItemClass *klass)
 {
     GObjectClass *object_class;
-#if !GTK_CHECK_VERSION(3, 0, 0)
-    GtkObjectClass *gtk_object_class;
-#endif
     GtkWidgetClass *widget_class;
     GtkToolItemClass *toolitem_class;
 
     object_class = (GObjectClass *)klass;
-#if !GTK_CHECK_VERSION(3, 0, 0)
-    gtk_object_class = (GtkObjectClass *)klass;
-#endif
     widget_class = (GtkWidgetClass *)klass;
     toolitem_class = (GtkToolItemClass *)klass;
 
     object_class->set_property = fm_menu_tool_item_set_property;
     object_class->get_property = fm_menu_tool_item_get_property;
-#if GTK_CHECK_VERSION(3, 0, 0)
     widget_class->destroy = fm_menu_tool_item_destroy;
-#else
-    gtk_object_class->destroy = fm_menu_tool_item_destroy;
-#endif
     widget_class->state_changed = fm_menu_tool_item_state_changed;
     toolitem_class->toolbar_reconfigured = fm_menu_tool_item_toolbar_reconfigured;
 
@@ -218,11 +204,7 @@ static void menu_position_func(GtkMenu *menu, int *x, int *y,
     GdkScreen *screen;
     GdkWindow *window;
 
-#if GTK_CHECK_VERSION(3, 0, 0)
     gtk_widget_get_preferred_size (GTK_WIDGET (priv->menu), &menu_req, NULL);
-#else
-    gtk_widget_size_request (GTK_WIDGET (priv->menu), &menu_req);
-#endif
 
     orientation = gtk_tool_item_get_orientation (GTK_TOOL_ITEM (button));
     direction = gtk_widget_get_direction (widget);
@@ -362,11 +344,7 @@ static void fm_menu_tool_item_init(FmMenuToolItem *button)
                       G_CALLBACK (arrow_button_button_press_event_cb), button);
 }
 
-#if GTK_CHECK_VERSION(3, 0, 0)
 static void fm_menu_tool_item_destroy(GtkWidget *object)
-#else
-static void fm_menu_tool_item_destroy (GtkObject *object)
-#endif
 {
     FmMenuToolItem *button;
 
@@ -387,11 +365,7 @@ static void fm_menu_tool_item_destroy (GtkObject *object)
                                               button);
     }
 
-#if GTK_CHECK_VERSION(3, 0, 0)
     GTK_WIDGET_CLASS (fm_menu_tool_item_parent_class)->destroy (object);
-#else
-    GTK_OBJECT_CLASS (fm_menu_tool_item_parent_class)->destroy (object);
-#endif
 }
 
 /**
