@@ -1818,7 +1818,7 @@ void fm_folder_view_item_clicked(FmFolderView* fv, GtkTreePath* path,
         break;
     case FM_FV_CONTEXT_MENU:
         if(fi && iface->count_selected_files(fv) > 0)
-                 /* workaround on ExoTreeView bug */
+                 /* workaround for a stale-selection edge case in list/icon views */
         {
             files = iface->dup_selected_files(fv);
             popup = _make_file_menu(fv, win, update_popup, open_folders, files);

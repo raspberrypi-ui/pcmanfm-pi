@@ -79,13 +79,6 @@ gtk_sources = files(
   'libfm/gtk/fm-thumbnail.c',
 )
 
-exo_sources = files(
-  'libfm/gtk/exo/exo-icon-view.c',
-  'libfm/gtk/exo/exo-private.c',
-  'libfm/gtk/exo/exo-tree-view.c',
-  'libfm/gtk/exo/exo-marshal.c',
-)
-
 module_sources = files(
   'libfm/modules/vfs-menu.c',
   'libfm/modules/vfs-search.c',
@@ -100,7 +93,7 @@ fm_gtk_marshal = gnome.genmarshal('fm-gtk-marshal',
   prefix : 'fm_marshal',
 )
 
-libfm_gtk_sources = files('libfm/fm-gtk.c') + gtk_sources + exo_sources + module_sources + fm_gtk_marshal
+libfm_gtk_sources = files('libfm/fm-gtk.c') + gtk_sources + module_sources + fm_gtk_marshal
 
 pcmanfm_sources = files(
   'pcmanfm/pcmanfm.c',
