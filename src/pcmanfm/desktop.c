@@ -1273,7 +1273,7 @@ static void fm_desktop_accessible_class_intern_init(gpointer klass)
 
 GType fm_desktop_accessible_get_type(void)
 {
-    static volatile gsize type_id_volatile = 0;
+    static gsize type_id_volatile = 0;
 
     if (g_once_init_enter(&type_id_volatile))
     {
