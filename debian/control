@@ -17,9 +17,9 @@ Homepage: https://github.com/raspberrypi-ui/pcmanfm-pi
 Package: pcmanfm-pi
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}
-Recommends: gvfs-backends,
-            gvfs-fuse [!hurd-any],
-            lxde-icon-theme | gnome-icon-theme | oxygen-icon-theme | tango-icon-theme,
+Breaks: pcmanfm
+Replaces: pcmanfm
+Recommends: gvfs-backends, gvfs-fuse [!hurd-any],
             lxpolkit | polkit-1-auth-agent | policykit-1-gnome
 Description: extremely fast and lightweight file manager
  PCMan File Manager is a GTK+ based file manager, featuring:
