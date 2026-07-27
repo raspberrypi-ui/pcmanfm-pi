@@ -206,7 +206,7 @@ static void _free_archoice(gpointer data)
 static void fm_app_config_init(FmAppConfig *cfg)
 {
     /* load libfm config file */
-    fm_config_load_from_file((FmConfig*)cfg, NULL);
+    fm_config_load_from_file((FmConfig*)cfg, "pcmanfm/default/pcmanfm.conf");
 
     cfg->bm_open_method = FM_OPEN_IN_CURRENT_TAB;
 
