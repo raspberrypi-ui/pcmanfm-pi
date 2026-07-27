@@ -308,6 +308,7 @@ static void update_view_menu(FmMainWin* win)
                                             break;
             case FM_FV_LIST_VIEW :          item = gtk_toolbar_get_nth_item (win->toolbar, VIEW_TAB_LOC + 1 + (geteuid() ? 0 : 2));
                                             break;
+            default:                        break;
         }
         if (item) gtk_toggle_tool_button_set_active (GTK_TOGGLE_TOOL_BUTTON(item), TRUE);
     }

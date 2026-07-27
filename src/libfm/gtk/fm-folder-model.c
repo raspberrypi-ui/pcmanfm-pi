@@ -697,7 +697,6 @@ static void fm_folder_model_get_value(GtkTreeModel *tree_model,
 {
     GSequenceIter* item_it;
     FmFolderModel* model = FM_FOLDER_MODEL(tree_model);
-    int scale = gtk_widget_get_scale_factor (model->view);
 
     g_return_if_fail(iter != NULL);
     g_return_if_fail((guint)column < column_infos_n && column_infos[column] != NULL);

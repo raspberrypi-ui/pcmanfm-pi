@@ -1091,6 +1091,7 @@ static void on_file_prop(GtkAction* act, FmFolderView* fv)
     }
 }
 
+#if 0
 static void popup_position_func(GtkMenu *menu, gint *x, gint *y,
                                 gboolean *push_in, gpointer user_data)
 {
@@ -1161,6 +1162,7 @@ static void popup_position_func(GtkMenu *menu, gint *x, gint *y,
     else
         *y = MAX(mr.y, *y); /* place menu below cursor */
 }
+#endif
 
 static void on_menu(GtkAction* act, FmFolderView* fv, int x, int y)
 {

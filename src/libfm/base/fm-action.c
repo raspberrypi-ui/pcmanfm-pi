@@ -1660,6 +1660,7 @@ static void _action_cache_monitor_event(GFileMonitor *mon, GFile *gf,
     case G_FILE_MONITOR_EVENT_CHANGES_DONE_HINT:
     case G_FILE_MONITOR_EVENT_PRE_UNMOUNT:
     case G_FILE_MONITOR_EVENT_UNMOUNTED:
+    default:
         /* ignore those */
         break;
     }

@@ -656,7 +656,7 @@ gboolean has_subdirs (FmFileInfo *fi)
     if (dir)
     {
         const char *sub;
-        while (sub = g_dir_read_name (dir))
+        while ((sub = g_dir_read_name (dir)))
         {
             char *test = g_strdup_printf ("%s/%s", rpath, sub);
             result = g_file_test (test, G_FILE_TEST_IS_DIR);

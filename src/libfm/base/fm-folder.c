@@ -703,6 +703,7 @@ static void on_folder_changed(GFileMonitor* mon, GFile* gf, GFile* other, GFileM
         case G_FILE_MONITOR_EVENT_MOVED:
         case G_FILE_MONITOR_EVENT_CHANGES_DONE_HINT:
             ;
+        default : break;
         }
         g_object_unref(folder);
         return;

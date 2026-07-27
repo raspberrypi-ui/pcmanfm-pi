@@ -882,7 +882,9 @@ static gboolean generate_thumbnails_with_builtin(ThumbnailTask* task)
     char *file_name;
     GObject* normal_pix = NULL;
     GObject* large_pix = NULL;
+#ifdef USE_EXIF
     GCancellable *cancellable = task->cancellable;
+#endif
 
     DEBUG("generate thumbnail for %s", fm_file_info_get_name(task->fi));
 
