@@ -1254,7 +1254,7 @@ struct _FmDesktopAccessiblePriv
     guint action_idle_handler;
 };
 
-#define FM_DESKTOP_ACCESSIBLE_GET_PRIVATE(_d_) G_TYPE_INSTANCE_GET_PRIVATE(_d_, FM_TYPE_DESKTOP_ACCESSIBLE, FmDesktopAccessiblePriv)
+#define FM_DESKTOP_ACCESSIBLE_GET_PRIVATE(_d_) ((FmDesktopAccessiblePriv *) g_type_instance_get_private((GTypeInstance *)(_d_), FM_TYPE_DESKTOP_ACCESSIBLE))
 
 static void atk_component_interface_init(AtkComponentIface *iface);
 static void atk_selection_interface_init(AtkSelectionIface *iface);

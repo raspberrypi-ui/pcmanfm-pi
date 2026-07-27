@@ -68,7 +68,7 @@ enum
 
 typedef struct _FmPathEntryModel FmPathEntryModel;
 
-#define FM_PATH_ENTRY_GET_PRIVATE(obj) ( G_TYPE_INSTANCE_GET_PRIVATE( (obj), FM_TYPE_PATH_ENTRY, FmPathEntryPrivate ) )
+#define FM_PATH_ENTRY_GET_PRIVATE(obj) ( fm_path_entry_get_instance_private((FmPathEntry *)(obj)) )
 
 typedef struct _FmPathEntryPrivate FmPathEntryPrivate;
 
@@ -129,7 +129,7 @@ static void fm_path_entry_get_property(GObject *object,
                                        GValue *value,
                                        GParamSpec *pspec);
 
-G_DEFINE_TYPE(FmPathEntry, fm_path_entry, GTK_TYPE_ENTRY)
+G_DEFINE_TYPE_WITH_PRIVATE(FmPathEntry, fm_path_entry, GTK_TYPE_ENTRY)
 
 /* customized model used for entry completion to save memory.
  * GtkEntryCompletion requires that we store full paths in the model
@@ -330,8 +330,6 @@ static void fm_path_entry_class_init(FmPathEntryClass *klass)
     widget_class->focus_in_event = fm_path_entry_focus_in_event;
     /* widget_class->grab_focus = fm_path_entry_grab_focus; */
     widget_class->focus_out_event = fm_path_entry_focus_out_event;
-
-    g_type_class_add_private( klass, sizeof (FmPathEntryPrivate) );
 }
 
 static inline void update_inline_completion(FmPathEntryPrivate* priv)

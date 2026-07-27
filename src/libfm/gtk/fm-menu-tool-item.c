@@ -40,7 +40,7 @@
 #include "fm-menu-tool-item.h"
 
 #define FM_MENU_TOOL_ITEM_GET_PRIVATE(object) \
-    (G_TYPE_INSTANCE_GET_PRIVATE((object), FM_TYPE_MENU_TOOL_ITEM, FmMenuToolItemPrivate))
+    (fm_menu_tool_item_get_instance_private(object))
 
 struct _FmMenuToolItemPrivate
 {
@@ -66,7 +66,7 @@ enum
 
 static gint signals[LAST_SIGNAL];
 
-G_DEFINE_TYPE (FmMenuToolItem, fm_menu_tool_item, GTK_TYPE_TOOL_ITEM)
+G_DEFINE_TYPE_WITH_PRIVATE (FmMenuToolItem, fm_menu_tool_item, GTK_TYPE_TOOL_ITEM)
 
 static void fm_menu_tool_item_construct_contents (FmMenuToolItem *button)
 {
@@ -183,8 +183,6 @@ static void fm_menu_tool_item_class_init (FmMenuToolItemClass *klass)
                                                           "The dropdown menu",
                                                           GTK_TYPE_MENU,
                                                           G_PARAM_READWRITE));
-
-    g_type_class_add_private (object_class, sizeof (FmMenuToolItemPrivate));
 }
 
 static void menu_position_func(GtkMenu *menu, int *x, int *y,

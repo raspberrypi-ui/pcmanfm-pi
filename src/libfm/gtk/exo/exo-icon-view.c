@@ -167,7 +167,7 @@ typedef struct _ExoIconViewItem     ExoIconViewItem;
 
 
 
-#define EXO_ICON_VIEW_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), EXO_TYPE_ICON_VIEW, ExoIconViewPrivate))
+#define EXO_ICON_VIEW_GET_PRIVATE(obj) (exo_icon_view_get_instance_private (obj))
 #define EXO_ICON_VIEW_CELL_INFO(obj)   ((ExoIconViewCellInfo *) (obj))
 #define EXO_ICON_VIEW_CHILD(obj)       ((ExoIconViewChild *) (obj))
 #define EXO_ICON_VIEW_ITEM(obj)        ((ExoIconViewItem *) (obj))
@@ -638,6 +638,7 @@ extern gboolean longpress;
 
 
 G_DEFINE_TYPE_WITH_CODE (ExoIconView, exo_icon_view, GTK_TYPE_CONTAINER,
+    G_ADD_PRIVATE (ExoIconView)
     G_IMPLEMENT_INTERFACE (GTK_TYPE_SCROLLABLE, NULL)
     G_IMPLEMENT_INTERFACE (GTK_TYPE_CELL_LAYOUT, exo_icon_view_cell_layout_init))
 
@@ -650,9 +651,6 @@ exo_icon_view_class_init (ExoIconViewClass *klass)
   GtkWidgetClass    *gtkwidget_class;
   GtkBindingSet     *gtkbinding_set;
   GObjectClass      *gobject_class;
-
-  /* add our private data to the type's instances */
-  g_type_class_add_private (klass, sizeof (ExoIconViewPrivate));
 
   gobject_class = G_OBJECT_CLASS (klass);
   gobject_class->dispose = exo_icon_view_dispose;

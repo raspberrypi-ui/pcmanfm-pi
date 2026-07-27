@@ -63,7 +63,7 @@
 #include <exo/exo-alias.h>
 */
 
-#define EXO_TREE_VIEW_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), EXO_TYPE_TREE_VIEW, ExoTreeViewPrivate))
+#define EXO_TREE_VIEW_GET_PRIVATE(obj) ((ExoTreeViewPrivate *) g_type_instance_get_private ((GTypeInstance *) (obj), EXO_TYPE_TREE_VIEW))
 
 
 
