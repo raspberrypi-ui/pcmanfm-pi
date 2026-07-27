@@ -4438,6 +4438,8 @@ static void on_drag_data_received (GtkWidget *dest_widget,
 {
     FmDesktop* desktop = FM_DESKTOP(dest_widget);
     GList *items, *l;
+    GdkRectangle rect;
+    GdkMonitor *mon;
     int offset_x, offset_y;
 
     if(info != FM_DND_DEST_DESKTOP_ITEM)
@@ -4447,10 +4449,14 @@ static void on_drag_data_received (GtkWidget *dest_widget,
     items = get_selected_items(desktop, NULL);
     offset_x = x - desktop->drag_start_x;
     offset_y = y - desktop->drag_start_y;
+
+    mon = gdk_display_get_monitor_at_window (gdk_display_get_default (), gtk_widget_get_window (dest_widget));
+    gdk_monitor_get_geometry (mon, &rect);
+
     for(l = items; l; l=l->next)
     {
         FmDesktopItem* item = (FmDesktopItem*)l->data;
-        move_item(desktop, item, item->area.x + offset_x, item->area.y + offset_y, FALSE);
+        move_item(desktop, item, item->area.x + offset_x + rect.x, item->area.y + offset_y + rect.y, FALSE);
     }
     g_list_free(items);
 
