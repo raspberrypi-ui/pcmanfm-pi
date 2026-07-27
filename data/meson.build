@@ -23,10 +23,6 @@ install_data('pcmanfm.conf',
   install_dir : get_option('sysconfdir') / 'xdg' / 'pcmanfm' / 'default',
 )
 
-install_data('libfm.xml',
-  install_dir : get_option('datadir') / 'mime' / 'packages',
-)
-
 install_data('archivers.list', 'terminals.list',
   install_dir : datadir,
 )
