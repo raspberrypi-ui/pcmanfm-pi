@@ -642,7 +642,7 @@ static gboolean fm_folder_model_get_iter(GtkTreeModel *tree_model,
                                          GtkTreePath *path)
 {
     FmFolderModel* model;
-    gint *indices, n, depth;
+    gint *indices, n;
     GSequenceIter* items_it;
 
     g_assert(FM_IS_FOLDER_MODEL(tree_model));
@@ -651,7 +651,9 @@ static gboolean fm_folder_model_get_iter(GtkTreeModel *tree_model,
     model = (FmFolderModel*)tree_model;
 
     indices = gtk_tree_path_get_indices(path);
-    depth   = gtk_tree_path_get_depth(path);
+#ifndef G_DISABLE_ASSERT
+    gint depth   = gtk_tree_path_get_depth(path);
+#endif
 
     /* we do not allow children */
     g_assert(depth == 1); /* depth 1 = top level; a list only has top level nodes and no children */
@@ -677,7 +679,9 @@ static GtkTreePath *fm_folder_model_get_path(GtkTreeModel *tree_model,
 {
     GtkTreePath* path;
     GSequenceIter* items_it;
+#ifndef G_DISABLE_CHECKS
     FmFolderModel* model = FM_FOLDER_MODEL(tree_model);
+#endif
 
     g_return_val_if_fail(model, NULL);
     g_return_val_if_fail(iter != NULL, NULL);
