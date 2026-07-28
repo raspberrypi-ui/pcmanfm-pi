@@ -1,5 +1,5 @@
-pcmanfm-pi (1.0.0) trixie; urgency=medium
+pcmanfm-pi (1.0) trixie; urgency=medium
 
   * Convert to a single monolithic build; no functional changes
 
- -- Simon Long <simon@raspberrypi.com>  Thu, 23 Jul 2026 14:30:41 +0100
+ -- Simon Long <simon@raspberrypi.com>  Tue, 28 Jul 2026 08:52:41 +0100

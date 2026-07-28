@@ -1,7 +1,7 @@
 Source: pcmanfm-pi
 Section: utils
 Priority: optional
-Uploaders: Simon Long <simon@raspberrypi.com>
+Maintainer: Simon Long <simon@raspberrypi.com>
 Build-Depends: debhelper-compat (= 13),
                meson (>= 0.61.0),
                ninja-build,
@@ -11,7 +11,6 @@ Build-Depends: debhelper-compat (= 13),
                libmenu-cache-dev (>= 0.5.0),
                pkgconf
 Standards-Version: 4.7.2
-Rules-Requires-Root: no
 Homepage: https://github.com/raspberrypi-ui/pcmanfm-pi
 
 Package: pcmanfm-pi
