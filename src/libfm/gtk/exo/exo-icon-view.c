@@ -3861,9 +3861,7 @@ exo_icon_view_paint_item (ExoIconView     *icon_view,
 {
   GtkCellRendererState flags;
   ExoIconViewCellInfo *info;
-  //GtkStateType         state;
   GdkRectangle         cell_area;
-  //gboolean             rtl;
   GList               *lp;
 
   if (G_UNLIKELY (icon_view->priv->model == NULL))
@@ -3871,75 +3869,15 @@ exo_icon_view_paint_item (ExoIconView     *icon_view,
 
   exo_icon_view_set_cell_data (icon_view, item);
 
-  //rtl = gtk_widget_get_direction (GTK_WIDGET (icon_view)) == GTK_TEXT_DIR_RTL;
-
   if (item->selected)
-    {
       flags = GTK_CELL_RENDERER_SELECTED;
-      //state = gtk_widget_has_focus (icon_view) ? GTK_STATE_SELECTED : GTK_STATE_ACTIVE;
-#if 0
-      /* FIXME We hardwire background drawing behind text cell renderers
-       * here. This is ugly, but it's done to be consistent with GtkIconView.
-       * The additional info->is_text attribute is used for performance
-       * optimization and should be removed alongside the following code. */
-
-      cr = gdk_cairo_create (drawable);
-
-      for (lp = icon_view->priv->cell_list; lp != NULL; lp = lp->next)
-        {
-          info = EXO_ICON_VIEW_CELL_INFO (lp->data);
-
-          if (G_UNLIKELY (!gtk_cell_renderer_get_visible(info->cell)))
-            continue;
-
-          if (info->is_text)
-            {
-              exo_icon_view_get_cell_area (icon_view, item, info, &cell_area);
-
-              x_0 = x - item->area.x + cell_area.x;
-              y_0 = x - item->area.x + cell_area.y;
-              x_1 = x_0 + cell_area.width;
-              y_1 = y_0 + cell_area.height;
-
-              cairo_move_to (cr, x_0 + 5, y_0);
-              cairo_line_to (cr, x_1 - 5, y_0);
-              cairo_curve_to (cr, x_1 - 5, y_0, x_1, y_0, x_1, y_0 + 5);
-              cairo_line_to (cr, x_1, y_1 - 5);
-              cairo_curve_to (cr, x_1, y_1 - 5, x_1, y_1, x_1 - 5, y_1);
-              cairo_line_to (cr, x_0 + 5, y_1);
-              cairo_curve_to (cr, x_0 + 5, y_1, x_0, y_1, x_0, y_1 - 5);
-              cairo_line_to (cr, x_0, y_0 + 5);
-              cairo_curve_to (cr, x_0, y_0 + 5, x_0, y_0, x_0 + 5, y_0);
-
-              gdk_cairo_set_source_color (cr, &GTK_WIDGET (icon_view)->style->base[state]);
-
-              cairo_fill (cr);
-            }
-        }
-
-      cairo_destroy (cr);
-
-      /* FIXME Ugly code ends here */
-#endif
-    }
   else
-    {
       flags = 0;
-      //state = GTK_STATE_NORMAL;
-    }
 
   if (G_UNLIKELY (icon_view->priv->prelit_item == item))
     flags |= GTK_CELL_RENDERER_PRELIT;
   if (G_UNLIKELY (EXO_ICON_VIEW_FLAG_SET (icon_view, EXO_ICON_VIEW_DRAW_KEYFOCUS) && icon_view->priv->cursor_item == item))
     flags |= GTK_CELL_RENDERER_FOCUSED;
-
-#ifdef DEBUG_ICON_VIEW
-  gdk_draw_rectangle (drawable,
-                      GTK_WIDGET (icon_view)->style->black_gc,
-                      FALSE,
-                      x, y,
-                      item->area.width, item->area.height);
-#endif
 
   for (lp = icon_view->priv->cell_list; lp != NULL; lp = lp->next)
     {
@@ -3949,22 +3887,6 @@ exo_icon_view_paint_item (ExoIconView     *icon_view,
         continue;
 
       exo_icon_view_get_cell_area (icon_view, item, info, &cell_area);
-
-#ifdef DEBUG_ICON_VIEW
-      gdk_draw_rectangle (drawable,
-                          GTK_WIDGET (icon_view)->style->black_gc,
-                          FALSE,
-                          x - item->area.x + cell_area.x,
-                          y - item->area.y + cell_area.y,
-                          cell_area.width, cell_area.height);
-
-      gdk_draw_rectangle (drawable,
-                          GTK_WIDGET (icon_view)->style->black_gc,
-                          FALSE,
-                          x - item->area.x + item->box[info->position].x,
-                          y - item->area.y + item->box[info->position].y,
-                          item->box[info->position].width, item->box[info->position].height);
-#endif
 
       cell_area.x = x - item->area.x + cell_area.x;
       cell_area.y = y - item->area.y + cell_area.y;
