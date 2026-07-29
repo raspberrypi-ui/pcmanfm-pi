@@ -5,10 +5,12 @@ Maintainer: Simon Long <simon@raspberrypi.com>
 Build-Depends: debhelper-compat (= 13),
                meson (>= 0.61.0),
                ninja-build,
+               intltool,
                gettext,
                libglib2.0-dev,
                libgtk-3-dev,
-               libmenu-cache-dev (>= 0.5.0),
+               libmenu-cache-dev,
+               libgtk-layer-shell-dev,
                pkgconf
 Standards-Version: 4.7.2
 Homepage: https://github.com/raspberrypi-ui/pcmanfm-pi
