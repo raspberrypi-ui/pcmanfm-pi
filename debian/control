@@ -21,7 +21,8 @@ Depends: ${misc:Depends}, ${shlibs:Depends}
 Breaks: pcmanfm
 Replaces: pcmanfm
 Recommends: gvfs-backends, gvfs-fuse [!hurd-any],
-            lxpolkit | polkit-1-auth-agent | policykit-1-gnome
+            lxpolkit | polkit-1-auth-agent | policykit-1-gnome,
+            pixflat-icons | pixtrix-icons
 Description: extremely fast and lightweight file manager
  PCMan File Manager is a GTK+ based file manager, featuring:
  .

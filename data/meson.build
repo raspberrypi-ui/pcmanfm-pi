@@ -27,9 +27,5 @@ install_data('archivers.list', 'terminals.list',
   install_dir : datadir,
 )
 
-install_data('unknown.png', 'folder.png',
-  install_dir : themedir,
-)
-
 subdir('ui')
 subdir('icons')

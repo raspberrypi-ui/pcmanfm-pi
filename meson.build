@@ -11,7 +11,6 @@ localedir = get_option('prefix') / get_option('localedir')
 moduledir = get_option('prefix') / get_option('libdir') / 'pcmanfm'
 datadir = get_option('prefix') / get_option('datadir') / 'pcmanfm'
 uidir = datadir / 'ui'
-themedir = datadir / 'images'
 
 subdir('src')
 subdir('po')
