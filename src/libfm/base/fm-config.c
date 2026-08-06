@@ -502,11 +502,11 @@ void fm_config_save(FmConfig* cfg, const char* name)
         gchar *home = home_dir ();
         if (home)
         {
-            name = path = g_build_filename(home, ".config", "libfm/libfm.conf", NULL);
+            name = path = g_build_filename(home, ".config", "pcmanfm/default/pcmanfm.conf", NULL);
             g_free (home);
         }
         else
-        name = path = g_build_filename(g_get_user_config_dir(), "libfm/libfm.conf", NULL);
+        name = path = g_build_filename(g_get_user_config_dir(), "pcmanfm/default/pcmanfm.conf", NULL);
     }
     else if(!g_path_is_absolute(name))
         name = path = g_build_filename(g_get_user_config_dir(), name, NULL);
