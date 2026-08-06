@@ -378,7 +378,7 @@ void fm_config_load_from_file(FmConfig* cfg, const char* name)
     cfg->system_modules_blacklist = NULL;
     _cfg_monitor_free(cfg);
     if(G_LIKELY(!name))
-        name = "libfm/libfm.conf";
+        name = "pcmanfm/default/pcmanfm.conf";
     else
     {
         if(G_UNLIKELY(g_path_is_absolute(name)))
