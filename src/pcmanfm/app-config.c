@@ -89,6 +89,21 @@ static void _save_sort(GString *buf, FmSortMode mode, FmFolderModelCol col)
     g_string_append_c(buf, '\n');
 }
 
+static void _save_conf_sort(GKeyFile *kf, FmSortMode mode, FmFolderModelCol col)
+{
+    const char *name = fm_folder_model_col_get_name(col);
+    char *str;
+
+    if (name == NULL) /* FM_FOLDER_MODEL_COL_NAME is always valid */
+        name = fm_folder_model_col_get_name(FM_FOLDER_MODEL_COL_NAME);
+    str = g_strdup_printf ("%s;%s;%s%s", name,
+                            FM_SORT_IS_ASCENDING(mode) ? "ascending" : "descending",
+                            mode & FM_SORT_CASE_SENSITIVE ? "case;" : "",
+                            mode & FM_SORT_NO_FOLDER_FIRST ? "mingle;" : "");
+    g_key_file_set_string (kf, "ui", "sort", str);
+    g_free (str);
+}
+
 /* we use capitalized keys here because it is de-facto standard for
    desktop entry files and we use those keys in '.directory' as well */
 static gboolean _parse_config_for_path(FmFolderConfig *fc,
@@ -750,15 +765,17 @@ void fm_app_config_save_desktop_config(GString *buf, const char *group, FmDeskto
     g_string_append_printf(buf, "bmargin=%d\n", cfg->bmargin);
 }
 
-static void _save_choice(gpointer key, gpointer val, gpointer buf)
+static void _save_choice(gpointer key, gpointer val, gpointer file)
 {
     FmAutorunChoice *choice = val;
+    GKeyFile *kf = file;
 
     if (!choice->dont_ask && !choice->last_used)
         return;
-    g_string_append_printf(buf, "%s=%s%s\n", (char*)key,
-                           choice->dont_ask ? "*" : "",
-                           choice->last_used ? choice->last_used : "");
+    char *str = g_strdup_printf ("%s%s", choice->dont_ask ? "*" : "",
+        choice->last_used ? choice->last_used : "");
+    g_key_file_set_string (kf, "autorun", (char*) key, str);
+    g_free (str);
 }
 
 void fm_app_config_save_profile(FmAppConfig* cfg, const char* name)
@@ -777,87 +794,71 @@ void fm_app_config_save_profile(FmAppConfig* cfg, const char* name)
     }
     else
     dir_path = g_build_filename(g_get_user_config_dir(), "pcmanfm", name, NULL);
+    path = g_build_filename(dir_path, "pcmanfm.conf", NULL);
     if(g_mkdir_with_parents(dir_path, 0700) != -1)
     {
-        GString* buf = g_string_sized_new(1024);
+        GKeyFile* kf;
+        gsize len;
+        char *str;
 
-        g_string_append(buf, "[config]\n");
-        g_string_append_printf(buf, "bm_open_method=%d\n", cfg->bm_open_method);
-        /*if(cfg->su_cmd && *cfg->su_cmd)
-            g_string_append_printf(buf, "su_cmd=%s\n", cfg->su_cmd);*/
-        if (cfg->home_path && cfg->home_path[0]
-            && strcmp(cfg->home_path, fm_get_home_dir()) != 0)
-            g_string_append_printf(buf, "home_path=%s\n", cfg->home_path);
+        kf = g_key_file_new ();
+        g_key_file_load_from_file (kf, path, 0, NULL);
 
-        g_string_append(buf, "\n[volume]\n");
-        g_string_append_printf(buf, "mount_on_startup=%d\n", cfg->mount_on_startup);
-        g_string_append_printf(buf, "mount_removable=%d\n", cfg->mount_removable);
-        g_string_append_printf(buf, "autorun=%d\n", cfg->autorun);
-
+        g_key_file_set_integer (kf, "config", "bm_open_method", cfg->bm_open_method);
+        g_key_file_set_string (kf, "config", "home_path", cfg->home_path);
+        g_key_file_set_integer (kf, "volume", "mount_on_startup", cfg->mount_on_startup);
+        g_key_file_set_integer (kf, "volume", "mount_removable", cfg->mount_removable);
+        g_key_file_set_integer (kf, "volume", "autorun", cfg->autorun);
         if (g_hash_table_size(cfg->autorun_choices) > 0)
-        {
-            g_string_append(buf, "\n[autorun]\n");
-            g_hash_table_foreach(cfg->autorun_choices, _save_choice, buf);
-        }
+            g_hash_table_foreach (cfg->autorun_choices, _save_choice, kf);
+        g_key_file_set_integer (kf, "ui", "always_show_tabs", cfg->always_show_tabs);
+        g_key_file_set_integer (kf, "ui", "max_tab_chars", cfg->max_tab_chars);
+        g_key_file_set_integer (kf, "ui", "win_width", cfg->win_width);
+        g_key_file_set_integer (kf, "ui", "win_height", cfg->win_height);
+        g_key_file_set_integer (kf, "ui", "maximized", cfg->maximized);
+        g_key_file_set_integer (kf, "ui", "splitter_pos", cfg->splitter_pos);
+        g_key_file_set_integer (kf, "ui", "media_in_new_tab", cfg->media_in_new_tab);
+        g_key_file_set_integer (kf, "ui", "desktop_folder_new_win", cfg->desktop_folder_new_win);
+        g_key_file_set_integer (kf, "ui", "change_tab_on_drop", cfg->change_tab_on_drop);
+        g_key_file_set_integer (kf, "ui", "close_on_unmount", cfg->close_on_unmount);
+        g_key_file_set_integer (kf, "ui", "focus_previous", cfg->focus_previous);
 
-        g_string_append(buf, "\n[ui]\n");
-        g_string_append_printf(buf, "always_show_tabs=%d\n", cfg->always_show_tabs);
-        g_string_append_printf(buf, "max_tab_chars=%d\n", cfg->max_tab_chars);
-        /* g_string_append_printf(buf, "hide_close_btn=%d\n", cfg->hide_close_btn); */
-        g_string_append_printf(buf, "win_width=%d\n", cfg->win_width);
-        g_string_append_printf(buf, "win_height=%d\n", cfg->win_height);
-        if (cfg->maximized)
-            g_string_append(buf, "maximized=1\n");
-        g_string_append_printf(buf, "splitter_pos=%d\n", cfg->splitter_pos);
-        g_string_append_printf(buf, "media_in_new_tab=%d\n", cfg->media_in_new_tab);
-        g_string_append_printf(buf, "desktop_folder_new_win=%d\n", cfg->desktop_folder_new_win);
-        g_string_append_printf(buf, "change_tab_on_drop=%d\n", cfg->change_tab_on_drop);
-        g_string_append_printf(buf, "close_on_unmount=%d\n", cfg->close_on_unmount);
-        g_string_append_printf(buf, "focus_previous=%d\n", cfg->focus_previous);
-        g_string_append(buf, "side_pane_mode=");
-        if (cfg->side_pane_mode & FM_SP_HIDE)
-            g_string_append(buf, "hidden;");
-        g_string_append_printf(buf, "%s\n",
-                               fm_side_pane_get_mode_name(cfg->side_pane_mode & FM_SP_MODE_MASK));
-        g_string_append_printf(buf, "view_mode=%s\n", fm_standard_view_mode_to_str(cfg->view_mode));
-        g_string_append_printf(buf, "show_hidden=%d\n", cfg->show_hidden);
-        g_string_append_printf(buf, "show_thumbs=%d\n", cfg->show_thumbs);
-        _save_sort(buf, cfg->sort_type, cfg->sort_by);
+        str = g_strdup_printf ("%s%s", cfg->side_pane_mode & FM_SP_HIDE ? "hidden;" : "", fm_side_pane_get_mode_name (cfg->side_pane_mode & FM_SP_MODE_MASK));
+        g_key_file_set_string (kf, "ui", "side_pane_mode", str);
+        g_free (str);
+
+        g_key_file_set_string (kf, "ui", "view_mode", fm_standard_view_mode_to_str(cfg->view_mode));
+        g_key_file_set_integer (kf, "ui", "show_hidden", cfg->show_hidden);
+        g_key_file_set_integer (kf, "ui", "show_thumbs", cfg->show_thumbs);
+
+        _save_conf_sort (kf, cfg->sort_type, cfg->sort_by);
+
         if (cfg->columns && cfg->columns[0])
         {
-            char **colptr;
-
-            g_string_append(buf, "columns=");
-            for (colptr = cfg->columns; *colptr; colptr++)
-                g_string_append_printf(buf, "%s;", *colptr);
-            g_string_append_c(buf, '\n');
+            str = g_strjoinv (";", cfg->columns);
+            g_key_file_set_string (kf, "ui", "columns", str);
+            g_free (str);
         }
-        g_string_append(buf, "toolbar=");
-        if (!cfg->tb.visible)
-            g_string_append(buf, "hidden;");
-        if (cfg->tb.new_win)
-            g_string_append(buf, "newwin;");
-        if (cfg->tb.new_tab)
-            g_string_append(buf, "newtab;");
-        if (cfg->tb.nav)
-            g_string_append(buf, "navigation;");
-        if (cfg->tb.home)
-            g_string_append(buf, "home;");
-        g_string_append_c(buf, '\n');
-        g_string_append_printf(buf, "show_statusbar=%d\n", cfg->show_statusbar);
-        g_string_append_printf(buf, "pathbar_mode_buttons=%d\n", cfg->pathbar_mode_buttons);
-        if (cfg->prefs_app) g_string_append_printf(buf, "prefs_app=%s\n", cfg->prefs_app);
-        g_string_append_printf(buf, "common_bg=%d\n", cfg->common_bg);
-        g_string_append_printf(buf, "use_swaybg=%d\n", cfg->use_swaybg);
 
-        path = g_build_filename(dir_path, "pcmanfm.conf", NULL);
-        g_file_set_contents(path, buf->str, buf->len, NULL);
-        g_free(path);
-        g_string_free(buf, TRUE);
+        str = g_strdup_printf ("%s%s%s%s%s", !cfg->tb.visible ? "hidden;" : "", cfg->tb.new_win ? "newwin;" : "", cfg->tb.new_tab ? "newtab;" : "", cfg->tb.nav ? "navigation;" : "", cfg->tb.home ?"home;" : "");
+        g_key_file_set_string (kf, "ui", "toolbar", str);
+        g_free (str);
+
+        g_key_file_set_integer (kf, "ui", "show_statusbar", cfg->show_statusbar);
+        g_key_file_set_integer (kf, "ui", "pathbar_mode_buttons", cfg->pathbar_mode_buttons);
+        if (cfg->prefs_app) g_key_file_set_string (kf, "ui", "prefs_app", cfg->prefs_app);
+        g_key_file_set_integer (kf, "ui", "common_bg", cfg->common_bg);
+        g_key_file_set_integer (kf, "ui", "use_swaybg", cfg->use_swaybg);
+
+        str = g_key_file_to_data (kf, &len, NULL);
+        g_file_set_contents (path, str, len, NULL);
+        g_free (str);
+        g_key_file_free (kf);
 
         /* libfm does not have any profile things */
         fm_folder_config_save_cache();
     }
+    g_free (path);
     g_free(dir_path);
 }
 
