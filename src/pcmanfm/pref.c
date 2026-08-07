@@ -1140,10 +1140,10 @@ void fm_edit_preference( GtkWindow* parent, int page )
         FmSortMode mode;
         fm_folder_model_get_sort (fm_folder_view_get_model(fv), &by, &mode);
 
-        obj = gtk_builder_get_object (builder, "mingle_dirs");
-        gtk_widget_set_visible (GTK_WIDGET(obj), fm_config->cutdown_menus);
-        gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(obj), mode & FM_SORT_NO_FOLDER_FIRST);
-        g_signal_connect (obj, "toggled", G_CALLBACK(on_mingle_dirs), win);
+        //obj = gtk_builder_get_object (builder, "mingle_dirs");
+        //gtk_widget_set_visible (GTK_WIDGET(obj), fm_config->cutdown_menus);
+        //gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(obj), mode & FM_SORT_NO_FOLDER_FIRST);
+        //g_signal_connect (obj, "toggled", G_CALLBACK(on_mingle_dirs), win);
 
         obj = gtk_builder_get_object (builder, "ignore_case");
         gtk_widget_set_visible (GTK_WIDGET(obj), fm_config->cutdown_menus);

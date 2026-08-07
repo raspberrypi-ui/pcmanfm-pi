@@ -805,7 +805,7 @@ void fm_app_config_save_profile(FmAppConfig* cfg, const char* name)
         g_key_file_load_from_file (kf, path, 0, NULL);
 
         g_key_file_set_integer (kf, "config", "bm_open_method", cfg->bm_open_method);
-        g_key_file_set_string (kf, "config", "home_path", cfg->home_path);
+        if (cfg->home_path) g_key_file_set_string (kf, "config", "home_path", cfg->home_path);
         g_key_file_set_integer (kf, "volume", "mount_on_startup", cfg->mount_on_startup);
         g_key_file_set_integer (kf, "volume", "mount_removable", cfg->mount_removable);
         g_key_file_set_integer (kf, "volume", "autorun", cfg->autorun);

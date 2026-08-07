@@ -374,7 +374,7 @@ static gboolean _fm_modules_load(gpointer unused)
         dir = g_dir_open(dir_name, 0, NULL);
         if (dir == NULL)
         {
-            g_warning("modules directory is not accessible");
+            //g_warning("modules directory is not accessible");
             goto _next_dir;
         }
         g_debug("scanning modules directory %s", dir_name);

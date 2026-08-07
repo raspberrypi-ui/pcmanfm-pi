@@ -297,8 +297,6 @@ static void update_view_menu(FmMainWin* win)
     win->in_update = TRUE;
     act = gtk_ui_manager_get_action(win->ui, "/menubar/ViewMenu/ShowHidden");
     gtk_toggle_action_set_active(GTK_TOGGLE_ACTION(act), fm_folder_view_get_show_hidden(fv));
-    act = gtk_ui_manager_get_action(win->ui, "/menubar/ViewMenu/ShowThumbs");
-    gtk_toggle_action_set_active(GTK_TOGGLE_ACTION(act), fm_standard_view_get_thumbs(FM_STANDARD_VIEW(fv)));
     if (fm_config->cutdown_menus)
     {
         GtkToolItem *item = NULL;
@@ -311,6 +309,8 @@ static void update_view_menu(FmMainWin* win)
             default:                        break;
         }
         if (item) gtk_toggle_tool_button_set_active (GTK_TOGGLE_TOOL_BUTTON(item), TRUE);
+        act = gtk_ui_manager_get_action(win->ui, "/menubar/ViewMenu/ShowThumbs");
+        gtk_toggle_action_set_active(GTK_TOGGLE_ACTION(act), fm_standard_view_get_thumbs(FM_STANDARD_VIEW(fv)));
     }
     else
     gtk_radio_action_set_current_value(win->first_view_mode,
