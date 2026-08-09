@@ -1,3 +1,9 @@
+pcmanfm-pi (1.4) trixie; urgency=medium
+
+  * Restore file mingle option
+
+ -- Simon Long <simon@raspberrypi.com>  Sun, 09 Aug 2026 12:02:40 +0100
+
 pcmanfm-pi (1.3) trixie; urgency=medium
 
   * Handle saving to config files with keyfile functions
