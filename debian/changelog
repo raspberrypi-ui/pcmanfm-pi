@@ -1,3 +1,9 @@
+pcmanfm-pi (1.5) trixie; urgency=medium
+
+  * Version bump for build
+
+ -- Simon Long <simon@raspberrypi.com>  Wed, 02 Sep 2026 13:22:18 +0100
+
 pcmanfm-pi (1.4) trixie; urgency=medium
 
   * Restore file mingle option
