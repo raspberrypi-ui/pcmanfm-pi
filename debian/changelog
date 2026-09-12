@@ -1,3 +1,9 @@
+pcmanfm-pi (1.6) trixie; urgency=medium
+
+  * Fix for occasional crash when dragging an icon within the same window
+
+ -- Simon Long <simon@raspberrypi.com>  Sat, 12 Sep 2026 21:12:52 +0100
+
 pcmanfm-pi (1.5) trixie; urgency=medium
 
   * Version bump for build
