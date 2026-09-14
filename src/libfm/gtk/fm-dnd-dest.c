@@ -115,6 +115,7 @@ struct _FmDndDest
     gboolean waiting_data;
     gboolean has_handlers;
     gboolean can_copy;
+    guint leave_idle_id;
 };
 
 enum
@@ -138,6 +139,7 @@ static void fm_dnd_dest_dispose              (GObject *object);
 static gboolean fm_dnd_dest_files_dropped(FmDndDest* dd, int x, int y, guint action, guint info_type, FmPathList* files);
 
 static void clear_src_cache(FmDndDest* dd);
+static void cancel_pending_leave(FmDndDest* dd);
 
 static void on_drag_leave(GtkWidget *widget, GdkDragContext *drag_context,
                           guint time, FmDndDest* dd);
@@ -211,6 +213,7 @@ static void fm_dnd_dest_dispose(GObject *object)
 
     fm_dnd_dest_set_widget(dd, NULL);
 
+    cancel_pending_leave(dd);
     clear_src_cache(dd);
 
     G_OBJECT_CLASS(fm_dnd_dest_parent_class)->dispose(object);
@@ -542,6 +545,7 @@ static gboolean fm_dnd_dest_files_dropped(FmDndDest* dd, int x, int y,
     default: /* invalid combination */
         break;
     }
+
 out:
     clear_src_cache (dd);
     return ret;
@@ -649,6 +653,9 @@ gboolean _on_drag_data_received(FmDndDest* dd, GdkDragContext *drag_context,
     FmPathList* files = NULL;
     gint length, format;
     const gchar* data;
+
+    /* fresh data for this widget - the drag is definitely still here */
+    cancel_pending_leave(dd);
 
     data = (const gchar*)gtk_selection_data_get_data_with_length(sel_data, &length);
     format = gtk_selection_data_get_format(sel_data);
@@ -844,6 +851,10 @@ gboolean _on_drag_drop(FmDndDest* dd, GdkDragContext *drag_context,
     gboolean ret = FALSE;
     GtkWidget* dest_widget = dd->widget;
     guint i;
+
+    /* a drop is landing here - the drag is definitely still here */
+    cancel_pending_leave(dd);
+
     if(G_LIKELY(target != GDK_NONE))
         for(i = 1; i < N_FM_DND_DEST_DEFAULT_TARGETS; i++)
             if(dest_target_atom[i] == target)
@@ -911,7 +922,6 @@ gboolean _on_drag_drop(FmDndDest* dd, GdkDragContext *drag_context,
                 ret = FALSE;
         }
         gtk_drag_finish(drag_context, ret, FALSE, time);
-        clear_src_cache(dd);
     }
     return ret;
 }
@@ -949,6 +959,10 @@ GdkDragAction fm_dnd_dest_get_default_action(FmDndDest* dd,
     FmFileInfo* dest = dd->dest_file;
     FmPath* dest_path;
     int can_drop;
+
+    /* a motion event here - the drag is still (or again) over this
+     * widget, so any pending "drag has left" invalidation is stale. */
+    cancel_pending_leave(dd);
 
     /* this is XDirectSave */
     if(target == dest_target_atom[FM_DND_DEST_TARGET_XDS])
@@ -1084,6 +1098,40 @@ query_sources:
     return action;
 }
 
+/* GTK/XDND can deliver a "drag-leave" immediately followed by a fresh
+ * "drag-motion" back onto the very same widget - crossing an internal
+ * child window, the floating drag icon transiently covering the
+ * pointer, etc. Treat that as still dragging over this widget: cancel
+ * whatever fm_dnd_dest_drag_leave() scheduled as soon as we see real
+ * activity here again. */
+/* GTK/XDND does not guarantee that a "drag-leave" means the drag has
+ * genuinely moved to another widget - it can be delivered right before
+ * a "drag-motion" that re-enters this very same widget. Defer the
+ * actual cache invalidation to idle, so that a prompt drag-motion
+ * (handled via cancel_pending_leave(), called from
+ * fm_dnd_dest_get_default_action() et al) can cancel it before it
+ * ever runs. Only a leave that is not followed by further activity on
+ * this widget results in the cache actually being cleared. */
+
+static gboolean on_leave_idle(gpointer user_data)
+{
+    FmDndDest* dd = FM_DND_DEST(user_data);
+
+    dd->leave_idle_id = 0;
+    fm_dnd_dest_set_dest_file(dd, NULL);
+    clear_src_cache(dd);
+    return G_SOURCE_REMOVE;
+}
+
+static void cancel_pending_leave(FmDndDest* dd)
+{
+    if(dd->leave_idle_id != 0)
+    {
+        g_source_remove(dd->leave_idle_id);
+        dd->leave_idle_id = 0;
+    }
+}
+
 /**
  * fm_dnd_dest_drag_leave
  * @dd: a drag destination descriptor
@@ -1100,8 +1148,8 @@ query_sources:
  */
 void fm_dnd_dest_drag_leave(FmDndDest* dd, GdkDragContext* drag_context, guint time)
 {
-    fm_dnd_dest_set_dest_file(dd, NULL);
-    clear_src_cache(dd);
+    if(dd->leave_idle_id == 0)
+        dd->leave_idle_id = g_idle_add(on_leave_idle, dd);
 }
 
 static void on_drag_leave(GtkWidget *widget, GdkDragContext *drag_context,
