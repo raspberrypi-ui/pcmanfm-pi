@@ -495,6 +495,7 @@ static gboolean fm_dnd_dest_files_dropped(FmDndDest* dd, int x, int y,
     FmPath* dest;
     GtkWidget* parent;
     int can_drop;
+    gboolean ret = FALSE;
 
     dest = fm_dnd_dest_get_dest_path(dd);
     g_debug("%d files-dropped!, info_type: %d", fm_path_list_get_length(files), info_type);
@@ -502,17 +503,18 @@ static gboolean fm_dnd_dest_files_dropped(FmDndDest* dd, int x, int y,
     can_drop = fm_dnd_dest_can_receive_drop(dd->dest_file, dest,
                                             fm_path_list_peek_head(files));
     if (can_drop == 0)
-        return FALSE;
+        goto out;
     if (action != GDK_ACTION_ASK && can_drop < 0) /* drop into itself only if ask */
-        return FALSE;
+        goto out;
 
     if(fm_file_info_is_desktop_entry(dd->dest_file))
     {
         if(action != GDK_ACTION_COPY)
-            return FALSE;
+            goto out;
         parent = gtk_widget_get_toplevel(dd->widget);
-        return fm_launch_desktop_entry_simple(GTK_WINDOW(parent), NULL,
+        ret = fm_launch_desktop_entry_simple(GTK_WINDOW(parent), NULL,
                                               dd->dest_file, files);
+        goto out;
     }
 
     parent = gtk_widget_get_toplevel(dd->widget);
@@ -525,19 +527,24 @@ static gboolean fm_dnd_dest_files_dropped(FmDndDest* dd, int x, int y,
             fm_trash_files(GTK_WINDOW(parent), files);
         else
             fm_move_files(GTK_WINDOW(parent), files, dest);
+        ret = TRUE;
         break;
     case GDK_ACTION_COPY:
         fm_copy_files(GTK_WINDOW(parent), files, dest);
+        ret = TRUE;
         break;
     case GDK_ACTION_LINK:
         fm_link_files(GTK_WINDOW(parent), files, dest);
+        ret = TRUE;
         break;
     case GDK_ACTION_ASK:
     case GDK_ACTION_PRIVATE:
     default: /* invalid combination */
-        return FALSE;
+        break;
     }
-    return TRUE;
+out:
+    clear_src_cache (dd);
+    return ret;
 }
 
 static void clear_src_cache(FmDndDest* dd)
@@ -947,9 +954,6 @@ GdkDragAction fm_dnd_dest_get_default_action(FmDndDest* dd,
     if(target == dest_target_atom[FM_DND_DEST_TARGET_XDS])
         return gdk_drag_context_get_suggested_action(drag_context);
 
-    // I can see no way this mess of caching code is going to do the right thing in every situation. So force the issue...
-    gtk_drag_get_data (dd->widget, drag_context, target, time(NULL));
-
     if(!dest || !(dest_path = fm_file_info_get_path(dest)))
         /* query drag sources in any case */
         goto query_sources;
@@ -1096,9 +1100,12 @@ query_sources:
  */
 void fm_dnd_dest_drag_leave(FmDndDest* dd, GdkDragContext* drag_context, guint time)
 {
+    fm_dnd_dest_set_dest_file(dd, NULL);
+    clear_src_cache(dd);
 }
 
 static void on_drag_leave(GtkWidget *widget, GdkDragContext *drag_context,
                           guint time, FmDndDest* dd)
 {
+    fm_dnd_dest_drag_leave(dd, drag_context, time);
 }
