@@ -115,6 +115,14 @@ struct _FmDndDest
     gboolean waiting_data;
     gboolean has_handlers;
     gboolean can_copy;
+
+    /* TRUE between an actual "drag-drop" and the drag-data-received
+     * response that was freshly requested for it. While this is set,
+     * the next drag-data-received is the authoritative answer for the
+     * drop and must not be confused with data cached from an earlier,
+     * possibly stale "drag-motion" query. */
+    gboolean drop_pending;
+    gint drop_x, drop_y;
 };
 
 enum
@@ -745,6 +753,28 @@ gboolean _on_drag_data_received(FmDndDest* dd, GdkDragContext *drag_context,
     if(G_UNLIKELY(dd->context))
         g_object_unref(dd->context);
     dd->context = g_object_ref(drag_context);
+
+    if(dd->drop_pending)
+    {
+        /* This is the fresh, authoritative data that was explicitly
+         * re-requested for an actual drop in _on_drag_drop() - complete
+         * the drop now instead of leaving it to be picked up (possibly
+         * stale or empty, e.g. if overlapping requests were in flight
+         * from "drag-motion") from the cache later. */
+        gboolean ret = FALSE;
+
+        dd->drop_pending = FALSE;
+        if(files)
+        {
+            GdkDragAction action = gdk_drag_context_get_selected_action(drag_context);
+            g_signal_emit(dd, signals[FILES_DROPPED], 0, dd->drop_x, dd->drop_y,
+                          action, info, files, &ret);
+        }
+        gtk_drag_finish(drag_context, ret, FALSE, time);
+        clear_src_cache(dd);
+        return ret;
+    }
+
     return (files != NULL);
 }
 
@@ -886,25 +916,30 @@ gboolean _on_drag_drop(FmDndDest* dd, GdkDragContext *drag_context,
             return TRUE;
         }
 
-        /* see if the dragged files are cached by "drag-motion" handler */
-        if(dd->src_files && drag_context == dd->context)
+        /* Do not trust dd->src_files here: it may have been populated (or
+         * left stale/empty) by an earlier "drag-motion" query, and
+         * repeated/overlapping gtk_drag_get_data() calls made while
+         * hovering can race with it - this is especially likely when
+         * input events arrive in delayed bursts, e.g. over a remote/VNC
+         * connection. Always request fresh data for the actual drop, and
+         * complete it only once that authoritative response arrives in
+         * drag-data-received(). Note: don't clear_src_cache() here - it
+         * would also wipe dd->dest_file/dd->context, which are still
+         * needed (by fm_dnd_dest_files_dropped()) once the drop actually
+         * completes below. */
+        if(G_UNLIKELY(dd->src_files))
         {
-            GdkDragAction action = gdk_drag_context_get_selected_action(drag_context);
-            /* emit files-dropped signal */
-            g_signal_emit(dd, signals[FILES_DROPPED], 0, x, y, action, dd->info_type, dd->src_files, &ret);
+            fm_path_list_unref(dd->src_files);
+            dd->src_files = NULL;
         }
-        else /* we don't have the data */
-        {
-            if(dd->waiting_data) /* if we're still waiting for the data */
-            {
-                /* FIXME: how to handle this? */
-                ret = FALSE;
-            }
-            else
-                ret = FALSE;
-        }
-        gtk_drag_finish(drag_context, ret, FALSE, time);
-        clear_src_cache(dd);
+        dd->drop_pending = TRUE;
+        dd->drop_x = x;
+        dd->drop_y = y;
+        dd->waiting_data = TRUE;
+        gtk_drag_get_data(dest_widget, drag_context, target, time);
+        /* gtk_drag_finish() is called from drag-data-received once the
+         * fresh data for this drop has arrived. */
+        return TRUE;
     }
     return ret;
 }
