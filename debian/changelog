@@ -1,3 +1,9 @@
+pcmanfm-pi (1.7) trixie; urgency=medium
+
+  * Do not delete global config strings unless overwritten by locals
+
+ -- Simon Long <simon@raspberrypi.com>  Tue, 15 Sep 2026 14:45:36 +0100
+
 pcmanfm-pi (1.6) trixie; urgency=medium
 
   * Fix for occasional crash when dragging an icon within the same window
