@@ -509,17 +509,9 @@ static void set_drag_dest_icon_item(FmStandardView* fv, GtkTreePath* tp)
 static GtkTreePath* get_drop_path_list_view(FmStandardView* fv, gint x, gint y)
 {
     GtkTreePath* tp = NULL;
-    GtkTreeViewColumn* col;
 
     gtk_tree_view_convert_widget_to_bin_window_coords(GTK_TREE_VIEW(fv->view), x, y, &x, &y);
-    if(gtk_tree_view_get_path_at_pos(GTK_TREE_VIEW(fv->view), x, y, &tp, &col, NULL, NULL))
-    {
-        if(gtk_tree_view_column_get_sort_column_id(col)!=FM_FOLDER_MODEL_COL_NAME)
-        {
-            gtk_tree_path_free(tp);
-            tp = NULL;
-        }
-    }
+    gtk_tree_view_get_path_at_pos(GTK_TREE_VIEW(fv->view), x, y, &tp, NULL, NULL, NULL);
     return tp;
 }
 
@@ -550,18 +542,24 @@ static gboolean on_drag_motion(GtkWidget *dest_widget,
     if(fm_dnd_dest_is_target_supported(fv->dnd_dest, target))
     {
         GtkTreePath* tp = fv->get_drop_path(fv, x, y);
+        FmFileInfo* fi = NULL;
+
         if(tp)
         {
             GtkTreeIter it;
             if(gtk_tree_model_get_iter(GTK_TREE_MODEL(fv->model), &it, tp))
-            {
-                FmFileInfo* fi;
                 gtk_tree_model_get(GTK_TREE_MODEL(fv->model), &it, FM_FOLDER_MODEL_COL_INFO, &fi, -1);
-                fm_dnd_dest_set_dest_file(fv->dnd_dest, fi);
-            }
         }
-        else
+
+        if(fi)
         {
+            fm_dnd_dest_set_dest_file(fv->dnd_dest, fi);
+            action = fm_dnd_dest_get_default_action(fv->dnd_dest, drag_context, target);
+        }
+
+        if(action == 0)
+        {
+            /* icon cannot accept drop, so fall back and pass on to window */
             FmFolderModel* model = fv->model;
             if (model)
             {
@@ -570,8 +568,15 @@ static gboolean on_drag_motion(GtkWidget *dest_widget,
             }
             else
                 fm_dnd_dest_set_dest_file(fv->dnd_dest, NULL);
+            action = fm_dnd_dest_get_default_action(fv->dnd_dest, drag_context, target);
+            if(tp)
+            {
+                /* no longer targeting that specific item - hide drop highlight for it */
+                gtk_tree_path_free(tp);
+                tp = NULL;
+            }
         }
-        action = fm_dnd_dest_get_default_action(fv->dnd_dest, drag_context, target);
+
         ret = action != 0;
         fv->set_drag_dest(fv, ret ? tp : NULL);
         if (tp)
