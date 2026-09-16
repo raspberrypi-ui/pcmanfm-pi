@@ -263,6 +263,7 @@ static void _parse_drop_default_action(GKeyFile *kf, gint *action)
 void fm_config_load_from_key_file(FmConfig* cfg, GKeyFile* kf)
 {
     char **strv;
+    char *ptr;
 
     fm_key_file_get_bool(kf, "config", "use_trash", &cfg->use_trash);
     fm_key_file_get_bool(kf, "config", "single_click", &cfg->single_click);
@@ -272,12 +273,18 @@ void fm_config_load_from_key_file(FmConfig* cfg, GKeyFile* kf)
     fm_key_file_get_int(kf, "config", "auto_selection_delay", &cfg->auto_selection_delay);
     fm_key_file_get_bool(kf, "config", "confirm_del", &cfg->confirm_del);
     fm_key_file_get_bool(kf, "config", "confirm_trash", &cfg->confirm_trash);
-    if(cfg->terminal)
-        g_free(cfg->terminal);
-    cfg->terminal = g_key_file_get_string(kf, "config", "terminal", NULL);
-    if(cfg->archiver)
-        g_free(cfg->archiver);
-    cfg->archiver = g_key_file_get_string(kf, "config", "archiver", NULL);
+    ptr = g_key_file_get_string(kf, "config", "terminal", NULL);
+    if (ptr)
+    {
+        g_free (cfg->terminal);
+        cfg->terminal = ptr;
+    }
+    ptr = g_key_file_get_string(kf, "config", "archiver", NULL);
+    if (ptr)
+    {
+        g_free (cfg->archiver);
+        cfg->archiver = ptr;
+    }
     fm_key_file_get_bool(kf, "config", "thumbnail_local", &cfg->thumbnail_local);
     fm_key_file_get_int(kf, "config", "thumbnail_max", &cfg->thumbnail_max);
     fm_key_file_get_bool(kf, "config", "advanced_mode", &cfg->advanced_mode);
@@ -299,8 +306,12 @@ void fm_config_load_from_key_file(FmConfig* cfg, GKeyFile* kf)
     fm_key_file_get_bool(kf, "config", "cutdown_places", &cfg->cutdown_places);
     fm_key_file_get_bool(kf, "config", "real_expanders", &cfg->real_expanders);
     fm_key_file_get_bool(kf, "config", "gestures_touch_only", &cfg->gestures_touch_only);
-    g_free(cfg->format_cmd);
-    cfg->format_cmd = g_key_file_get_string(kf, "config", "format_cmd", NULL);
+    ptr = g_key_file_get_string(kf, "config", "format_cmd", NULL);
+    if (ptr)
+    {
+        g_free (cfg->format_cmd);
+        cfg->format_cmd = ptr;
+    }
     /* append blacklist */
     strv = g_key_file_get_string_list(kf, "config", "modules_blacklist", NULL, NULL);
     fm_strcatv(&cfg->modules_blacklist, strv);
@@ -315,11 +326,18 @@ void fm_config_load_from_key_file(FmConfig* cfg, GKeyFile* kf)
     fm_key_file_get_int(kf, "ui", "thumbnail_size", &cfg->thumbnail_size);
     fm_key_file_get_bool(kf, "ui", "show_thumbnail", &cfg->show_thumbnail);
     fm_key_file_get_bool(kf, "ui", "shadow_hidden", &cfg->shadow_hidden);
-    g_free(cfg->list_view_size_units);
-    cfg->list_view_size_units = g_key_file_get_string(kf, "ui", "list_view_size_units", NULL);
-    g_free(cfg->saved_search);
-    cfg->saved_search = g_key_file_get_string(kf, "ui", "saved_search", NULL);
-
+    ptr = g_key_file_get_string(kf, "ui", "list_view_size_units", NULL);
+    if (ptr)
+    {
+        g_free (cfg->list_view_size_units);
+        cfg->list_view_size_units = ptr;
+    }
+    ptr = g_key_file_get_string(kf, "ui", "saved_search", NULL);
+    if (ptr)
+    {
+        g_free (cfg->saved_search);
+        cfg->saved_search = ptr;
+    }
     fm_key_file_get_bool(kf, "places", "places_home", &cfg->places_home);
     fm_key_file_get_bool(kf, "places", "places_desktop", &cfg->places_desktop);
     fm_key_file_get_bool(kf, "places", "places_root", &cfg->places_root);
