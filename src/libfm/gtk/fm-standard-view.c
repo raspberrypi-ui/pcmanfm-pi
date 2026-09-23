@@ -542,19 +542,19 @@ static gboolean on_drag_motion(GtkWidget *dest_widget,
     if(fm_dnd_dest_is_target_supported(fv->dnd_dest, target))
     {
         GtkTreePath* tp = fv->get_drop_path(fv, x, y);
-        FmFileInfo* fi = NULL;
-
         if(tp)
         {
             GtkTreeIter it;
             if(gtk_tree_model_get_iter(GTK_TREE_MODEL(fv->model), &it, tp))
+            {
+                FmFileInfo* fi = NULL;
                 gtk_tree_model_get(GTK_TREE_MODEL(fv->model), &it, FM_FOLDER_MODEL_COL_INFO, &fi, -1);
-        }
-
-        if(fi)
-        {
-            fm_dnd_dest_set_dest_file(fv->dnd_dest, fi);
-            action = fm_dnd_dest_get_default_action(fv->dnd_dest, drag_context, target);
+                if(fi)
+                {
+                    fm_dnd_dest_set_dest_file(fv->dnd_dest, fi);
+                    action = fm_dnd_dest_get_default_action(fv->dnd_dest, drag_context, target);
+                }
+            }
         }
 
         if(action == 0)
@@ -571,7 +571,7 @@ static gboolean on_drag_motion(GtkWidget *dest_widget,
             action = fm_dnd_dest_get_default_action(fv->dnd_dest, drag_context, target);
             if(tp)
             {
-                /* no longer targeting that specific item - hide drop highlight for it */
+                /* hide drop highlight for icon */
                 gtk_tree_path_free(tp);
                 tp = NULL;
             }

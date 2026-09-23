@@ -1,3 +1,9 @@
+pcmanfm-pi (1.8) trixie; urgency=medium
+
+  * Fix for drop failing on list view
+
+ -- Simon Long <simon@raspberrypi.com>  Wed, 23 Sep 2026 18:26:15 +0100
+
 pcmanfm-pi (1.7) trixie; urgency=medium
 
   * Do not delete global config strings unless overwritten by locals
