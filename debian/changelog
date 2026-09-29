@@ -1,3 +1,9 @@
+pcmanfm-pi (1.10) trixie; urgency=medium
+
+  * Fix spurious rename dialog when clicking forward and back buttons
+
+ -- Simon Long <simon@raspberrypi.com>  Tue, 29 Sep 2026 11:41:14 +0100
+
 pcmanfm-pi (1.9) trixie; urgency=medium
 
   * Set default margins to match default taskbar config

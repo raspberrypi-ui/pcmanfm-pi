@@ -447,7 +447,7 @@ exo_tree_view_button_press_event (GtkWidget      *widget,
         gtk_tree_selection_set_select_function (selection, (GtkTreeSelectionFunc) exo_noop_false, NULL, NULL);
       else
         selected_paths = gtk_tree_selection_get_selected_rows (selection, NULL);
-      if (!tree_view->priv->single_click)
+      if (event->button == 1 && !tree_view->priv->single_click)
       {
         tree_view->priv->pending_rename = 1;
         tree_view->priv->ren_path = gtk_tree_path_copy (path);
