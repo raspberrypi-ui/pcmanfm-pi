@@ -2587,13 +2587,11 @@ static void on_rows_reordered(FmFolderModel* model, GtkTreePath* parent_tp, GtkT
 
 static void update_working_area (FmDesktop* desktop)
 {
-    GdkRectangle geom;
     GdkMonitor *mon = gdk_mon_for_desktop (desktop);
     if (!mon) return;
-    gdk_monitor_get_workarea (mon, &desktop->working_area);
-    gdk_monitor_get_geometry (mon, &geom);
-    desktop->working_area.x -= geom.x;
-    desktop->working_area.y -= geom.y;
+    gdk_monitor_get_geometry (mon, &desktop->working_area);
+    desktop->working_area.x = 0;
+    desktop->working_area.y = 0;
     queue_layout_items(desktop);
     return;
 }
@@ -3912,9 +3910,12 @@ static void desktop_search_position(FmDesktop *desktop)
     gdk_monitor_get_geometry (gdk_mon_for_desktop (desktop), &geom);
 
     x = geom.x + desktop->working_area.x + desktop->working_area.width - requisition.width;
-    y = geom.y + desktop->working_area.y;
+    y = geom.y + desktop->working_area.y + desktop->conf.tmargin;
 
-    gtk_window_move(GTK_WINDOW(desktop->search_window), x, y);
+    if (gtk_layer_is_supported ())
+        gtk_layer_set_margin (GTK_WINDOW(desktop->search_window), GTK_LAYER_SHELL_EDGE_TOP, desktop->conf.tmargin);
+    else
+        gtk_window_move(GTK_WINDOW(desktop->search_window), x, y);
 }
 
 static void desktop_search_init(GtkWidget *search_entry, FmDesktop *desktop)
@@ -3986,6 +3987,7 @@ static void desktop_search_ensure_window(FmDesktop *desktop)
         gtk_layer_set_anchor (window, GTK_LAYER_SHELL_EDGE_RIGHT, TRUE);
         gtk_layer_set_layer (window, GTK_LAYER_SHELL_LAYER_OVERLAY);
         gtk_layer_set_keyboard_mode (window, GTK_LAYER_SHELL_KEYBOARD_MODE_ON_DEMAND);
+        gtk_layer_set_exclusive_zone (window, -1);
     }
 
     gtk_window_group_add_window(win_group, window);

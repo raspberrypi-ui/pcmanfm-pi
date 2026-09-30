@@ -1,3 +1,9 @@
+pcmanfm-pi (1.11) trixie; urgency=medium
+
+  * Fixes for icon layout under X, and for search window position
+
+ -- Simon Long <simon@raspberrypi.com>  Wed, 30 Sep 2026 08:28:14 +0100
+
 pcmanfm-pi (1.10) trixie; urgency=medium
 
   * Fix spurious rename dialog when clicking forward and back buttons
