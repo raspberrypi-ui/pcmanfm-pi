@@ -729,6 +729,7 @@ static void fm_main_win_init(FmMainWin *win)
     gboolean is_first;
     GtkShadowType shadow_type;
 
+    gtk_widget_set_name (GTK_WIDGET (win), "fmwin");
     pcmanfm_ref();
     all_wins = g_slist_prepend(all_wins, win);
 

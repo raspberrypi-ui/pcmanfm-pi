@@ -221,7 +221,7 @@ static void fm_side_pane_init(FmSidePane *sp)
     gtk_scrolled_window_set_shadow_type((GtkScrolledWindow*)sp->scroll, GTK_SHADOW_IN);
 
     if (!fm_config->cutdown_menus) gtk_box_pack_start(GTK_BOX(sp), sp->title_bar, FALSE, TRUE, 0);
-    else gtk_box_set_spacing (GTK_BOX (sp), 5);
+    else gtk_box_set_spacing (GTK_BOX (sp), 1);
     gtk_box_pack_start(GTK_BOX(sp), sp->scroll, TRUE, TRUE, 0);
     gtk_widget_show_all(GTK_WIDGET(sp));
 }
