@@ -371,7 +371,7 @@ static void fm_side_pane_dispose(GObject *object)
     G_OBJECT_CLASS(fm_side_pane_parent_class)->dispose(object);
 }
 
-static void init_dir_tree(FmSidePane* sp)
+static void init_dir_tree(FmSidePane* sp, GtkWidget* view)
 {
         FmFileInfoJob* job = fm_file_info_job_new(NULL, FM_FILE_INFO_JOB_NONE);
         GList* l;
@@ -394,7 +394,7 @@ static void init_dir_tree(FmSidePane* sp)
         }
         g_object_unref(job);
 
-    gtk_tree_view_set_model(GTK_TREE_VIEW(sp->view), GTK_TREE_MODEL(dir_tree_model));
+    gtk_tree_view_set_model(GTK_TREE_VIEW(view), GTK_TREE_MODEL(dir_tree_model));
     g_object_unref(dir_tree_model);
 }
 
@@ -409,8 +409,17 @@ static void init_dir_tree(FmSidePane* sp)
  */
 void fm_side_pane_set_mode(FmSidePane* sp, FmSidePaneMode mode)
 {
+    GtkWidget *dir_tree = NULL;
+
     if(mode == sp->mode)
         return;
+
+    /* build the dir tree first if needed */
+    if (mode == FM_SP_HYBRID || mode == FM_SP_DIR_TREE)
+    {
+        dir_tree = (GtkWidget*) fm_dir_tree_view_new ();
+        init_dir_tree (sp, dir_tree);
+    }
 
     if(sp->view)
     {
@@ -431,9 +440,8 @@ void fm_side_pane_set_mode(FmSidePane* sp, FmSidePaneMode mode)
 
     if (mode == FM_SP_HYBRID)
     {
-        /* create a dir tree */
-        sp->view = (GtkWidget*) fm_dir_tree_view_new ();
-        init_dir_tree (sp);
+        /* use the dir tree created earlier */
+        sp->view = dir_tree;
         fm_dir_tree_view_chdir (FM_DIR_TREE_VIEW (sp->view), sp->cwd);
         gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (sp->scroll),
                 GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
@@ -496,9 +504,8 @@ void fm_side_pane_set_mode(FmSidePane* sp, FmSidePaneMode mode)
         break;
     case FM_SP_DIR_TREE:
         gtk_label_set_text(GTK_LABEL(sp->menu_label), _("Directory Tree"));
-        /* create a dir tree */
-        sp->view = (GtkWidget*)fm_dir_tree_view_new();
-        init_dir_tree(sp);
+        /* use the dir tree created earlier */
+        sp->view = dir_tree;
         fm_dir_tree_view_chdir(FM_DIR_TREE_VIEW(sp->view), sp->cwd);
 
         gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(sp->scroll),
