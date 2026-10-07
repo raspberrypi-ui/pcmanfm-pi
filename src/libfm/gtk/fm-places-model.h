@@ -76,7 +76,8 @@ typedef enum
     FM_PLACES_ITEM_NONE,
     FM_PLACES_ITEM_PATH,
     FM_PLACES_ITEM_VOLUME,
-    FM_PLACES_ITEM_MOUNT
+    FM_PLACES_ITEM_MOUNT,
+    FM_PLACES_ITEM_DIRTREE
 } FmPlacesType;
 
 typedef struct _FmPlacesItem FmPlacesItem;

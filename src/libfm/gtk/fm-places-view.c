@@ -48,6 +48,7 @@
 #include "fm-places-model.h"
 #include "fm-gtk-file-launcher.h"
 #include "fm-gtk-marshal.h"
+#include "fm-side-pane.h"
 
 #include <gdk/gdkkeysyms.h>
 
@@ -679,6 +680,12 @@ static void activate_row(FmPlacesView* view, guint button, GtkTreePath* tree_pat
                 path = NULL;
             break;
         }
+        case FM_PLACES_ITEM_DIRTREE:
+            FmSidePane *sp = (FmSidePane *) gtk_widget_get_parent (gtk_widget_get_parent (GTK_WIDGET (view)));
+            FmSidePaneMode mod = fm_side_pane_get_mode (sp);
+            if (mod == FM_SP_HYBRID) fm_side_pane_set_mode (sp, FM_SP_PLACES);
+            else fm_side_pane_set_mode (sp, FM_SP_HYBRID);
+            break;
         default:
             return;
         }

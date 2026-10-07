@@ -122,6 +122,8 @@ static void place_item_free(FmPlacesItem* item)
         if(item->bm_item)
             fm_bookmark_item_unref(item->bm_item);
         break;
+    case FM_PLACES_ITEM_DIRTREE:
+        break;
     case FM_PLACES_ITEM_NONE:
         ;
     }
@@ -636,6 +638,15 @@ static void add_bookmarks(FmPlacesModel* model, FmFileInfoJob* job)
         if(remote_pix)
             g_object_unref(remote_pix);
     }
+
+    GtkTreeIter it;
+    remote_icon = fm_icon_from_name ("go-jump");
+    remote_pix = fm_pixbuf_from_icon (remote_icon, fm_config->pane_icon_size, GTK_IS_WIDGET (model->view) ? gtk_widget_get_scale_factor (model->view) : 1);
+    item = add_new_item (GTK_LIST_STORE (model), FM_PLACES_ITEM_DIRTREE, &it, NULL);
+    item->icon = g_object_ref (remote_icon);
+    gtk_list_store_set (GTK_LIST_STORE (model), &it, FM_PLACES_MODEL_COL_ICON, remote_pix, FM_PLACES_MODEL_COL_LABEL, _("Directory Tree"), -1);
+    g_object_unref (remote_pix);
+    g_object_unref (remote_icon);
 }
 
 static void on_bookmarks_changed(FmBookmarks* bm, gpointer user_data)

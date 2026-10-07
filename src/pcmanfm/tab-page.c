@@ -860,7 +860,7 @@ static void fm_tab_page_init(FmTabPage *page)
     fm_side_pane_set_mode(page->side_pane, (mode & FM_SP_MODE_MASK));
     else
     {
-        if (fm_config->cutdown_places) fm_side_pane_set_mode(page->side_pane, FM_SP_HYBRID);
+        if (fm_config->cutdown_places) fm_side_pane_set_mode(page->side_pane, FM_SP_PLACES);
         else fm_side_pane_set_mode(page->side_pane, FM_SP_DIR_TREE);
     }
     fm_side_pane_set_popup_updater(page->side_pane, _update_sidepane_popup, page);
@@ -1084,7 +1084,7 @@ void fm_tab_page_set_show_places (FmTabPage* page, gboolean show_places)
 {
     fm_config->cutdown_places = show_places;
     if (fm_config->cutdown_places)
-        fm_side_pane_set_mode (page->side_pane, FM_SP_HYBRID);
+        fm_side_pane_set_mode (page->side_pane, FM_SP_PLACES);
     else
         fm_side_pane_set_mode (page->side_pane, FM_SP_DIR_TREE);
 }
