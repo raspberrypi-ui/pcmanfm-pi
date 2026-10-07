@@ -541,6 +541,17 @@ static gboolean on_draw (GtkWidget *self, cairo_t *cr, gpointer data)
     return FALSE;
 }
 
+/* the directory tree toggle is an action, not a place, so never select it */
+static gboolean select_func(GtkTreeSelection *sel, GtkTreeModel *model, GtkTreePath *path,
+                            gboolean selected, gpointer data)
+{
+    GtkTreeIter it;
+    FmPlacesItem *item = NULL;
+    if (gtk_tree_model_get_iter (model, &it, path))
+        gtk_tree_model_get (model, &it, FM_PLACES_MODEL_COL_INFO, &item, -1);
+    return !item || fm_places_item_get_type (item) != FM_PLACES_ITEM_DIRTREE;
+}
+
 static void fm_places_view_init(FmPlacesView *self)
 {
     GtkTreeViewColumn* col;
@@ -563,6 +574,7 @@ static void fm_places_view_init(FmPlacesView *self)
 
     gtk_tree_view_set_headers_visible(GTK_TREE_VIEW(self), FALSE);
     gtk_tree_view_set_row_separator_func(GTK_TREE_VIEW(self), sep_func, NULL, NULL);
+    gtk_tree_selection_set_select_function(gtk_tree_view_get_selection(GTK_TREE_VIEW(self)), select_func, NULL, NULL);
 
     col = gtk_tree_view_column_new();
     renderer = (GtkCellRenderer*)fm_cell_renderer_pixbuf_new();
