@@ -190,6 +190,7 @@ static void fm_side_pane_init(FmSidePane *sp)
     GtkActionGroup* act_grp = gtk_action_group_new("SidePane");
     GtkWidget* hbox;
 
+    gtk_widget_set_name (GTK_WIDGET (sp), "fmsp");
     gtk_action_group_set_translation_domain(act_grp, GETTEXT_PACKAGE);
     /* FIXME: migrate to GtkGrid */
     sp->title_bar = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
@@ -221,7 +222,7 @@ static void fm_side_pane_init(FmSidePane *sp)
     gtk_scrolled_window_set_shadow_type((GtkScrolledWindow*)sp->scroll, GTK_SHADOW_IN);
 
     if (!fm_config->cutdown_menus) gtk_box_pack_start(GTK_BOX(sp), sp->title_bar, FALSE, TRUE, 0);
-    else gtk_box_set_spacing (GTK_BOX (sp), 0);
+    else gtk_box_set_spacing (GTK_BOX (sp), 1);
     gtk_box_pack_start(GTK_BOX(sp), sp->scroll, TRUE, TRUE, 0);
     gtk_widget_show_all(GTK_WIDGET(sp));
 }
@@ -638,6 +639,8 @@ const char *fm_side_pane_get_mode_name(FmSidePaneMode mode)
             return "places";
         case FM_SP_DIR_TREE:
             return "dirtree";
+        case FM_SP_HYBRID:
+            return "hybrid";
         default:
             return NULL;
     }
@@ -661,6 +664,8 @@ FmSidePaneMode fm_side_pane_get_mode_by_name(const char *str)
         return FM_SP_PLACES;
     if (strcmp(str, "dirtree") == 0)
         return FM_SP_DIR_TREE;
+    if (strcmp(str, "hybrid") == 0)
+        return FM_SP_HYBRID;
     return FM_SP_NONE;
 }
 

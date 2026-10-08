@@ -94,6 +94,7 @@ struct _FmPlacesModel
     guint places_network_change_handler;
     guint places_unmounted_change_handler;
     guint places_volmounts_change_handler;
+    guint places_dirtree_change_handler;
     GdkPixbuf* eject_icon;
 
     GSList* jobs;
@@ -639,14 +640,17 @@ static void add_bookmarks(FmPlacesModel* model, FmFileInfoJob* job)
             g_object_unref(remote_pix);
     }
 
-    GtkTreeIter it;
-    remote_icon = fm_icon_from_name ("go-jump");
-    remote_pix = fm_pixbuf_from_icon (remote_icon, fm_config->pane_icon_size, GTK_IS_WIDGET (model->view) ? gtk_widget_get_scale_factor (model->view) : 1);
-    item = add_new_item (GTK_LIST_STORE (model), FM_PLACES_ITEM_DIRTREE, &it, NULL);
-    item->icon = g_object_ref (remote_icon);
-    gtk_list_store_set (GTK_LIST_STORE (model), &it, FM_PLACES_MODEL_COL_ICON, remote_pix, FM_PLACES_MODEL_COL_LABEL, _("Directory Tree"), -1);
-    g_object_unref (remote_pix);
-    g_object_unref (remote_icon);
+    if (fm_config->places_dirtree)
+    {
+        GtkTreeIter it;
+        remote_icon = fm_icon_from_name ("go-jump");
+        remote_pix = fm_pixbuf_from_icon (remote_icon, fm_config->pane_icon_size, GTK_IS_WIDGET (model->view) ? gtk_widget_get_scale_factor (model->view) : 1);
+        item = add_new_item (GTK_LIST_STORE (model), FM_PLACES_ITEM_DIRTREE, &it, NULL);
+        item->icon = g_object_ref (remote_icon);
+        gtk_list_store_set (GTK_LIST_STORE (model), &it, FM_PLACES_MODEL_COL_ICON, remote_pix, FM_PLACES_MODEL_COL_LABEL, _("Directory Tree"), -1);
+        g_object_unref (remote_pix);
+        g_object_unref (remote_icon);
+    }
 }
 
 static void on_bookmarks_changed(FmBookmarks* bm, gpointer user_data)
@@ -889,6 +893,12 @@ static void on_places_network_changed(FmConfig* cfg, gpointer user_data)
     {
         remove_path_item(model, FM_PLACES_ID_NETWORK);
     }
+}
+
+static void on_places_dirtree_changed(FmConfig* cfg, gpointer user_data)
+{
+    FmPlacesModel* model = FM_PLACES_MODEL(user_data);
+    on_bookmarks_changed (model->bookmarks, model);
 }
 
 static void on_pane_icon_size_changed(FmConfig* cfg, gpointer user_data)
@@ -1171,6 +1181,8 @@ void fm_places_model_do_init (FmPlacesModel *self)
                                              G_CALLBACK(on_places_unmounted_changed), self);
     self->places_volmounts_change_handler = g_signal_connect(fm_config, "changed::places_volmounts",
                                              G_CALLBACK(on_places_volmounts_changed), self);
+    self->places_dirtree_change_handler = g_signal_connect(fm_config, "changed::places_dirtree",
+                                             G_CALLBACK(on_places_dirtree_changed), self);
 
     self->pane_icon_size_change_handler = g_signal_connect(fm_config, "changed::pane_icon_size",
                                              G_CALLBACK(on_pane_icon_size_changed), self);

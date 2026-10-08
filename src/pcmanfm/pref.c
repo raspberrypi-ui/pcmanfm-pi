@@ -707,6 +707,17 @@ static void on_show_places (GtkToggleButton* act, FmMainWin* win)
     pcmanfm_save_config (FALSE);
 }
 
+static void on_show_dirtree (GtkToggleButton* act, FmMainWin* win)
+{
+    FmTabPage* page = win->current_page;
+    if (!page) return;
+    gboolean active = gtk_toggle_button_get_active (act);
+    fm_config->cutdown_dirtree = active;
+    fm_tab_page_set_show_dirtree (page, active);
+    //gtk_widget_set_sensitive (places_box, fm_config->cutdown_dirtree);
+    pcmanfm_save_config (FALSE);
+}
+
 static void on_show_side_pane(GtkToggleButton* act, FmMainWin* win)
 {
     gboolean active;
@@ -910,6 +921,7 @@ void fm_edit_preference( GtkWindow* parent, int page )
         INIT_BOOL(builder, FmConfig, places_computer, NULL);
         INIT_BOOL(builder, FmConfig, places_network, NULL);
         INIT_BOOL(builder, FmConfig, places_volmounts, NULL);
+        INIT_BOOL(builder, FmConfig, places_dirtree, NULL);
         places_box = GTK_WIDGET(gtk_builder_get_object(builder, "vbox_places"));
         gtk_widget_show (places_box);
         if (fm_config->cutdown_menus)
@@ -1131,10 +1143,15 @@ void fm_edit_preference( GtkWindow* parent, int page )
         gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(obj), fm_config->cutdown_places);
         g_signal_connect (obj, "toggled", G_CALLBACK(on_show_places), win);
 
-        obj = gtk_builder_get_object (builder, "show_sidebar");
+        obj = gtk_builder_get_object (builder, "show_dirtree");
         gtk_widget_set_visible (GTK_WIDGET(obj), fm_config->cutdown_menus);
-        gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(obj), !(app_config->side_pane_mode & FM_SP_HIDE));
-        g_signal_connect (obj, "toggled", G_CALLBACK(on_show_side_pane), win);
+        gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(obj), fm_config->cutdown_dirtree);
+        g_signal_connect (obj, "toggled", G_CALLBACK(on_show_dirtree), win);
+
+        //obj = gtk_builder_get_object (builder, "show_sidebar");
+        //gtk_widget_set_visible (GTK_WIDGET(obj), fm_config->cutdown_menus);
+        //gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(obj), !(app_config->side_pane_mode & FM_SP_HIDE));
+        //g_signal_connect (obj, "toggled", G_CALLBACK(on_show_side_pane), win);
 
         FmFolderModelCol by;
         FmSortMode mode;

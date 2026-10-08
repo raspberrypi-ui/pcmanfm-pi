@@ -860,8 +860,22 @@ static void fm_tab_page_init(FmTabPage *page)
     fm_side_pane_set_mode(page->side_pane, (mode & FM_SP_MODE_MASK));
     else
     {
-        if (fm_config->cutdown_places) fm_side_pane_set_mode(page->side_pane, FM_SP_PLACES);
-        else fm_side_pane_set_mode(page->side_pane, FM_SP_DIR_TREE);
+        gtk_widget_show(GTK_WIDGET(page->side_pane));
+        app_config->side_pane_mode &= ~FM_SP_HIDE;
+        if (fm_config->cutdown_places)
+        {
+            if (fm_config->cutdown_dirtree) fm_side_pane_set_mode(page->side_pane, FM_SP_HYBRID);
+            else fm_side_pane_set_mode(page->side_pane, FM_SP_PLACES);
+        }
+        else
+        {
+            if (fm_config->cutdown_dirtree) fm_side_pane_set_mode(page->side_pane, FM_SP_DIR_TREE);
+            else
+            {
+                app_config->side_pane_mode |= FM_SP_HIDE;
+                gtk_widget_hide(GTK_WIDGET(page->side_pane));
+            }
+        }
     }
     fm_side_pane_set_popup_updater(page->side_pane, _update_sidepane_popup, page);
     if (app_config->home_path && app_config->home_path[0])
@@ -1083,10 +1097,43 @@ void fm_tab_page_set_show_hidden(FmTabPage* page, gboolean show_hidden)
 void fm_tab_page_set_show_places (FmTabPage* page, gboolean show_places)
 {
     fm_config->cutdown_places = show_places;
+    app_config->side_pane_mode &= ~FM_SP_HIDE;
+    gtk_widget_show(GTK_WIDGET(page->side_pane));
     if (fm_config->cutdown_places)
-        fm_side_pane_set_mode (page->side_pane, FM_SP_PLACES);
+    {
+        if (fm_config->cutdown_dirtree) fm_side_pane_set_mode(page->side_pane, FM_SP_HYBRID);
+        else fm_side_pane_set_mode(page->side_pane, FM_SP_PLACES);
+    }
     else
-        fm_side_pane_set_mode (page->side_pane, FM_SP_DIR_TREE);
+    {
+        if (fm_config->cutdown_dirtree) fm_side_pane_set_mode(page->side_pane, FM_SP_DIR_TREE);
+        else
+        {
+            app_config->side_pane_mode |= FM_SP_HIDE;
+            gtk_widget_hide(GTK_WIDGET(page->side_pane));
+        }
+    }
+}
+
+void fm_tab_page_set_show_dirtree (FmTabPage* page, gboolean show_dirtree)
+{
+    fm_config->cutdown_dirtree = show_dirtree;
+    app_config->side_pane_mode &= ~FM_SP_HIDE;
+    gtk_widget_show(GTK_WIDGET(page->side_pane));
+    if (fm_config->cutdown_places)
+    {
+        if (fm_config->cutdown_dirtree) fm_side_pane_set_mode(page->side_pane, FM_SP_HYBRID);
+        else fm_side_pane_set_mode(page->side_pane, FM_SP_PLACES);
+    }
+    else
+    {
+        if (fm_config->cutdown_dirtree) fm_side_pane_set_mode(page->side_pane, FM_SP_DIR_TREE);
+        else
+        {
+            app_config->side_pane_mode |= FM_SP_HIDE;
+            gtk_widget_hide(GTK_WIDGET(page->side_pane));
+        }
+    }
 }
 
 FmPath* fm_tab_page_get_cwd(FmTabPage* page)
