@@ -1213,8 +1213,8 @@
                                   </packing>
                                 </child>
                                 <child>
-                                  <object class="GtkCheckButton" id="show_sidebar">
-                                    <property name="label" translatable="yes">Show sidebar</property>
+                                  <object class="GtkCheckButton" id="show_dirtree">
+                                    <property name="label" translatable="yes">Show directory tree in sidebar</property>
                                     <property name="visible">True</property>
                                     <property name="can_focus">True</property>
                                     <property name="receives_default">False</property>

@@ -700,30 +700,50 @@ static void on_show_places (GtkToggleButton* act, FmMainWin* win)
 {
     FmTabPage* page = win->current_page;
     if (!page) return;
-    gboolean active = gtk_toggle_button_get_active (act);
-    fm_config->cutdown_places = active;
-    fm_tab_page_set_show_places (page, active);
-    gtk_widget_set_sensitive (places_box, fm_config->cutdown_places);
-    pcmanfm_save_config (FALSE);
-}
-
-static void on_show_side_pane(GtkToggleButton* act, FmMainWin* win)
-{
-    gboolean active;
-
-    active = gtk_toggle_button_get_active(act);
-    if(active)
+    if (gtk_toggle_button_get_active (act))
     {
         app_config->side_pane_mode &= ~FM_SP_HIDE;
+        app_config->side_pane_mode |= FM_SP_PLACES;
         gtk_widget_show_all(GTK_WIDGET(win->side_pane));
+        fm_side_pane_set_mode (page->side_pane, app_config->side_pane_mode);
+        gtk_widget_set_sensitive (places_box, TRUE);
     }
     else
     {
-        app_config->side_pane_mode |= FM_SP_HIDE;
-        gtk_widget_hide(GTK_WIDGET(win->side_pane));
+        app_config->side_pane_mode &= ~FM_SP_PLACES;
+        fm_side_pane_set_mode (page->side_pane, app_config->side_pane_mode);
+        if (fm_side_pane_get_mode (page->side_pane) == FM_SP_NONE)
+        {
+            app_config->side_pane_mode |= FM_SP_HIDE;
+            gtk_widget_hide(GTK_WIDGET(win->side_pane));
+        }
+        gtk_widget_set_sensitive (places_box, FALSE);
     }
-    /* FIXME: propagate the event to other windows? */
-    pcmanfm_save_config(FALSE);
+    pcmanfm_save_config (FALSE);
+}
+
+static void on_show_dirtree (GtkToggleButton* act, FmMainWin* win)
+{
+    FmTabPage* page = win->current_page;
+    if (!page) return;
+    if (gtk_toggle_button_get_active (act))
+    {
+        app_config->side_pane_mode &= ~FM_SP_HIDE;
+        app_config->side_pane_mode |= FM_SP_DIR_TREE;
+        gtk_widget_show_all(GTK_WIDGET(win->side_pane));
+        fm_side_pane_set_mode (page->side_pane, app_config->side_pane_mode);
+    }
+    else
+    {
+        app_config->side_pane_mode &= ~FM_SP_DIR_TREE;
+        fm_side_pane_set_mode (page->side_pane, app_config->side_pane_mode);
+        if (fm_side_pane_get_mode (page->side_pane) == FM_SP_NONE)
+        {
+            app_config->side_pane_mode |= FM_SP_HIDE;
+            gtk_widget_hide(GTK_WIDGET(win->side_pane));
+        }
+    }
+    pcmanfm_save_config (FALSE);
 }
 
 static inline void update_sort_type_for_page(FmTabPage *page, FmFolderView *fv, FmSortMode mode)
@@ -913,7 +933,7 @@ void fm_edit_preference( GtkWindow* parent, int page )
         places_box = GTK_WIDGET(gtk_builder_get_object(builder, "vbox_places"));
         gtk_widget_show (places_box);
         if (fm_config->cutdown_menus)
-            gtk_widget_set_sensitive (GTK_WIDGET(gtk_builder_get_object(builder, "vbox_places")), fm_config->cutdown_places);
+            gtk_widget_set_sensitive (GTK_WIDGET(gtk_builder_get_object(builder, "vbox_places")), app_config->side_pane_mode & FM_SP_PLACES);
 
         INIT_BOOL(builder, FmConfig, cutdown_menus, NULL);
 
@@ -1128,13 +1148,13 @@ void fm_edit_preference( GtkWindow* parent, int page )
 
         obj = gtk_builder_get_object (builder, "show_places");
         gtk_widget_set_visible (GTK_WIDGET(obj), fm_config->cutdown_menus);
-        gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(obj), fm_config->cutdown_places);
+        gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(obj), (app_config->side_pane_mode & FM_SP_PLACES) && !(app_config->side_pane_mode & FM_SP_HIDE));
         g_signal_connect (obj, "toggled", G_CALLBACK(on_show_places), win);
 
-        obj = gtk_builder_get_object (builder, "show_sidebar");
+        obj = gtk_builder_get_object (builder, "show_dirtree");
         gtk_widget_set_visible (GTK_WIDGET(obj), fm_config->cutdown_menus);
-        gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(obj), !(app_config->side_pane_mode & FM_SP_HIDE));
-        g_signal_connect (obj, "toggled", G_CALLBACK(on_show_side_pane), win);
+        gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(obj), (app_config->side_pane_mode & FM_SP_DIR_TREE) && !(app_config->side_pane_mode & FM_SP_HIDE));
+        g_signal_connect (obj, "toggled", G_CALLBACK(on_show_dirtree), win);
 
         FmFolderModelCol by;
         FmSortMode mode;

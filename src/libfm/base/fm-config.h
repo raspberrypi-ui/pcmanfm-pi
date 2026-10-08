@@ -74,7 +74,6 @@ typedef struct _FmConfigClass       FmConfigClass;
 #define     FM_CONFIG_DEFAULT_QUICK_EXEC        FALSE
 #define     FM_CONFIG_DEFAULT_SMART_DESKTOP_AUTODROP TRUE
 #define     FM_CONFIG_DEFAULT_CUTDOWN_MENUS     FALSE
-#define     FM_CONFIG_DEFAULT_CUTDOWN_PLACES    TRUE
 #define     FM_CONFIG_DEFAULT_REAL_EXPANDERS    FALSE
 #define     FM_CONFIG_DEFAULT_GESTURES_TOUCH_ONLY FALSE
 
@@ -207,7 +206,6 @@ struct _FmConfig
     gboolean defer_content_test;
     gboolean quick_exec;
     gboolean cutdown_menus;
-    gboolean cutdown_places;
     gboolean real_expanders;
     gboolean gestures_touch_only;
 

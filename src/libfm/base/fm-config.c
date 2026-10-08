@@ -179,7 +179,6 @@ static void fm_config_init(FmConfig *self)
     self->places_volmounts = FM_CONFIG_DEFAULT_PLACES_VOLMOUNTS;
     self->smart_desktop_autodrop = FM_CONFIG_DEFAULT_SMART_DESKTOP_AUTODROP;
     self->cutdown_menus = FM_CONFIG_DEFAULT_CUTDOWN_MENUS;
-    self->cutdown_places = FM_CONFIG_DEFAULT_CUTDOWN_PLACES;
     self->gestures_touch_only = FM_CONFIG_DEFAULT_GESTURES_TOUCH_ONLY;
 }
 
@@ -303,7 +302,6 @@ void fm_config_load_from_key_file(FmConfig* cfg, GKeyFile* kf)
     fm_key_file_get_bool(kf, "config", "quick_exec", &cfg->quick_exec);
     fm_key_file_get_bool(kf, "config", "smart_desktop_autodrop", &cfg->smart_desktop_autodrop);
     fm_key_file_get_bool(kf, "config", "cutdown_menus", &cfg->cutdown_menus);
-    fm_key_file_get_bool(kf, "config", "cutdown_places", &cfg->cutdown_places);
     fm_key_file_get_bool(kf, "config", "real_expanders", &cfg->real_expanders);
     fm_key_file_get_bool(kf, "config", "gestures_touch_only", &cfg->gestures_touch_only);
     ptr = g_key_file_get_string(kf, "config", "format_cmd", NULL);
@@ -576,7 +574,6 @@ void fm_config_save(FmConfig* cfg, const char* name)
         }
         _save_config_bool("config", cfg, smart_desktop_autodrop);
         _save_config_bool("config", cfg, cutdown_menus);
-        _save_config_bool("config", cfg, cutdown_places);
         _save_config_bool("config", cfg, real_expanders);
         _save_config_bool("config", cfg, gestures_touch_only);
         _save_config_int("ui", cfg, big_icon_size);

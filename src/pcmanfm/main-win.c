@@ -2387,14 +2387,8 @@ static void on_notebook_switch_page(GtkNotebook* nb, gpointer* new_page, guint n
     }
     else
     {
-        if (!fm_config->cutdown_menus)
         fm_side_pane_set_mode(win->side_pane,
                               (app_config->side_pane_mode & FM_SP_MODE_MASK));
-        else
-        {
-            if (fm_config->cutdown_places) fm_side_pane_set_mode(page->side_pane, FM_SP_HYBRID);
-            else fm_side_pane_set_mode(page->side_pane, FM_SP_DIR_TREE);
-        }
         gtk_widget_show_all(GTK_WIDGET(win->side_pane));
     }
 

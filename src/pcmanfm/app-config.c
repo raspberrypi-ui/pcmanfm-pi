@@ -446,7 +446,7 @@ void fm_app_config_load_from_key_file(FmAppConfig* cfg, GKeyFile* kf)
         }
         g_strfreev(tmpv);
     }
-    if ((tmp_int & FM_SP_MODE_MASK) != FM_SP_NONE)
+    if (fm_config->cutdown_menus || (tmp_int & FM_SP_MODE_MASK) != FM_SP_NONE)
         cfg->side_pane_mode = (FmSidePaneMode)tmp_int;
 
     /* default values for folder views */

@@ -631,6 +631,8 @@ const char *fm_side_pane_get_mode_name(FmSidePaneMode mode)
             return "places";
         case FM_SP_DIR_TREE:
             return "dirtree";
+        case FM_SP_HYBRID:
+            return "hybrid";
         default:
             return NULL;
     }
@@ -654,6 +656,8 @@ FmSidePaneMode fm_side_pane_get_mode_by_name(const char *str)
         return FM_SP_PLACES;
     if (strcmp(str, "dirtree") == 0)
         return FM_SP_DIR_TREE;
+    if (strcmp(str, "hybrid") == 0)
+        return FM_SP_HYBRID;
     return FM_SP_NONE;
 }
 
