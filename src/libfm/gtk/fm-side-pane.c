@@ -190,6 +190,7 @@ static void fm_side_pane_init(FmSidePane *sp)
     GtkActionGroup* act_grp = gtk_action_group_new("SidePane");
     GtkWidget* hbox;
 
+    gtk_widget_set_name (GTK_WIDGET (sp), "fmsp");
     gtk_action_group_set_translation_domain(act_grp, GETTEXT_PACKAGE);
     /* FIXME: migrate to GtkGrid */
     sp->title_bar = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
