@@ -680,6 +680,7 @@ static void on_toolsbar_changed(FmAppConfig *cfg, FmMainWin *win)
 static void on_statusbar_changed(FmAppConfig *cfg, FmMainWin *win)
 {
     gtk_widget_set_visible(GTK_WIDGET(win->statusbar), cfg->show_statusbar);
+    gtk_widget_set_visible(GTK_WIDGET(win->statussep), cfg->show_statusbar);
     update_statusbar(win);
 }
 
@@ -979,7 +980,8 @@ static void fm_main_win_init(FmMainWin *win)
     gtk_frame_set_shadow_type(win->vol_status, GTK_SHADOW_NONE);
     gtk_box_pack_start(GTK_BOX(win->statusbar), GTK_WIDGET(win->vol_status), FALSE, TRUE, 0);
     gtk_container_add(GTK_CONTAINER(win->vol_status), gtk_label_new(NULL));
-
+    win->statussep = GTK_SEPARATOR (gtk_separator_new (GTK_ORIENTATION_HORIZONTAL));
+    gtk_box_pack_start (vbox, GTK_WIDGET (win->statussep), FALSE, TRUE, 0);
     gtk_box_pack_start( vbox, GTK_WIDGET(win->statusbar), FALSE, TRUE, 0 );
     win->statusbar_ctx = gtk_statusbar_get_context_id(win->statusbar, "status");
     win->statusbar_ctx2 = gtk_statusbar_get_context_id(win->statusbar, "status2");
@@ -1800,6 +1802,7 @@ FmMainWin* fm_main_win_add_win(FmMainWin* win, FmPath* path)
     else on_toolsbar_changed(app_config, win);
     /* the same for statusbar */
     gtk_widget_set_visible(GTK_WIDGET(win->statusbar), app_config->show_statusbar);
+    gtk_widget_set_visible(GTK_WIDGET(win->statussep), app_config->show_statusbar);
     /* the same for path bar mode */
     if (!fm_config->cutdown_menus)
     {

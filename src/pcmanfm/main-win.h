@@ -57,6 +57,7 @@ struct _FmMainWin
     FmTabPage* current_page;
     FmSidePane* side_pane;
     FmFolderView* folder_view;
+    GtkSeparator* statussep;
     GtkStatusbar* statusbar;
     GtkFrame* vol_status;
     GtkMenuShell* bookmarks_menu;

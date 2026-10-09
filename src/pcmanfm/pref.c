@@ -694,6 +694,7 @@ static void on_show_status (GtkToggleButton *act, FmMainWin *win)
         pcmanfm_save_config(FALSE);
     }
     gtk_widget_set_visible(GTK_WIDGET(win->statusbar), app_config->show_statusbar);
+    gtk_widget_set_visible(GTK_WIDGET(win->statussep), app_config->show_statusbar);
 }
 
 static void on_show_toolbar(GtkToggleButton *act, FmMainWin *win)
