@@ -1660,13 +1660,15 @@ guint fm_folder_model_get_icon_size(FmFolderModel* model)
 
 void fm_folder_model_show_thumbnails(FmFolderModel* model, gboolean show)
 {
+    if (model->show_thumbs == show) return;
     model->show_thumbs = show;
+    reload_icons(model, show ? RELOAD_ICONS : RELOAD_THUMBNAILS);
 }
 
 static void on_show_thumbnail_changed(FmConfig* cfg, gpointer user_data)
 {
     FmFolderModel* model = (FmFolderModel*)user_data;
-    reload_icons(model, RELOAD_THUMBNAILS);
+    reload_icons(model, cfg->show_thumbnail ? RELOAD_ICONS : RELOAD_THUMBNAILS);
 }
 
 static GList* find_in_pending_thumbnail_requests(FmFolderModel* model, FmFileInfo* fi)

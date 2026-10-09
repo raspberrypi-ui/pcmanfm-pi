@@ -2127,6 +2127,8 @@ const char *fm_standard_view_get_mode_icon(FmStandardViewMode mode)
 void fm_standard_view_set_thumbs(FmStandardView* fv, gboolean thumbs)
 {
     fv->show_thumbs = thumbs;
+    if (fv->model && fv->mode == FM_FV_ICON_OR_THUMB_VIEW)
+        fm_folder_model_show_thumbnails(fv->model, thumbs);
 }
 
 gboolean fm_standard_view_get_thumbs(FmStandardView* fv)

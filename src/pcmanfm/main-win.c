@@ -1222,7 +1222,6 @@ static void on_show_thumbs (GtkToggleAction* act, FmMainWin* win)
 {
     gboolean active = gtk_toggle_action_get_active (act);
     fm_standard_view_set_thumbs (FM_STANDARD_VIEW (win->folder_view), active);
-    if (app_config->view_mode == FM_FV_ICON_OR_THUMB_VIEW) fm_tab_page_reload (win->current_page);
     app_config->show_thumbs = active;
     pcmanfm_save_config (FALSE);
 }

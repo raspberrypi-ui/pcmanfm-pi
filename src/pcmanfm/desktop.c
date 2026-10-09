@@ -4661,6 +4661,7 @@ static inline void connect_model(FmDesktop *desktop, FmFolder *folder)
     g_signal_connect(folder, "finish-loading", G_CALLBACK(on_folder_finish_loading), desktop);
     g_signal_connect(folder, "error", G_CALLBACK(on_folder_error), desktop);
     fm_folder_model_set_icon_size(desktop->model, fm_config->big_icon_size);
+    fm_folder_model_show_thumbnails(desktop->model, fm_config->show_thumbnail);
     g_signal_connect(app_config, "changed::big_icon_size",
                      G_CALLBACK(on_big_icon_size_changed), desktop->model);
     g_signal_connect(desktop->model, "row-deleting", G_CALLBACK(on_row_deleting), desktop);
