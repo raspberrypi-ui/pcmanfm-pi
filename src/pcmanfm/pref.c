@@ -805,6 +805,12 @@ static void on_sort_ignore_case(GtkToggleButton* act, FmMainWin* win)
     }
 }
 
+static void cutdown_changed (FmConfig *conf, gpointer user_data)
+{
+    if (!conf->cutdown_menus)
+        if (app_config->side_pane_mode & FM_SP_HYBRID)
+            app_config->side_pane_mode &= ~FM_SP_DIR_TREE;
+}
 
 void fm_edit_preference( GtkWindow* parent, int page )
 {
@@ -936,6 +942,7 @@ void fm_edit_preference( GtkWindow* parent, int page )
             gtk_widget_set_sensitive (GTK_WIDGET(gtk_builder_get_object(builder, "vbox_places")), app_config->side_pane_mode & FM_SP_PLACES);
 
         INIT_BOOL(builder, FmConfig, cutdown_menus, NULL);
+        g_signal_connect_object (fm_config, "changed::cutdown_menus", G_CALLBACK(cutdown_changed), pref_dlg, 0);
 
         /* 'Volume management' tab */
         INIT_BOOL(builder, FmAppConfig, mount_on_startup, NULL);
