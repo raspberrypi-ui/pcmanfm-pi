@@ -632,10 +632,13 @@ static void on_toolsbar_changed(FmAppConfig *cfg, FmMainWin *win)
     if (win->in_update)
         return;
     win->in_update = TRUE; /* avoid recursion */
-    if (fm_config->cutdown_menus) active = TRUE;
-    else
     active = cfg->tb.visible;
     gtk_widget_set_visible(GTK_WIDGET(win->toolbar), active);
+    if (fm_config->cutdown_menus)
+    {
+        win->in_update = FALSE;
+        return;
+    }
     act = gtk_ui_manager_get_action(win->ui, "/menubar/ViewMenu/Toolbar/ToolbarNewWin");
     gtk_action_set_sensitive(act, active);
     if (gtk_toggle_action_get_active(GTK_TOGGLE_ACTION(act)) != app_config->tb.new_win)
@@ -1794,6 +1797,7 @@ FmMainWin* fm_main_win_add_win(FmMainWin* win, FmPath* path)
     act = gtk_ui_manager_get_action(win->ui, "/menubar/ViewMenu/Toolbar/ToolbarHome");
     gtk_toggle_action_set_active(GTK_TOGGLE_ACTION(act), app_config->tb.home);
     }
+    else on_toolsbar_changed(app_config, win);
     /* the same for statusbar */
     gtk_widget_set_visible(GTK_WIDGET(win->statusbar), app_config->show_statusbar);
     /* the same for path bar mode */
