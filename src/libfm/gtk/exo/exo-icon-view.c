@@ -3409,6 +3409,10 @@ static void
 exo_icon_view_set_adjustment_upper (GtkAdjustment *adj,
                                     gdouble        upper)
 {
+  /* never let the scrollable range be smaller than the visible page,
+   * otherwise GtkScrolledWindow thinks we're overscrolled */
+  upper = MAX (upper, gtk_adjustment_get_page_size (adj));
+
   if (upper != gtk_adjustment_get_upper(adj))
     {
       gdouble min = MAX (0.0, upper - gtk_adjustment_get_page_size(adj));
