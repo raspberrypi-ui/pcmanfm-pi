@@ -457,6 +457,8 @@ static void create_bookmarks_menu(FmMainWin* win)
 
 static void on_bookmarks_changed(FmBookmarks* bm, FmMainWin* win)
 {
+    if (!win->bookmarks_menu) return;
+
     /* delete old items first. */
     GList* mis = gtk_container_get_children(GTK_CONTAINER(win->bookmarks_menu));
     GList* l;
