@@ -1798,6 +1798,8 @@ FmMainWin* fm_main_win_add_win(FmMainWin* win, FmPath* path)
     gtk_toggle_action_set_active(GTK_TOGGLE_ACTION(act), app_config->tb.nav);
     act = gtk_ui_manager_get_action(win->ui, "/menubar/ViewMenu/Toolbar/ToolbarHome");
     gtk_toggle_action_set_active(GTK_TOGGLE_ACTION(act), app_config->tb.home);
+    act = gtk_ui_manager_get_action(win->ui, "/menubar/ViewMenu/ShowStatus");
+    gtk_toggle_action_set_active(GTK_TOGGLE_ACTION(act), app_config->show_statusbar);
     }
     else on_toolsbar_changed(app_config, win);
     /* the same for statusbar */
