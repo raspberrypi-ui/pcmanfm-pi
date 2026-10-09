@@ -987,9 +987,8 @@ msgid "_Bookmarks"
 msgstr "_Bookmarks"
 
 #: ../src/main-win-ui.c:345
-#, fuzzy
 msgid "_Add to Bookmarks..."
-msgstr "Add to Bookmarks"
+msgstr "_Add Current Folder to Bookmarks..."
 
 #: ../src/main-win-ui.c:345
 msgid "Add current folder to bookmarks list"

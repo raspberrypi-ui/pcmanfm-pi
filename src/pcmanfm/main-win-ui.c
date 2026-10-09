@@ -227,6 +227,7 @@ static const char main_menu_cutdown_xml[] =
     "<separator/>"
     "<menuitem action='Term'/>"
     "<menuitem action='Launch'/>"
+    "<menuitem action='AddBookmark'/>"
     /* "<menuitem action='AsRoot'/>" */
   "</menu>"
 "</menubar>"
