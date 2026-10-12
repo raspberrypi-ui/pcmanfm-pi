@@ -181,9 +181,6 @@ static void on_file_info_job_finished(FmFileInfoJob* job, gpointer user_data)
                                 g_object_unref(pix);
                             }
                         }
-                        /* remove the file from list to speed up further loading.
-                         * This won't cause problem since nobody else if using the list. */
-                        fm_file_info_list_delete_link(job->file_infos, l);
                         break;
                     }
                 }
