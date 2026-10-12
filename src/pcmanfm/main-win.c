@@ -431,8 +431,19 @@ static void create_bookmarks_menu(FmMainWin* win)
     const GList *list, *l;
     GtkWidget* mi;
     int i = 0;
+    gboolean added = FALSE;
 
-    if (fm_config->cutdown_menus) return;
+    if (fm_config->cutdown_menus)
+    {
+        // set i to location of separator
+        GList *l, *ch = gtk_container_get_children (GTK_CONTAINER (win->bookmarks_menu));
+        for (l = ch; l != NULL; l = l->next)
+        {
+            i++;
+            if (GTK_IS_SEPARATOR_MENU_ITEM (l->data)) break;
+        }
+        g_list_free (ch);
+    }
 
     list = fm_bookmarks_get_all(win->bookmarks);
     for(l=list;l;l=l->next)
@@ -445,9 +456,10 @@ static void create_bookmarks_menu(FmMainWin* win)
         g_signal_connect(mi, "activate", G_CALLBACK(on_bookmark), win);
         gtk_menu_shell_insert(win->bookmarks_menu, mi, i);
         ++i;
+        added = TRUE;
     }
     g_list_free_full((GList*)list, (GDestroyNotify)fm_bookmark_item_unref);
-    if(i > 0)
+    if(added)
     {
         mi = gtk_separator_menu_item_new();
         gtk_widget_show(mi);
@@ -457,6 +469,7 @@ static void create_bookmarks_menu(FmMainWin* win)
 
 static void on_bookmarks_changed(FmBookmarks* bm, FmMainWin* win)
 {
+    gboolean bms = FALSE;
     if (!win->bookmarks_menu) return;
 
     /* delete old items first. */
@@ -469,12 +482,15 @@ static void on_bookmarks_changed(FmBookmarks* bm, FmMainWin* win)
         {
             g_signal_handlers_disconnect_by_func(item, on_bookmark, win);
             gtk_widget_destroy(item);
+            bms = TRUE;
         }
         else
         {
-            if(GTK_IS_SEPARATOR_MENU_ITEM(item))
+            if(GTK_IS_SEPARATOR_MENU_ITEM(item) && bms)
+            {
                 gtk_widget_destroy(item);
-            break;
+                break;
+            }
         }
     }
     g_list_free(mis);
@@ -484,8 +500,11 @@ static void on_bookmarks_changed(FmBookmarks* bm, FmMainWin* win)
 
 static void load_bookmarks(FmMainWin* win, GtkUIManager* ui)
 {
-    GtkWidget* mi = gtk_ui_manager_get_widget(ui, "/menubar/BookmarksMenu");
-    if (!fm_config->cutdown_menus)
+    GtkWidget* mi;
+    if (fm_config->cutdown_menus)
+        mi = gtk_ui_manager_get_widget(ui, "/menubar/GoMenu");
+    else
+        mi = gtk_ui_manager_get_widget(ui, "/menubar/BookmarksMenu");
     win->bookmarks_menu = GTK_MENU_SHELL(gtk_menu_item_get_submenu(GTK_MENU_ITEM(mi)));
     win->bookmarks = fm_bookmarks_dup();
     g_signal_connect(win->bookmarks, "changed", G_CALLBACK(on_bookmarks_changed), win);
