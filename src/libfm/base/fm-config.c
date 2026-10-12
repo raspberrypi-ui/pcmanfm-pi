@@ -177,6 +177,7 @@ static void fm_config_init(FmConfig *self)
     self->places_network = FM_CONFIG_DEFAULT_PLACES_NETWORK;
     self->places_unmounted = FM_CONFIG_DEFAULT_PLACES_UNMOUNTED;
     self->places_volmounts = FM_CONFIG_DEFAULT_PLACES_VOLMOUNTS;
+    self->places_bookmarks = FM_CONFIG_DEFAULT_PLACES_BOOKMARKS;
     self->smart_desktop_autodrop = FM_CONFIG_DEFAULT_SMART_DESKTOP_AUTODROP;
     self->cutdown_menus = FM_CONFIG_DEFAULT_CUTDOWN_MENUS;
     self->gestures_touch_only = FM_CONFIG_DEFAULT_GESTURES_TOUCH_ONLY;
@@ -345,6 +346,7 @@ void fm_config_load_from_key_file(FmConfig* cfg, GKeyFile* kf)
     fm_key_file_get_bool(kf, "places", "places_network", &cfg->places_network);
     fm_key_file_get_bool(kf, "places", "places_unmounted", &cfg->places_unmounted);
     fm_key_file_get_bool(kf, "places", "places_volmounts", &cfg->places_volmounts);
+    fm_key_file_get_bool(kf, "places", "places_bookmarks", &cfg->places_bookmarks);
 }
 
 static gchar *home_dir (void)
@@ -595,6 +597,7 @@ void fm_config_save(FmConfig* cfg, const char* name)
         _save_config_bool("places", cfg, places_network);
         _save_config_bool("places", cfg, places_unmounted);
         _save_config_bool("places", cfg, places_volmounts);
+        _save_config_bool("places", cfg, places_bookmarks);
 
         str = g_key_file_to_data (kf, &len, NULL);
         g_file_set_contents (name, str, len, NULL);

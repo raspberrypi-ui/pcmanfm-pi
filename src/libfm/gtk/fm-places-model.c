@@ -94,6 +94,7 @@ struct _FmPlacesModel
     guint places_network_change_handler;
     guint places_unmounted_change_handler;
     guint places_volmounts_change_handler;
+    guint places_bookmarks_change_handler;
     GdkPixbuf* eject_icon;
 
     GSList* jobs;
@@ -589,6 +590,8 @@ static void on_mount_removed(GVolumeMonitor* vm, GMount* mount, gpointer user_da
 
 static void add_bookmarks(FmPlacesModel* model, FmFileInfoJob* job)
 {
+    if (!fm_config->places_bookmarks) return;
+
     FmPlacesItem* item;
     GList *bms, *l;
     FmIcon* icon = fm_icon_from_name("folder");
@@ -880,6 +883,40 @@ static void on_places_network_changed(FmConfig* cfg, gpointer user_data)
     }
 }
 
+static void on_places_bookmarks_changed(FmConfig* cfg, gpointer user_data)
+{
+    FmPlacesModel* model = FM_PLACES_MODEL(user_data);
+    GtkTreePath* tp = gtk_tree_row_reference_get_path(model->separator);
+    GtkTreeIter it;
+
+    gtk_tree_model_get_iter(GTK_TREE_MODEL(model), &it, tp);
+    gtk_tree_path_free(tp);
+
+    if(cfg->places_bookmarks)
+    {
+        FmFileInfoJob* job = fm_file_info_job_new(NULL, FM_FILE_INFO_JOB_FOLLOW_SYMLINK);
+        add_bookmarks(model, job);
+
+        g_signal_connect(job, "finished", G_CALLBACK(on_file_info_job_finished), model);
+        model->jobs = g_slist_prepend(model->jobs, job);
+        if (!fm_job_run_async(FM_JOB(job)))
+        {
+            model->jobs = g_slist_remove(model->jobs, job);
+            g_object_unref(job);
+            g_critical("fm_job_run_async() failed for bookmark update");
+        }
+    }
+    else
+    {
+        /* remove all old bookmarks */
+        if(gtk_tree_model_iter_next(GTK_TREE_MODEL(model), &it))
+        {
+            while(gtk_list_store_remove(GTK_LIST_STORE(model), &it))
+                continue;
+        }
+    }
+}
+
 static void on_pane_icon_size_changed(FmConfig* cfg, gpointer user_data)
 {
     FmPlacesModel* model = FM_PLACES_MODEL(user_data);
@@ -1160,6 +1197,8 @@ void fm_places_model_do_init (FmPlacesModel *self)
                                              G_CALLBACK(on_places_unmounted_changed), self);
     self->places_volmounts_change_handler = g_signal_connect(fm_config, "changed::places_volmounts",
                                              G_CALLBACK(on_places_volmounts_changed), self);
+    self->places_bookmarks_change_handler = g_signal_connect(fm_config, "changed::places_bookmarks",
+                                             G_CALLBACK(on_places_bookmarks_changed), self);
 
     self->pane_icon_size_change_handler = g_signal_connect(fm_config, "changed::pane_icon_size",
                                              G_CALLBACK(on_pane_icon_size_changed), self);
@@ -1518,6 +1557,11 @@ static void fm_places_model_dispose(GObject *object)
         g_signal_handler_disconnect(fm_config, self->places_volmounts_change_handler);
         self->places_volmounts_change_handler = 0;
     }
+    if(self->places_bookmarks_change_handler)
+    {
+        g_signal_handler_disconnect(fm_config, self->places_bookmarks_change_handler);
+        self->places_bookmarks_change_handler = 0;
+    }
     if(self->pane_icon_size_change_handler)
     {
         g_signal_handler_disconnect(fm_config, self->pane_icon_size_change_handler);
@@ -1565,7 +1609,7 @@ static void fm_places_model_dispose(GObject *object)
 
 void fm_places_model_free_separator (FmPlacesModel *model)
 {
-    if (gtk_tree_row_reference_valid (model->separator))
+    if (model->separator)
     {
         gtk_tree_row_reference_free (model->separator);
         model->separator = NULL;
