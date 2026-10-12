@@ -154,23 +154,6 @@ static void on_file_info_job_finished(FmFileInfoJob* job, gpointer user_data)
     if(fm_file_info_list_is_empty(job->file_infos))
         goto finished;
 
-    /* optimize for one file case */
-    if(fm_file_info_list_get_length(job->file_infos) == 1)
-    {
-        fi = fm_file_info_list_peek_head(job->file_infos);
-        do {
-            item = NULL;
-            gtk_tree_model_get(GTK_TREE_MODEL(model), &it, FM_PLACES_MODEL_COL_INFO, &item, -1);
-            if( item && item->fi && (path = fm_file_info_get_path(item->fi)) && fm_path_equal(path, fm_file_info_get_path(fi)) )
-            {
-                fm_file_info_unref(item->fi);
-                item->fi = fm_file_info_ref(fi);
-                break;
-            }
-        }while(gtk_tree_model_iter_next(GTK_TREE_MODEL(model), &it));
-    }
-    else
-    {
         do {
             item = NULL;
             gtk_tree_model_get(GTK_TREE_MODEL(model), &it, FM_PLACES_MODEL_COL_INFO, &item, -1);
@@ -195,6 +178,7 @@ static void on_file_info_job_finished(FmFileInfoJob* job, gpointer user_data)
                                 pix = fm_pixbuf_from_icon(icon, fm_config->pane_icon_size, gtk_widget_get_scale_factor (model->view));
                                 gtk_list_store_set(GTK_LIST_STORE(model), &it,
                                                    FM_PLACES_MODEL_COL_ICON, pix, -1);
+                                g_object_unref(pix);
                             }
                         }
                         /* remove the file from list to speed up further loading.
@@ -205,7 +189,6 @@ static void on_file_info_job_finished(FmFileInfoJob* job, gpointer user_data)
                 }
             }
         }while(gtk_tree_model_iter_next(GTK_TREE_MODEL(model), &it));
-    }
 finished:
     g_object_unref(job);
 }
