@@ -845,6 +845,15 @@ static gboolean on_drag_motion(FmTabLabel *label, GdkDragContext *drag_context,
     return TRUE;
 }
 
+/* map a saved view mode to one the current menu set supports - cutdown mode
+   only has icon-or-thumb and list views, normal mode has no icon-or-thumb view */
+static FmStandardViewMode tab_page_view_mode(FmStandardViewMode mode)
+{
+    if (fm_config->cutdown_menus)
+        return mode == FM_FV_LIST_VIEW ? FM_FV_LIST_VIEW : FM_FV_ICON_OR_THUMB_VIEW;
+    return mode == FM_FV_ICON_OR_THUMB_VIEW ? FM_FV_ICON_VIEW : mode;
+}
+
 static void fm_tab_page_init(FmTabPage *page)
 {
     GtkPaned* paned = GTK_PANED(page);
@@ -867,11 +876,11 @@ static void fm_tab_page_init(FmTabPage *page)
     focus_chain = g_list_prepend(focus_chain, page->side_pane);
 
     /* setup initial view mode for the tab from configuration */
-    page->view_mode = app_config->view_mode;
+    page->view_mode = tab_page_view_mode(app_config->view_mode);
     page->show_thumbs = app_config->show_thumbs;
 
     /* handlers below will be used when FmMainWin detects new page added */
-    folder_view = (FmFolderView*)fm_standard_view_new(app_config->view_mode,
+    folder_view = (FmFolderView*)fm_standard_view_new(page->view_mode,
                                                       update_files_popup,
                                                       open_folder_func);
     fm_standard_view_set_thumbs ((FmStandardView *) folder_view, app_config->show_thumbs);
@@ -1011,7 +1020,7 @@ static void fm_tab_page_chdir_without_history(FmTabPage* page, FmPath* path)
     }
 
     /* change view and sort modes according to new path */
-    fm_standard_view_set_mode(FM_STANDARD_VIEW(page->folder_view), view_mode);
+    fm_standard_view_set_mode(FM_STANDARD_VIEW(page->folder_view), tab_page_view_mode(view_mode));
     /* update columns from config */
     if (columns)
     {
