@@ -430,7 +430,7 @@ static void create_bookmarks_menu(FmMainWin* win)
 {
     const GList *list, *l;
     GtkWidget* mi;
-    int i = 0;
+    int i = 0, seps = 0;
     gboolean added = FALSE;
 
     if (fm_config->cutdown_menus)
@@ -440,7 +440,11 @@ static void create_bookmarks_menu(FmMainWin* win)
         for (l = ch; l != NULL; l = l->next)
         {
             i++;
-            if (GTK_IS_SEPARATOR_MENU_ITEM (l->data)) break;
+            if (GTK_IS_SEPARATOR_MENU_ITEM (l->data))
+            {
+                seps++;
+                if (seps == 2) break;
+            }
         }
         g_list_free (ch);
     }
