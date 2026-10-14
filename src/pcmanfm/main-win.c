@@ -93,6 +93,8 @@ static void on_save_per_folder(GtkToggleAction* act, FmMainWin* win);
 static void on_show_side_pane(GtkToggleAction* act, FmMainWin* win);
 static void on_dual_pane(GtkToggleAction* act, FmMainWin* win);
 static void on_show_toolbar(GtkToggleAction *action, FmMainWin *win);
+static void on_show_places (GtkToggleAction* act, FmMainWin* win);
+static void on_show_dirtree (GtkToggleAction* act, FmMainWin* win);
 static void on_toolbar_new_win(GtkToggleAction *act, FmMainWin *win);
 static void on_toolbar_new_tab(GtkToggleAction *act, FmMainWin *win);
 static void on_toolbar_nav(GtkToggleAction *act, FmMainWin *win);
@@ -311,6 +313,10 @@ static void update_view_menu(FmMainWin* win)
         if (item) gtk_toggle_tool_button_set_active (GTK_TOGGLE_TOOL_BUTTON(item), TRUE);
         act = gtk_ui_manager_get_action(win->ui, "/menubar/ViewMenu/ShowThumbs");
         gtk_toggle_action_set_active(GTK_TOGGLE_ACTION(act), fm_standard_view_get_thumbs(FM_STANDARD_VIEW(fv)));
+        act = gtk_ui_manager_get_action(win->ui, "/menubar/ViewMenu/ShowPlaces");
+        gtk_toggle_action_set_active(GTK_TOGGLE_ACTION(act), app_config->side_pane_mode & FM_SP_PLACES);
+        act = gtk_ui_manager_get_action(win->ui, "/menubar/ViewMenu/ShowDirTree");
+        gtk_toggle_action_set_active(GTK_TOGGLE_ACTION(act), app_config->side_pane_mode & FM_SP_DIR_TREE);
     }
     else
     gtk_radio_action_set_current_value(win->first_view_mode,
@@ -2832,4 +2838,52 @@ static void on_show_status(GtkToggleAction *action, FmMainWin *win)
         fm_config_emit_changed(fm_config, "statusbar");
         pcmanfm_save_config(FALSE);
     }
+}
+
+static void on_show_places (GtkToggleAction* act, FmMainWin* win)
+{
+    FmTabPage* page = win->current_page;
+    if (!page) return;
+    if (gtk_toggle_action_get_active (act))
+    {
+        app_config->side_pane_mode &= ~FM_SP_HIDE;
+        app_config->side_pane_mode |= FM_SP_PLACES;
+        gtk_widget_show_all(GTK_WIDGET(win->side_pane));
+        fm_side_pane_set_mode (page->side_pane, app_config->side_pane_mode);
+    }
+    else
+    {
+        app_config->side_pane_mode &= ~FM_SP_PLACES;
+        fm_side_pane_set_mode (page->side_pane, app_config->side_pane_mode);
+        if (fm_side_pane_get_mode (page->side_pane) == FM_SP_NONE)
+        {
+            app_config->side_pane_mode |= FM_SP_HIDE;
+            gtk_widget_hide(GTK_WIDGET(win->side_pane));
+        }
+    }
+    pcmanfm_save_config (FALSE);
+}
+
+static void on_show_dirtree (GtkToggleAction* act, FmMainWin* win)
+{
+    FmTabPage* page = win->current_page;
+    if (!page) return;
+    if (gtk_toggle_action_get_active (act))
+    {
+        app_config->side_pane_mode &= ~FM_SP_HIDE;
+        app_config->side_pane_mode |= FM_SP_DIR_TREE;
+        gtk_widget_show_all(GTK_WIDGET(win->side_pane));
+        fm_side_pane_set_mode (page->side_pane, app_config->side_pane_mode);
+    }
+    else
+    {
+        app_config->side_pane_mode &= ~FM_SP_DIR_TREE;
+        fm_side_pane_set_mode (page->side_pane, app_config->side_pane_mode);
+        if (fm_side_pane_get_mode (page->side_pane) == FM_SP_NONE)
+        {
+            app_config->side_pane_mode |= FM_SP_HIDE;
+            gtk_widget_hide(GTK_WIDGET(win->side_pane));
+        }
+    }
+    pcmanfm_save_config (FALSE);
 }

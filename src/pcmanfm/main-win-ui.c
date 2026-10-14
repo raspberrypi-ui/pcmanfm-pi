@@ -190,6 +190,9 @@ static const char main_menu_cutdown_xml[] =
     "<separator/>"
     "<menuitem action='Fullscreen' />"
     "<separator/>"
+    "<menuitem action='ShowPlaces'/>"
+    "<menuitem action='ShowDirTree'/>"
+    "<separator/>"
     "<menuitem action='TogIconView'/>"
     "<menuitem action='TogListView'/>"
     "<separator/>"
@@ -352,7 +355,9 @@ static GtkToggleActionEntry main_win_toggle_actions[]=
     {"ShowSidePane", NULL, N_("Sho_w Side Pane"), "F9", NULL, G_CALLBACK(on_show_side_pane), TRUE},
     {"ShowStatus", NULL, N_("Show Status B_ar"), "<Ctrl>B", NULL, G_CALLBACK(on_show_status), TRUE},
     {"DualPane", NULL, N_("_Dual Pane Mode"), "F3", N_("Show two panels with folder views"), G_CALLBACK(on_dual_pane), FALSE},
-    {"Fullscreen", NULL, N_("Fullscreen _Mode"), "F11", NULL, G_CALLBACK(on_fullscreen), FALSE}
+    {"Fullscreen", NULL, N_("Fullscreen _Mode"), "F11", NULL, G_CALLBACK(on_fullscreen), FALSE},
+    {"ShowPlaces", NULL, N_("Show _Places"), "<Ctrl><Alt>P", NULL, G_CALLBACK(on_show_places), TRUE},
+    {"ShowDirTree", NULL, N_("Show _Directory Tree"), "<Ctrl><Alt>D", NULL, G_CALLBACK(on_show_dirtree), TRUE}
 };
 
 static GtkRadioActionEntry main_win_sort_type_actions[]=
