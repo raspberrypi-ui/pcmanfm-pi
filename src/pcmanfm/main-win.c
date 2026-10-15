@@ -293,6 +293,7 @@ static void update_view_menu(FmMainWin* win)
 {
     GtkAction* act;
     FmFolderView* fv = win->folder_view;
+    gboolean shown;
 
     if (win->in_update)
         return;
@@ -313,10 +314,12 @@ static void update_view_menu(FmMainWin* win)
         if (item) gtk_toggle_tool_button_set_active (GTK_TOGGLE_TOOL_BUTTON(item), TRUE);
         act = gtk_ui_manager_get_action(win->ui, "/menubar/ViewMenu/ShowThumbs");
         gtk_toggle_action_set_active(GTK_TOGGLE_ACTION(act), fm_standard_view_get_thumbs(FM_STANDARD_VIEW(fv)));
+        /* a component is only shown if the side pane itself is not hidden */
+        shown = !(app_config->side_pane_mode & FM_SP_HIDE);
         act = gtk_ui_manager_get_action(win->ui, "/menubar/ViewMenu/ShowPlaces");
-        gtk_toggle_action_set_active(GTK_TOGGLE_ACTION(act), app_config->side_pane_mode & FM_SP_PLACES);
+        gtk_toggle_action_set_active(GTK_TOGGLE_ACTION(act), shown && (app_config->side_pane_mode & FM_SP_PLACES));
         act = gtk_ui_manager_get_action(win->ui, "/menubar/ViewMenu/ShowDirTree");
-        gtk_toggle_action_set_active(GTK_TOGGLE_ACTION(act), app_config->side_pane_mode & FM_SP_DIR_TREE);
+        gtk_toggle_action_set_active(GTK_TOGGLE_ACTION(act), shown && (app_config->side_pane_mode & FM_SP_DIR_TREE));
     }
     else
     gtk_radio_action_set_current_value(win->first_view_mode,
@@ -2843,18 +2846,20 @@ static void on_show_status(GtkToggleAction *action, FmMainWin *win)
 static void on_show_places (GtkToggleAction* act, FmMainWin* win)
 {
     FmTabPage* page = win->current_page;
-    if (!page) return;
+    if (!page || win->in_update) return; /* ignore menu syncs from update_view_menu */
     if (gtk_toggle_action_get_active (act))
     {
-        app_config->side_pane_mode &= ~FM_SP_HIDE;
+        /* if the pane was hidden, show only this component, not any mode left over */
+        if (app_config->side_pane_mode & FM_SP_HIDE)
+            app_config->side_pane_mode &= ~(FM_SP_HIDE | FM_SP_MODE_MASK);
         app_config->side_pane_mode |= FM_SP_PLACES;
         gtk_widget_show_all(GTK_WIDGET(win->side_pane));
-        fm_side_pane_set_mode (page->side_pane, app_config->side_pane_mode);
+        fm_side_pane_set_mode (page->side_pane, app_config->side_pane_mode & FM_SP_MODE_MASK);
     }
     else
     {
         app_config->side_pane_mode &= ~FM_SP_PLACES;
-        fm_side_pane_set_mode (page->side_pane, app_config->side_pane_mode);
+        fm_side_pane_set_mode (page->side_pane, app_config->side_pane_mode & FM_SP_MODE_MASK);
         if (fm_side_pane_get_mode (page->side_pane) == FM_SP_NONE)
         {
             app_config->side_pane_mode |= FM_SP_HIDE;
@@ -2867,18 +2872,20 @@ static void on_show_places (GtkToggleAction* act, FmMainWin* win)
 static void on_show_dirtree (GtkToggleAction* act, FmMainWin* win)
 {
     FmTabPage* page = win->current_page;
-    if (!page) return;
+    if (!page || win->in_update) return; /* ignore menu syncs from update_view_menu */
     if (gtk_toggle_action_get_active (act))
     {
-        app_config->side_pane_mode &= ~FM_SP_HIDE;
+        /* if the pane was hidden, show only this component, not any mode left over */
+        if (app_config->side_pane_mode & FM_SP_HIDE)
+            app_config->side_pane_mode &= ~(FM_SP_HIDE | FM_SP_MODE_MASK);
         app_config->side_pane_mode |= FM_SP_DIR_TREE;
         gtk_widget_show_all(GTK_WIDGET(win->side_pane));
-        fm_side_pane_set_mode (page->side_pane, app_config->side_pane_mode);
+        fm_side_pane_set_mode (page->side_pane, app_config->side_pane_mode & FM_SP_MODE_MASK);
     }
     else
     {
         app_config->side_pane_mode &= ~FM_SP_DIR_TREE;
-        fm_side_pane_set_mode (page->side_pane, app_config->side_pane_mode);
+        fm_side_pane_set_mode (page->side_pane, app_config->side_pane_mode & FM_SP_MODE_MASK);
         if (fm_side_pane_get_mode (page->side_pane) == FM_SP_NONE)
         {
             app_config->side_pane_mode |= FM_SP_HIDE;
