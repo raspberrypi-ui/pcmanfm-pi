@@ -184,6 +184,7 @@ static void fm_cell_renderer_pixbuf_init(FmCellRendererPixbuf *self)
     }
     else
         self->icon = g_object_ref(link_icon);
+    self->scale = 1;
 }
 
 /**

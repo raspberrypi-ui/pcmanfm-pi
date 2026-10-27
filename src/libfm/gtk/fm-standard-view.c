@@ -214,7 +214,9 @@ static gboolean on_draw (GtkWidget *self, cairo_t *cr, gpointer data)
 {
     FmStandardView *fv = (FmStandardView *) self;
     int scale = gtk_widget_get_scale_factor (self);
-    if (fm_cell_renderer_pixbuf_get_scale ((FmCellRendererPixbuf *) fv->renderer_pixbuf) != scale)
+    /* the model is not attached until the folder has loaded */
+    if (fv->model && fv->renderer_pixbuf &&
+        fm_cell_renderer_pixbuf_get_scale ((FmCellRendererPixbuf *) fv->renderer_pixbuf) != scale)
     {
         fm_folder_model_set_icon_size (fv->model, fm_folder_model_get_icon_size (fv->model));
         fm_cell_renderer_pixbuf_set_scale ((FmCellRendererPixbuf *) fv->renderer_pixbuf, scale);
