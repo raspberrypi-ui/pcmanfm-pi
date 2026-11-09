@@ -230,7 +230,7 @@ static FmXmlFileItem *_prepare_contents(FmMenuMenuTree *data, GCancellable *canc
     /* do it in compatibility with lxpanel */
     xdg_menu_prefix = g_getenv("XDG_MENU_PREFIX");
     contents = g_strdup_printf("%sapplications.menu",
-                               xdg_menu_prefix ? xdg_menu_prefix : "lxde-");
+                               xdg_menu_prefix ? xdg_menu_prefix : "rpd-");
     data->file_path = g_build_filename(g_get_user_config_dir(), "menus",
                                        contents, NULL);
     *gf = g_file_new_for_path(data->file_path);
@@ -1023,7 +1023,7 @@ static MenuCache *_get_menu_cache(GError **error)
         requires_prefix = (g_getenv("XDG_MENU_PREFIX") == NULL);
         environment_tested = TRUE;
     }
-    mc = menu_cache_lookup_sync(requires_prefix ? "lxde-applications.menu+hidden" : "applications.menu+hidden");
+    mc = menu_cache_lookup_sync(requires_prefix ? "rpd-applications.menu+hidden" : "applications.menu+hidden");
     /* FIXME: may be it is reasonable to set XDG_MENU_PREFIX ? */
 
     if(mc == NULL) /* initialization failed */

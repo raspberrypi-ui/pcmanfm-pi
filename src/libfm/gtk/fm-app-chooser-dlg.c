@@ -428,7 +428,8 @@ GAppInfo* fm_app_chooser_dlg_dup_selected_app(GtkDialog* dlg, gboolean* set_defa
                         goto _out;
 
                     /* see if this command can be found in menu cache */
-                    menu_cache = menu_cache_lookup_sync("applications.menu");
+                    /* if under sudo, explicitly set the menu prefix to rpd_ */
+                    menu_cache = menu_cache_lookup_sync(g_getenv("XDG_MENU_PREFIX") ? "applications.menu" : "rpd-applications.menu");
                     if(menu_cache)
                     {
                         MenuCacheDir *root_dir = menu_cache_dup_root_dir(menu_cache);
