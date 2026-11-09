@@ -133,7 +133,6 @@ GtkTreeView *fm_app_menu_view_new(void)
     if(!store)
     {
         static GType menu_cache_item_type = 0;
-        char* oldenv;
         if(G_UNLIKELY(!menu_cache_item_type))
             menu_cache_item_type = g_boxed_type_register_static("MenuCacheItem",
                                             (GBoxedCopyFunc)menu_cache_item_ref,
@@ -141,17 +140,8 @@ GtkTreeView *fm_app_menu_view_new(void)
         store = gtk_tree_store_new(N_COLS, G_TYPE_ICON, /*GDK_TYPE_PIXBUF, */G_TYPE_STRING, menu_cache_item_type);
         g_object_weak_ref(G_OBJECT(store), destroy_store, NULL);
 
-        /* ensure that we're using lxmenu-data */
-        oldenv = g_strdup(g_getenv("XDG_MENU_PREFIX"));
-        //g_setenv("XDG_MENU_PREFIX", "lxde-", TRUE);
-        menu_cache = menu_cache_lookup("applications.menu");
-        if(oldenv)
-        {
-            g_setenv("XDG_MENU_PREFIX", oldenv, TRUE);
-            g_free(oldenv);
-        }
-        else
-            g_unsetenv("XDG_MENU_PREFIX");
+        /* if under sudo, explicitly set the menu prefix to rpd_ */
+        menu_cache = menu_cache_lookup(g_getenv("XDG_MENU_PREFIX") ? "applications.menu" : "rpd-applications.menu");
 
         if(menu_cache)
         {
