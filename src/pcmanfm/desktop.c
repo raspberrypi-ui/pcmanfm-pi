@@ -518,6 +518,7 @@ static void save_item_pos(FmDesktop* desktop)
                                     item->area.x, item->area.y);
     }
     g_file_set_contents(path, buf->str, buf->len, NULL);
+    fm_restore_real_owner(path);
     g_free(path);
     g_string_free(buf, TRUE);
     desktop->conf.changed = FALSE; /* reset it since we saved it */

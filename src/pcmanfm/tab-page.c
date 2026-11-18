@@ -241,7 +241,7 @@ static void on_home_path_changed(FmAppConfig *cfg, FmSidePane *sp)
     if (cfg->home_path && cfg->home_path[0])
         fm_side_pane_set_home_dir(sp, cfg->home_path);
     else
-        fm_side_pane_set_home_dir(sp, fm_get_home_dir());
+        fm_side_pane_set_home_dir(sp, fm_get_real_home_dir());
 }
 
 void fm_tab_page_destroy(GtkWidget *object)

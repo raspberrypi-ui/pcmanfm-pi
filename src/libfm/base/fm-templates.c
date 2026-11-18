@@ -44,7 +44,7 @@
 #include "fm-config.h"
 #include "fm-folder.h"
 
-extern gchar *home_dir (void);
+#include "fm-utils.h"
 
 typedef struct _FmTemplateFile  FmTemplateFile;
 typedef struct _FmTemplateDir   FmTemplateDir;
@@ -804,14 +804,7 @@ void _fm_templates_init(void)
     dir->next = templates_dirs;
     templates_dirs = dir;
 
-    gchar *home = home_dir ();
-    if (home)
-    {
-        dir_name = g_build_filename(home, "Templates", NULL);
-        g_free (home);
-    }
-    else
-    dir_name = g_get_user_special_dir(G_USER_DIRECTORY_TEMPLATES);
+    dir_name = fm_get_real_special_dir(G_USER_DIRECTORY_TEMPLATES);
     if(dir_name)
         dir->path = fm_path_new_for_path(dir_name);
     else

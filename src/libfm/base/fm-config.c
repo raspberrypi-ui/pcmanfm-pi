@@ -349,23 +349,6 @@ void fm_config_load_from_key_file(FmConfig* cfg, GKeyFile* kf)
     fm_key_file_get_bool(kf, "places", "places_volmounts", &cfg->places_volmounts);
 }
 
-static gchar *home_dir (void)
-{
-    char buf[256];
-    FILE *fp = popen ("eval echo ~$SUDO_USER", "r");
-    if (fp == NULL) return NULL;
-    if (fgets (buf, sizeof (buf) - 1, fp) == NULL)
-    {
-        pclose (fp);
-        return NULL;
-    }
-    pclose (fp);
-    if (strlen (buf) > 0) buf[strlen(buf) - 1] = 0;
-    else return NULL;
-    if (buf[0] != '/') return NULL;
-    return g_strdup (buf);
-}
-
 /**
  * fm_config_load_from_file
  * @cfg: pointer to configuration
@@ -428,14 +411,7 @@ void fm_config_load_from_file(FmConfig* cfg, const char* name)
     /* we got all system blacklists, save them and get user's one */
     cfg->system_modules_blacklist = cfg->modules_blacklist;
     cfg->modules_blacklist = NULL;
-    gchar *home = home_dir ();
-    if (home)
-    {
-        path = g_build_filename(home, ".config", name, NULL);
-        g_free (home);
-    }
-    else
-    path = g_build_filename(g_get_user_config_dir(), name, NULL);
+    path = g_build_filename(fm_get_real_config_dir(), name, NULL);
     if(g_key_file_load_from_file(kf, path, 0, NULL))
     {
         fm_config_load_from_key_file(cfg, kf);
@@ -513,17 +489,10 @@ void fm_config_save(FmConfig* cfg, const char* name)
     char* dir_path;
     if(!name)
     {
-        gchar *home = home_dir ();
-        if (home)
-        {
-            name = path = g_build_filename(home, ".config", "pcmanfm/default/pcmanfm.conf", NULL);
-            g_free (home);
-        }
-        else
-        name = path = g_build_filename(g_get_user_config_dir(), "pcmanfm/default/pcmanfm.conf", NULL);
+        name = path = g_build_filename(fm_get_real_config_dir(), "pcmanfm/default/pcmanfm.conf", NULL);
     }
     else if(!g_path_is_absolute(name))
-        name = path = g_build_filename(g_get_user_config_dir(), name, NULL);
+        name = path = g_build_filename(fm_get_real_config_dir(), name, NULL);
 
     dir_path = g_path_get_dirname(name);
     if(g_mkdir_with_parents(dir_path, 0700) != -1)
@@ -601,6 +570,7 @@ void fm_config_save(FmConfig* cfg, const char* name)
 
         str = g_key_file_to_data (kf, &len, NULL);
         g_file_set_contents (name, str, len, NULL);
+        fm_restore_real_owner (name);
         g_free (str);
         g_key_file_free (kf);
 

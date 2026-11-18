@@ -76,6 +76,10 @@ char* fm_strdup_replace(char* str, char* old_str, char* new_str);
 gboolean fm_run_in_default_main_context(GSourceFunc func, gpointer data);
 
 const char *fm_get_home_dir(void);
+const char *fm_get_real_home_dir (void);
+const char *fm_get_real_config_dir (void);
+const char *fm_get_real_special_dir (GUserDirectory directory);
+void fm_restore_real_owner (const char *path);
 
 char *fm_uri_subpath_to_native_subpath(const char *subpath, GError **error);
 void fm_strcatv(char ***strvp, char * const *astrv);

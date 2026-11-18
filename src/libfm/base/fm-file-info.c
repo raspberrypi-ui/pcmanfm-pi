@@ -133,7 +133,7 @@ struct _FmFileInfoList
 /* intialize the file info system */
 void _fm_file_info_init(void)
 {
-    const char* user_home = fm_get_home_dir();
+    const char* user_home = fm_get_real_home_dir();
     int home_dir_len = strlen(user_home);
     int i;
     icon_locked_folder = fm_icon_from_name("folder-locked");
@@ -141,7 +141,7 @@ void _fm_file_info_init(void)
     for(i = 0; i < G_USER_N_DIRECTORIES; ++i)
     {
         /* get information of every special dir */
-        const char* path_str = g_get_user_special_dir(i);
+        const char* path_str = fm_get_real_special_dir(i);
         const char* base_name = NULL;
         if(path_str)
         {

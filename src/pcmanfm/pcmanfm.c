@@ -659,9 +659,12 @@ void pcmanfm_open_folder_in_terminal(GtkWindow* parent, FmPath* dir)
 
 char* pcmanfm_get_profile_dir(gboolean create)
 {
-    char* dir = g_build_filename(g_get_user_config_dir(), "pcmanfm", profile ? profile : "default", NULL);
+    char* dir = g_build_filename(fm_get_real_config_dir(), "pcmanfm", profile ? profile : "default", NULL);
     if(create)
+    {
         g_mkdir_with_parents(dir, 0700);
+        fm_restore_real_owner(dir);
+    }
     return dir;
 }
 
@@ -672,19 +675,3 @@ char* pcmanfm_get_system_profile_dir (void)
     return dir;
 }
 
-gchar *home_dir (void)
-{
-    char buf[256];
-    FILE *fp = popen ("eval echo ~$SUDO_USER", "r");
-    if (fp == NULL) return NULL;
-    if (fgets (buf, sizeof (buf) - 1, fp) == NULL)
-    {
-        pclose (fp);
-        return NULL;
-    }
-    pclose (fp);
-    if (strlen (buf) > 0) buf[strlen(buf) - 1] = 0;
-    else return NULL;
-    if (buf[0] != '/') return NULL;
-    return g_strdup (buf);
-}

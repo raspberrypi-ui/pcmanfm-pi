@@ -1238,7 +1238,7 @@ void _fm_path_init()
 
     /* path object of root_path dir */
     root_path = _fm_path_new_internal(NULL, "/", 1, FM_PATH_IS_LOCAL|FM_PATH_IS_NATIVE);
-    home_dir = fm_get_home_dir();
+    home_dir = fm_get_real_home_dir();
     home_len = strlen(home_dir);
     while(home_dir[home_len - 1] == '/')
         --home_len;
@@ -1260,7 +1260,7 @@ void _fm_path_init()
     home_path = _fm_path_new_internal(parent, name, strlen(name), FM_PATH_IS_LOCAL|FM_PATH_IS_NATIVE);
     fm_path_unref(parent);
 
-    desktop_dir = g_get_user_special_dir(G_USER_DIRECTORY_DESKTOP);
+    desktop_dir = fm_get_real_special_dir(G_USER_DIRECTORY_DESKTOP);
     desktop_len = strlen(desktop_dir);
     while(desktop_dir[desktop_len - 1] == '/')
         --desktop_len;
