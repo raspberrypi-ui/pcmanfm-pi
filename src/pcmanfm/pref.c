@@ -486,14 +486,14 @@ static void on_use_home_path_toggled(GtkToggleButton *btn, GtkWidget *home_path_
 static void on_use_home_path_toggled2(GtkToggleButton *btn, GtkEntry *home_path)
 {
     if (!gtk_toggle_button_get_active(btn))
-        gtk_entry_set_text(home_path, fm_get_home_dir());
+        gtk_entry_set_text(home_path, fm_get_real_home_dir());
 }
 
 static void on_home_path_changed(GtkEntry *home_path, FmAppConfig *cfg)
 {
     const char *path = gtk_entry_get_text(home_path);
 
-    if (path[0] && strcmp(path, fm_get_home_dir()) != 0)
+    if (path[0] && strcmp(path, fm_get_real_home_dir()) != 0)
     {
         if (g_strcmp0(path, cfg->home_path) == 0) /* not changed */
             return;
@@ -1065,7 +1065,7 @@ void fm_edit_preference( GtkWindow* parent, int page )
             g_signal_connect(obj, "toggled", G_CALLBACK(on_use_home_path_toggled2),
                              gtk_builder_get_object(builder, "home_path"));
             is_set = app_config->home_path &&
-                     strcmp(app_config->home_path, fm_get_home_dir()) != 0;
+                     strcmp(app_config->home_path, fm_get_real_home_dir()) != 0;
             if (is_set)
                 gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(obj), TRUE);
             else
@@ -1074,7 +1074,7 @@ void fm_edit_preference( GtkWindow* parent, int page )
             if (is_set)
                 gtk_entry_set_text(GTK_ENTRY(obj), app_config->home_path);
             else
-                gtk_entry_set_text(GTK_ENTRY(obj), fm_get_home_dir());
+                gtk_entry_set_text(GTK_ENTRY(obj), fm_get_real_home_dir());
             g_signal_connect(obj, "changed", G_CALLBACK(on_home_path_changed), app_config);
             obj = gtk_builder_get_object(builder, "home_path_current");
             if (parent && IS_FM_MAIN_WIN(parent)) /* is called from menu */

@@ -112,12 +112,12 @@ static void fm_bookmarks_finalize(GObject *object)
 
 static inline char *get_legacy_bookmarks_file(void)
 {
-    return g_build_filename(fm_get_home_dir(), ".gtk-bookmarks", NULL);
+    return g_build_filename(fm_get_real_home_dir(), ".gtk-bookmarks", NULL);
 }
 
 static inline char *get_new_bookmarks_file(void)
 {
-    return g_build_filename(g_get_user_config_dir(), "gtk-3.0", "bookmarks", NULL);
+    return g_build_filename(fm_get_real_config_dir(), "gtk-3.0", "bookmarks", NULL);
 }
 
 static void on_changed( GFileMonitor* mon, GFile* gf, GFile* other,
@@ -340,6 +340,12 @@ static gboolean save_bookmarks(FmBookmarks* bookmarks)
     {
         g_critical("%s", err->message);
         g_error_free(err);
+    }
+    else
+    {
+        char *fpath = g_file_get_path(bookmarks->file);
+        fm_restore_real_owner(fpath);
+        g_free(fpath);
     }
 
     g_string_free(buf, TRUE);

@@ -46,7 +46,6 @@ void pcmanfm_save_config(gboolean immediate);
 gboolean pcmanfm_can_open_path_in_terminal(FmPath* dir);
 void pcmanfm_open_folder_in_terminal(GtkWindow* parent, FmPath* dir);
 
-gchar *home_dir (void);
 
 G_END_DECLS
 

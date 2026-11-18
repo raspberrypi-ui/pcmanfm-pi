@@ -39,6 +39,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <pwd.h>
+#include <unistd.h>
+#include <sys/stat.h>
 #include "fm-utils.h"
 #include "fm-file-info-job.h"
 #include "fm-config.h"
@@ -502,6 +505,184 @@ const char *fm_get_home_dir(void)
     if(!homedir)
         homedir = g_get_home_dir();
     return homedir;
+}
+
+/* Directories of the user who invoked sudo, looked up once from passwd */
+static gboolean sudo_checked = FALSE;
+static char *sudo_home = NULL;
+static uid_t sudo_uid;
+static gid_t sudo_gid;
+static char *sudo_config = NULL;
+static char *sudo_special[G_USER_N_DIRECTORIES];
+
+/* user-dirs.dirs keys, and the default folder names used if the sudo
+ * user's user-dirs.dirs is missing or has no entry for a directory */
+static const struct {
+    const char *key;
+    const char *name;
+} special_dirs[G_USER_N_DIRECTORIES] = {
+    [G_USER_DIRECTORY_DESKTOP]      = { "XDG_DESKTOP_DIR",     "Desktop" },
+    [G_USER_DIRECTORY_DOCUMENTS]    = { "XDG_DOCUMENTS_DIR",   "Documents" },
+    [G_USER_DIRECTORY_DOWNLOAD]     = { "XDG_DOWNLOAD_DIR",    "Downloads" },
+    [G_USER_DIRECTORY_MUSIC]        = { "XDG_MUSIC_DIR",       "Music" },
+    [G_USER_DIRECTORY_PICTURES]     = { "XDG_PICTURES_DIR",    "Pictures" },
+    [G_USER_DIRECTORY_PUBLIC_SHARE] = { "XDG_PUBLICSHARE_DIR", "Public" },
+    [G_USER_DIRECTORY_TEMPLATES]    = { "XDG_TEMPLATES_DIR",   "Templates" },
+    [G_USER_DIRECTORY_VIDEOS]       = { "XDG_VIDEOS_DIR",      "Videos" },
+};
+
+/* Fill sudo_special[] from the sudo user's user-dirs.dirs, which has lines
+ * of the form XDG_DESKTOP_DIR="$HOME/Desktop" or XDG_DESKTOP_DIR="/abs/path".
+ * As in the shell, a later line for the same key overrides an earlier one. */
+static void load_sudo_special_dirs (void)
+{
+    char *file = g_build_filename (sudo_config, "user-dirs.dirs", NULL);
+    char *contents, **lines, **l;
+    int i;
+
+    if (g_file_get_contents (file, &contents, NULL, NULL))
+    {
+        lines = g_strsplit (contents, "\n", -1);
+        for (l = lines; *l; l++)
+        {
+            char *val = g_strstrip (*l), *end, *path;
+            size_t len;
+
+            for (i = 0; i < G_USER_N_DIRECTORIES; i++)
+            {
+                len = strlen (special_dirs[i].key);
+                if (strncmp (val, special_dirs[i].key, len) == 0 && val[len] == '=')
+                    break;
+            }
+            if (i == G_USER_N_DIRECTORIES) continue;
+
+            val += len + 1;
+            if (*val == '"')
+            {
+                val++;
+                if (!(end = strchr (val, '"'))) continue;
+                *end = 0;
+            }
+
+            if (strncmp (val, "$HOME", 5) == 0 && (val[5] == '/' || val[5] == 0))
+                path = g_build_filename (sudo_home, val + 5, NULL);
+            else if (*val == '/')
+                path = g_strdup (val);
+            else
+                continue;
+
+            /* strip trailing separators, e.g. from "$HOME/" */
+            len = strlen (path);
+            while (len > 1 && path[len - 1] == '/')
+                path[--len] = 0;
+
+            g_free (sudo_special[i]);
+            sudo_special[i] = path;
+        }
+        g_strfreev (lines);
+        g_free (contents);
+    }
+    g_free (file);
+
+    for (i = 0; i < G_USER_N_DIRECTORIES; i++)
+        if (!sudo_special[i])
+            sudo_special[i] = g_build_filename (sudo_home, special_dirs[i].name, NULL);
+}
+
+static gboolean under_sudo (void)
+{
+    if (!sudo_checked)
+    {
+        const char *user = g_getenv ("SUDO_USER");
+        struct passwd *pw = user ? getpwnam (user) : NULL;
+        if (pw)
+        {
+            sudo_home = g_strdup (pw->pw_dir);
+            sudo_uid = pw->pw_uid;
+            sudo_gid = pw->pw_gid;
+            sudo_config = g_build_filename (sudo_home, ".config", NULL);
+            load_sudo_special_dirs ();
+        }
+        sudo_checked = TRUE;
+    }
+    return sudo_home != NULL;
+}
+
+/**
+ * fm_get_real_home_dir
+ *
+ * Retrieves the home directory of the real user - the user who invoked
+ * sudo if running under sudo, otherwise the current user.
+ *
+ * Returns: path string, owned by libfm; do not free.
+ */
+const char *fm_get_real_home_dir (void)
+{
+    return under_sudo () ? sudo_home : g_get_home_dir ();
+}
+
+/**
+ * fm_get_real_config_dir
+ *
+ * Retrieves the config directory of the real user - ~/.config of the user
+ * who invoked sudo if running under sudo, otherwise g_get_user_config_dir().
+ *
+ * Returns: path string, owned by libfm; do not free.
+ */
+const char *fm_get_real_config_dir (void)
+{
+    return under_sudo () ? sudo_config : g_get_user_config_dir ();
+}
+
+/**
+ * fm_get_real_special_dir
+ * @directory: the special directory to look up
+ *
+ * Retrieves a special (XDG user) directory of the real user. Under sudo
+ * this is read from the user-dirs.dirs of the user who invoked sudo,
+ * falling back to the default folder name (e.g. ~/Documents) in their
+ * home dir; otherwise it is g_get_user_special_dir().
+ *
+ * Returns: (allow-none): path string, owned by libfm; do not free.
+ */
+const char *fm_get_real_special_dir (GUserDirectory directory)
+{
+    g_return_val_if_fail (directory >= 0 && directory < G_USER_N_DIRECTORIES, NULL);
+    return under_sudo () ? sudo_special[directory] : g_get_user_special_dir (directory);
+}
+
+/**
+ * fm_restore_real_owner
+ * @path: file or directory just written or created
+ *
+ * When running under sudo, gives ownership of @path, and of any parent
+ * directories between it and the sudo user's home dir, back to the user
+ * who invoked sudo. Only items currently owned by root are changed, and
+ * nothing outside the sudo user's home dir is touched. Does nothing when
+ * not running under sudo.
+ */
+void fm_restore_real_owner (const char *path)
+{
+    size_t home_len;
+    struct stat st;
+    char *p, *parent;
+
+    if (!path || !under_sudo ()) return;
+
+    home_len = strlen (sudo_home);
+    p = g_strdup (path);
+    while (strncmp (p, sudo_home, home_len) == 0 && p[home_len] == '/')
+    {
+        if (lstat (p, &st) == 0 && st.st_uid == 0)
+        {
+            if (lchown (p, sudo_uid, sudo_gid) != 0)
+                g_warning ("could not restore owner of %s", p);
+        }
+        parent = g_path_get_dirname (p);
+        g_free (p);
+        p = parent;
+    }
+    g_free (p);
 }
 
 /**

@@ -42,6 +42,7 @@
 #include "fm-config.h"
 #include "fm-monitor.h"
 #include "fm-file-info-job.h"
+#include "fm-utils.h"
 
 /* standard items order */
 typedef enum
@@ -784,7 +785,7 @@ static void on_places_desktop_changed(FmConfig* cfg, gpointer user_data)
     GtkListStore* model = GTK_LIST_STORE(user_data);
     GtkTreeIter it;
     if(cfg->places_desktop &&
-       g_file_test(g_get_user_special_dir(G_USER_DIRECTORY_DESKTOP), G_FILE_TEST_IS_DIR))
+       g_file_test(fm_get_real_special_dir(G_USER_DIRECTORY_DESKTOP), G_FILE_TEST_IS_DIR))
     {
         new_path_item(model, &it, fm_path_get_desktop(), FM_PLACES_ID_DESKTOP,
                       _("Desktop"), "user-desktop", NULL);
@@ -1068,7 +1069,7 @@ void fm_places_model_reload (FmPlacesModel *self)
     if (fm_config->places_home)
         new_path_item (model, &it, fm_path_get_home (), FM_PLACES_ID_HOME, _("Home Folder"), "user-home", job);
 
-    if (fm_config->places_desktop && g_file_test (g_get_user_special_dir(G_USER_DIRECTORY_DESKTOP), G_FILE_TEST_IS_DIR))
+    if (fm_config->places_desktop && g_file_test (fm_get_real_special_dir(G_USER_DIRECTORY_DESKTOP), G_FILE_TEST_IS_DIR))
         new_path_item (model, &it, fm_path_get_desktop (), FM_PLACES_ID_DESKTOP, _("Desktop"), "user-desktop", job);
 
     if (fm_config->places_root)
@@ -1195,7 +1196,7 @@ void fm_places_model_do_init (FmPlacesModel *self)
 
     /* Only show desktop in side pane when the user has a desktop dir. */
     if(fm_config->places_desktop &&
-       g_file_test(g_get_user_special_dir(G_USER_DIRECTORY_DESKTOP), G_FILE_TEST_IS_DIR))
+       g_file_test(fm_get_real_special_dir(G_USER_DIRECTORY_DESKTOP), G_FILE_TEST_IS_DIR))
     {
         new_path_item(model, &it, fm_path_get_desktop(), FM_PLACES_ID_DESKTOP,
                       _("Desktop"), "user-desktop", job);

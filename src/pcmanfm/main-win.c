@@ -1626,30 +1626,11 @@ static void on_go_home(GtkAction* act, FmMainWin* win)
     if (app_config->home_path && app_config->home_path[0])
         fm_main_win_chdir_by_name(win, app_config->home_path);
     else
-    {
-        gchar *home = home_dir ();
-        if (home)
-        {
-            fm_main_win_chdir_by_name (win, home);
-            g_free (home);
-        }
-        else
-        fm_main_win_chdir( win, fm_path_get_home());
-    }
+        fm_main_win_chdir(win, fm_path_get_home());
 }
 
 static void on_go_desktop(GtkAction* act, FmMainWin* win)
 {
-    gchar *home = home_dir ();
-    if (home)
-    {
-        char *path;
-        path = g_build_filename (home, "Desktop", NULL);
-        fm_main_win_chdir_by_name (win, path);
-        g_free (path);
-        g_free (home);
-    }
-    else
     fm_main_win_chdir(win, fm_path_get_desktop());
 }
 
